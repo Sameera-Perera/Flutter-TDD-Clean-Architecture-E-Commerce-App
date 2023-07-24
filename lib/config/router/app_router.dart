@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 
-import '../../presentation/views/home_view.dart';
+import '../../presentation/views/main/main_view.dart';
 
 part 'app_router.gr.dart';
 
@@ -9,7 +9,7 @@ part 'app_router.gr.dart';
 class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
-    AutoRoute(page: HomeViewRoute.page, initial: true),
+    AutoRoute(page: MainViewRoute.page, initial: true),
   ];
 }
 
