@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
 import '../../../domain/entities/product.dart';
-import '../../../domain/usecases/product/get_product.dart';
+import '../../../domain/usecases/product/get_product_usecase.dart';
 
 part 'product_event.dart';
 part 'product_state.dart';

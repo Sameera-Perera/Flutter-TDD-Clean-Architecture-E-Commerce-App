@@ -98,7 +98,7 @@ class HomeView extends StatelessWidget {
                             product: Product(
                               id: 1,
                               name: state.toString(),
-                              image: "image",
+                              image: "https://via.placeholder.com/150",
                               price: 23,
                             ),
                           ),

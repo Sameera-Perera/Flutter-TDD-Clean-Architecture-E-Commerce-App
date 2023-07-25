@@ -9,12 +9,12 @@ String productModelToJson(List<ProductModel> data) => json.encode(List<dynamic>.
 class ProductModel extends Product {
   const ProductModel({
     required int id,
-    required String name,
+    required String title,
     required String image,
     required double price,
   }) : super(
           id: id,
-          name: name,
+          name: title,
           image: image,
           price: price,
         );
@@ -26,7 +26,7 @@ class ProductModel extends Product {
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
       id: json['id'],
-      name: json['title'],
+      title: json['title'],
       image: json['image'],
       price: json['price'].toDouble(),
     );
@@ -35,7 +35,7 @@ class ProductModel extends Product {
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'name': name,
+      'title': name,
       'image': image,
       'price': price,
     };

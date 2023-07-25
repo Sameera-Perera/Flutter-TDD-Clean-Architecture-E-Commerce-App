@@ -25,7 +25,7 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   Future<List<ProductModel>> getLastProducts() {
     final jsonString = sharedPreferences.getString(CACHED_PRODUCTS);
     if (jsonString != null) {
-      return Future.value(productModelFromJson(jsonString));
+      return Future.value(productModelFromJson(jsonDecode(jsonString!)));
     } else {
       throw CacheException();
     }

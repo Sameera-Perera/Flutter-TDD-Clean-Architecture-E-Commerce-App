@@ -7,7 +7,7 @@ import '../../data/data_sources/local/product_local_data_source.dart';
 import '../../data/data_sources/remote/product_remote_data_source.dart';
 import '../../data/repositories/product_repository_impl.dart';
 import '../../domain/repositories/product_repository.dart';
-import '../../domain/usecases/product/get_product.dart';
+import '../../domain/usecases/product/get_product_usecase.dart';
 import '../../presentation/blocs/product/product_bloc.dart';
 import '../network/network_info.dart';
 

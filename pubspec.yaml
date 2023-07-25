@@ -55,6 +55,9 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+#  mockito: ^5.4.2
+  mocktail: ^0.3.0
+
   auto_route_generator:
   build_runner:
 
