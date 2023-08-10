@@ -1,9 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:eshop/domain/entities/product/pagination_meta_data.dart';
 
 import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
-import '../../../domain/entities/product.dart';
+import '../../../domain/entities/product/product.dart';
 import '../../../domain/usecases/product/get_product_usecase.dart';
 
 part 'product_event.dart';
@@ -15,25 +16,38 @@ const String CACHE_FAILURE_MESSAGE = 'Cache Failure';
 class ProductBloc extends Bloc<ProductEvent, ProductState> {
   final GetProductUseCase _getProductUseCase;
 
-  ProductBloc(this._getProductUseCase) : super(ProductInitial()) {
-    on<GetProducts>(_onLoadCart);
+  ProductBloc(this._getProductUseCase)
+      : super(ProductInitial(
+            products: const [],
+            metaData: PaginationMetaData(
+              pageSize: 20,
+              page: 0,
+              total: 0,
+            ))) {
+    on<GetProducts>(_onLoadProducts);
   }
 
-  void _onLoadCart(GetProducts event, Emitter<ProductState> emit) async {
+  void _onLoadProducts(GetProducts event, Emitter<ProductState> emit) async {
     try {
-      emit(ProductLoading());
+      emit(ProductLoading(products: state.products, metaData: state.metaData));
       final result = await _getProductUseCase(NoParams());
       result.fold(
-        (failure) => emit(ProductError(message: _mapFailureToMessage(failure))),
-        (products) {
-          // print(products.length);
-          emit(ProductLoaded(products: products));
-          // print(state);
-        },
+        (failure) => emit(ProductError(
+            products: state.products,
+            metaData: state.metaData,
+            message: _mapFailureToMessage(failure))),
+        (productResponse) => emit(ProductLoaded(
+          metaData: state.metaData,
+          products: productResponse.products,
+        )),
       );
     } catch (e) {
-      print(e.toString());
-      emit(ProductError(message: e.toString()));
+      print(e);
+      emit(ProductError(
+        products: state.products,
+        metaData: state.metaData,
+        message: e.toString(),
+      ));
     }
   }
 

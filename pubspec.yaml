@@ -36,20 +36,27 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
 
-  http: ^0.13.3
-  flutter_bloc: ^8.0.1
+  #local storage
+  shared_preferences: ^2.2.0
+  flutter_secure_storage: ^8.0.0
+
+  #state management
   bloc: ^8.1.2
-  dio: ^5.3.0
+  flutter_bloc: ^8.0.1
+  get_it: ^7.6.0
+
+  http: ^0.13.3
+#  dio: ^5.3.0
   auto_route: ^7.7.1
   equatable: ^2.0.5
   dartz: ^0.10.1
   internet_connection_checker: ^1.0.0+1
-  shared_preferences: ^2.2.0
-  get_it: ^7.6.0
 
+  #ui
   oktoast: ^3.3.1
   flutter_snake_navigationbar: ^0.6.1
   shimmer:
+  cached_network_image: ^3.2.3
 
 dev_dependencies:
   flutter_test:

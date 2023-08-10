@@ -1,6 +1,6 @@
-import 'package:eshop/domain/entities/product.dart';
+import 'package:eshop/domain/entities/product/product.dart';
 import 'package:eshop/presentation/blocs/product/product_bloc.dart';
-import 'package:eshop/presentation/widgets/product_card.dart';
+import 'package:eshop/presentation/widgets/Product/product_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -94,14 +94,7 @@ class HomeView extends StatelessWidget {
                         return Shimmer.fromColors(
                           baseColor: Colors.grey.shade200,
                           highlightColor: Colors.white,
-                          child: ProductCard(
-                            product: Product(
-                              id: 1,
-                              name: state.toString(),
-                              image: "https://via.placeholder.com/150",
-                              price: 23,
-                            ),
-                          ),
+                          child: const ProductCard(),
                         );
                       },
                     );

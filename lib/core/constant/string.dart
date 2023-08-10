@@ -2,10 +2,10 @@
 const String appTitle = 'EShop';
 
 // Networking and APIs
-const String baseUrl = 'https://fakestoreapi.com';
-const String defaultApiKey = 'ff957763c54c44d8b00e5e082bc76cb0';
-const String defaultSources = 'bbc-news, abc-news, al-jazeera-english';
+const String baseUrl = 'https://rich-jade-mackerel-kit.cyclic.app';
+const String defaultApiKey = '';
+const String defaultSources = '';
 
 // Storage and Databases
-const String articlesTableName = 'articles_table';
-const String databaseName = 'app_database.db';
+const String articlesTableName = '';
+const String databaseName = '';

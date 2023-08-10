@@ -1,4 +1,4 @@
-import 'package:eshop/data/models/product_model.dart';
+import 'package:eshop/data/models/product/product_model.dart';
 
 const tProductModel = ProductModel(id: 1, title: "Text", image: "Text", price: 1.00);
 const tProductModelList = [

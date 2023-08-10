@@ -14,16 +14,13 @@ import '../network/network_info.dart';
 final sl = GetIt.instance;
 
 Future<void> init() async {
-  //! Features - Number Trivia
+  //Features - Product
   // Bloc
   sl.registerFactory(
     () => ProductBloc(sl()),
   );
-
   // Use cases
   sl.registerLazySingleton(() => GetProductUseCase(sl()));
-  // sl.registerLazySingleton(() => GetRandomNumberTrivia(sl()));
-
   // Repository
   sl.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(
@@ -32,12 +29,10 @@ Future<void> init() async {
         networkInfo: sl(),
     ),
   );
-
   // Data sources
   sl.registerLazySingleton<ProductRemoteDataSource>(
     () => ProductRemoteDataSourceImpl(client: sl()),
   );
-
   sl.registerLazySingleton<ProductLocalDataSource>(
     () => ProductLocalDataSourceImpl(sharedPreferences: sl()),
   );

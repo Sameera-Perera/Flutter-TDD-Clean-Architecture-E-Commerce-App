@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:eshop/core/usecases/usecase.dart';
-import 'package:eshop/domain/entities/product.dart';
+import 'package:eshop/domain/entities/product/product.dart';
 import 'package:eshop/domain/repositories/product_repository.dart';
 import 'package:eshop/domain/usecases/product/search_product_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';

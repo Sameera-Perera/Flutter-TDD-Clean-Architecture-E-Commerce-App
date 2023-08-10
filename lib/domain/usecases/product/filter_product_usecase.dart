@@ -3,16 +3,16 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/usecase.dart';
-import '../../entities/product.dart';
+import '../../entities/product/product_response.dart';
 import '../../repositories/product_repository.dart';
 
 class FilterProductUseCase
-    implements UseCase<List<Product>, FilterProductParams> {
+    implements UseCase<ProductResponse, FilterProductParams> {
   final ProductRepository repository;
   FilterProductUseCase(this.repository);
 
   @override
-  Future<Either<Failure, List<Product>>> call(
+  Future<Either<Failure, ProductResponse>> call(
       FilterProductParams params) async {
     return await repository.filterProducts(params);
   }

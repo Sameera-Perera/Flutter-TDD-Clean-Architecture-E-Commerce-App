@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../domain/entities/product.dart';
-import '../../../widgets/product_card.dart';
+import '../../../../domain/entities/product/product.dart';
+import '../../../widgets/Product/product_card.dart';
 
 class CartView extends StatelessWidget {
   const CartView({Key? key}) : super(key: key);
@@ -23,7 +23,7 @@ class CartView extends StatelessWidget {
                     itemCount: 10,
                     padding: const EdgeInsets.only(top: 14),
                     gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 0.55,
                       crossAxisSpacing: 6,
@@ -31,12 +31,16 @@ class CartView extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (BuildContext context, int index) {
-                      return const ProductCard(
+                      return ProductCard(
                         product: Product(
-                          id: 1,
+                          id: '1',
                           name: "name",
-                          image: "image",
-                          price: 23,
+                          description: '',
+                          priceTags: [],
+                          images: [],
+                          categories: [],
+                          createdAt: DateTime.now(),
+                          updatedAt: DateTime.now(),
                         ),
                       );
                     },

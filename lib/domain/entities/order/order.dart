@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:eshop/domain/entities/delivery_info.dart';
-import 'package:eshop/domain/entities/product.dart';
+import 'package:eshop/domain/entities/user/delivery_info.dart';
+import 'package:eshop/domain/entities/product/product.dart';
 
 class Order extends Equatable {
   final int id;

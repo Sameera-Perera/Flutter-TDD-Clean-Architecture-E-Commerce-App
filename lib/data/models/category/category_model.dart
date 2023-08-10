@@ -1,0 +1,34 @@
+import 'dart:convert';
+
+import '../../../domain/entities/category/category.dart';
+
+List<CategoryModel> categoryModelFromJson(String str) =>
+    List<CategoryModel>.from(
+        json.decode(str).map((x) => CategoryModel.fromJson(x)));
+
+String categoryModelToJson(List<CategoryModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class CategoryModel extends Category {
+  CategoryModel({
+    required String id,
+    required String name,
+    required String image,
+  }) : super(
+          id: id,
+          name: name,
+          image: image,
+        );
+
+  factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
+        id: json["_id"],
+        name: json["name"],
+        image: json["image"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "name": name,
+        "image": image,
+      };
+}
