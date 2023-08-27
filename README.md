@@ -1,16 +1,46 @@
-# eshop
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+<!-- PROJECT LOGO -->
+<p align="center">
+  <h3 align="center">EShop - Flutter TDD Clean Architecture E-Commerce App</h3>
+</p>
 
-A new Flutter project.
+[![Product Name Screen Shot][product-screenshot]](https://example.com)
 
+<!-- GETTING STARTED -->
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To get a local copy up and running follow these simple example steps.
 
-A few resources to get you started if this is your first Flutter project:
+### Installation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+1. Clone the repo
+   ```sh
+   git clone https://github.com/Sameera-Perera/EShop-Flutter-Clean-Architecture.git
+   ```
+2. Install packages
+   ```sh
+   flutter pub get
+   ```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/Sameera-Perera/EShop-Flutter-Clean-Architecture.svg?style=for-the-badge
+[contributors-url]: https://github.com/Sameera-Perera/EShop-Flutter-Clean-Architecture/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Sameera-Perera/EShop-Flutter-Clean-Architecture.svg?style=for-the-badge
+[forks-url]: https://github.com/Sameera-Perera/EShop-Flutter-Clean-Architecture/network/members
+[stars-shield]: https://img.shields.io/github/stars/Sameera-Perera/EShop-Flutter-Clean-Architecture.svg?style=for-the-badge
+[stars-url]: https://github.com/Sameera-Perera/EShop-Flutter-Clean-Architecture/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Sameera-Perera/EShop-Flutter-Clean-Architecture.svg?style=for-the-badge
+[issues-url]: https://github.com/Sameera-Perera/EShop-Flutter-Clean-Architecture/issues
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: http://www.linkedin.com/in/sameera-perera-1148081b8
+[product-screenshot]: readme_assets/splash.jpg
