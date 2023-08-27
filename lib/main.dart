@@ -1,3 +1,4 @@
+import 'package:eshop/presentation/blocs/category/category_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -29,6 +30,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => di.sl<ProductBloc>()..add(const GetProducts()),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<CategoryBloc>()..add(const GetCategories()),
         ),
       ],
       child: OKToast(

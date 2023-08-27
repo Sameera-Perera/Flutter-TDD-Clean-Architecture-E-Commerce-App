@@ -1,4 +1,6 @@
+import 'package:eshop/presentation/blocs/category/category_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../widgets/category_card.dart';
 
@@ -22,8 +24,10 @@ class CategoryView extends StatelessWidget {
                   style: TextStyle(fontSize: 26),
                 ),
                 Spacer(),
-                Icon(Icons.notifications_none,
-                color: Colors.black45,)
+                Icon(
+                  Icons.notifications_none,
+                  color: Colors.black45,
+                )
               ],
             ),
             Padding(
@@ -34,7 +38,7 @@ class CategoryView extends StatelessWidget {
                 autofocus: false,
                 decoration: InputDecoration(
                     contentPadding:
-                    const EdgeInsets.only(left: 20, bottom: 22, top: 22),
+                        const EdgeInsets.only(left: 20, bottom: 22, top: 22),
                     prefixIcon: const Padding(
                       padding: EdgeInsets.only(left: 8),
                       child: Icon(Icons.search),
@@ -45,20 +49,28 @@ class CategoryView extends StatelessWidget {
                     filled: true,
                     focusedBorder: OutlineInputBorder(
                         borderSide:
-                        const BorderSide(color: Colors.white, width: 3.0),
+                            const BorderSide(color: Colors.white, width: 3.0),
                         borderRadius: BorderRadius.circular(32)),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(32),
                       borderSide:
-                      const BorderSide(color: Colors.white, width: 3.0),
+                          const BorderSide(color: Colors.white, width: 3.0),
                     )),
               ),
             ),
-            Expanded(child: ListView.builder(
-              itemCount: 10,
-                padding: EdgeInsets.only(top: 14),
-                itemBuilder: (context, index) => CategoryCard()
-            ))
+            Expanded(
+              child: BlocBuilder<CategoryBloc, CategoryState>(
+                builder: (context, state) {
+                  return ListView.builder(
+                    itemCount: (state is CategoryLoading) ? 10 : state.categories.length,
+                    padding: const EdgeInsets.only(top: 14),
+                    itemBuilder: (context, index) => (state is CategoryLoading) ? const CategoryCard() : CategoryCard(
+                      category: state.categories[index],
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

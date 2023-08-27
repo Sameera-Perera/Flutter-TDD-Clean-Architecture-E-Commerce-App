@@ -1,3 +1,9 @@
+import 'package:eshop/data/data_sources/local/category_local_data_source.dart';
+import 'package:eshop/data/data_sources/remote/category_data_source.dart';
+import 'package:eshop/data/repositories/category_repository_impl.dart';
+import 'package:eshop/domain/repositories/category_repository.dart';
+import 'package:eshop/domain/usecases/category/get_category_usecase.dart';
+import 'package:eshop/presentation/blocs/category/category_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -24,9 +30,9 @@ Future<void> init() async {
   // Repository
   sl.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(
-        remoteDataSource: sl(),
-        localDataSource: sl(),
-        networkInfo: sl(),
+      remoteDataSource: sl(),
+      localDataSource: sl(),
+      networkInfo: sl(),
     ),
   );
   // Data sources
@@ -37,11 +43,37 @@ Future<void> init() async {
     () => ProductLocalDataSourceImpl(sharedPreferences: sl()),
   );
 
-  //! Core
-  // sl.registerLazySingleton(() => InputConverter());
+
+  //Features - Category
+  // Bloc
+  sl.registerFactory(
+    () => CategoryBloc(sl()),
+  );
+  // Use cases
+  sl.registerLazySingleton(() => GetCategoryUseCase(sl()));
+  // Repository
+  sl.registerLazySingleton<CategoryRepository>(
+    () => CategoryRepositoryImpl(
+      remoteDataSource: sl(),
+      localDataSource: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  // Data sources
+  sl.registerLazySingleton<CategoryRemoteDataSource>(
+    () => CategoryRemoteDataSourceImpl(client: sl()),
+  );
+  sl.registerLazySingleton<CategoryLocalDataSource>(
+    () => CategoryLocalDataSourceImpl(sharedPreferences: sl()),
+  );
+
+
+  ///***********************************************
+  ///! Core
+  /// sl.registerLazySingleton(() => InputConverter());
   sl.registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(sl()));
 
-  //! External
+  ///! External
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPreferences);
   sl.registerLazySingleton(() => http.Client());
