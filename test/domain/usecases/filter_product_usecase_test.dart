@@ -22,7 +22,7 @@ void main() {
     'should get products from the repository',
         () async {
       // arrange
-      const params = FilterProductParams(title: "Text", category: "Text", minPrice: 0, maxPrice: 1000);
+      const params = FilterProductParams(keyword: "Text", category: "Text", minPrice: 0, maxPrice: 1000);
       when(() => mockNumberProductRepository.filterProducts(params))
           .thenAnswer((_) async => const Right(tProductModelList));
       // act

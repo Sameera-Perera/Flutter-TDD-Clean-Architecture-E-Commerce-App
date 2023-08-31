@@ -5,4 +5,5 @@ import '../entities/category/category_response.dart';
 
 abstract class CategoryRepository {
   Future<Either<Failure, CategoryResponse>> getCategories();
+  Future<Either<Failure, CategoryResponse>> getCachedCategories();
 }

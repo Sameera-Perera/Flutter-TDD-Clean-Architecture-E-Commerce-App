@@ -15,52 +15,64 @@ class CategoryCard extends StatelessWidget {
         // Navigator.of(context).pushNamed(AppRouter.clothDetails, arguments: cloth);
       },
       child: category != null
-          ? Card(
-              color: Colors.black,
-              elevation: 4,
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height * 0.18,
-                child: Hero(
-                  tag: '', //product.id,
-                  child: Material(
-                    child: GridTile(
-                      footer: Container(),
+          ? Stack(
+              children: [
+                Card(
+                  color: Colors.grey.shade100,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  elevation: 4,
+                  clipBehavior: Clip.antiAlias,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.18,
+                    width: double.maxFinite,
+                    child: Hero(
+                      tag: category!.id,
                       child: CachedNetworkImage(
                         imageUrl: category!.image,
                         fit: BoxFit.cover,
-                        placeholder: (context, url) =>
-                            const CircularProgressIndicator(),
+                        placeholder: (context, url) => Container(
+                          color: Colors.grey.shade100,
+                        ),
                         errorWidget: (context, url, error) =>
-                            const Icon(Icons.error),
+                            const Center(child: Icon(Icons.error)),
                       ),
-                      // child: Image.asset(
-                      //   product.image,
-                      //   fit: BoxFit.cover,
-                      // ),
                     ),
                   ),
                 ),
-              ),
+                Positioned(
+                    right: 10,
+                    bottom: 25,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: Text(
+                        category!.name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                        ),
+                      ),
+                    ))
+              ],
             )
           : Shimmer.fromColors(
-              baseColor: Colors.grey.shade200,
+              baseColor: Colors.grey.shade100,
               highlightColor: Colors.white70,
               child: Card(
-                color: Colors.black,
+                color: Colors.grey.shade100,
                 elevation: 4,
+                margin: const EdgeInsets.only(bottom: 16),
                 clipBehavior: Clip.antiAlias,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: SizedBox(
                   height: MediaQuery.of(context).size.height * 0.18,
-                  child: Material(
-                    child: GridTile(footer: Container(), child: Container()),
-                  ),
                 ),
               ),
             ),

@@ -13,6 +13,7 @@ import '../../data/data_sources/local/product_local_data_source.dart';
 import '../../data/data_sources/remote/product_remote_data_source.dart';
 import '../../data/repositories/product_repository_impl.dart';
 import '../../domain/repositories/product_repository.dart';
+import '../../domain/usecases/category/get_cached_category_usecase.dart';
 import '../../domain/usecases/product/get_product_usecase.dart';
 import '../../presentation/blocs/product/product_bloc.dart';
 import '../network/network_info.dart';
@@ -43,14 +44,14 @@ Future<void> init() async {
     () => ProductLocalDataSourceImpl(sharedPreferences: sl()),
   );
 
-
   //Features - Category
   // Bloc
   sl.registerFactory(
-    () => CategoryBloc(sl()),
+    () => CategoryBloc(sl(), sl()),
   );
   // Use cases
   sl.registerLazySingleton(() => GetCategoryUseCase(sl()));
+  sl.registerLazySingleton(() => GetCachedCategoryUseCase(sl()));
   // Repository
   sl.registerLazySingleton<CategoryRepository>(
     () => CategoryRepositoryImpl(
@@ -66,7 +67,6 @@ Future<void> init() async {
   sl.registerLazySingleton<CategoryLocalDataSource>(
     () => CategoryLocalDataSourceImpl(sharedPreferences: sl()),
   );
-
 
   ///***********************************************
   ///! Core

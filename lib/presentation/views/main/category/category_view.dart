@@ -1,7 +1,7 @@
-import 'package:eshop/presentation/blocs/category/category_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../blocs/category/category_bloc.dart';
 import '../../../widgets/category_card.dart';
 
 class CategoryView extends StatelessWidget {
@@ -62,11 +62,18 @@ class CategoryView extends StatelessWidget {
               child: BlocBuilder<CategoryBloc, CategoryState>(
                 builder: (context, state) {
                   return ListView.builder(
-                    itemCount: (state is CategoryLoading) ? 10 : state.categories.length,
-                    padding: const EdgeInsets.only(top: 14),
-                    itemBuilder: (context, index) => (state is CategoryLoading) ? const CategoryCard() : CategoryCard(
-                      category: state.categories[index],
-                    ),
+                    itemCount: (state is CategoryLoading)
+                        ? 10
+                        : state.categories.length,
+                    physics: const BouncingScrollPhysics(),
+                    padding: EdgeInsets.only(
+                        top: 14,
+                        bottom: (80 + MediaQuery.of(context).padding.bottom)),
+                    itemBuilder: (context, index) => (state is CategoryLoading)
+                        ? const CategoryCard()
+                        : CategoryCard(
+                            category: state.categories[index],
+                          ),
                   );
                 },
               ),

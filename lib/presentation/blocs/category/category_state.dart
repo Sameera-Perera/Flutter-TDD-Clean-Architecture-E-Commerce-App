@@ -17,6 +17,12 @@ class CategoryLoading extends CategoryState {
   List<Object> get props => [];
 }
 
+class CategoryCacheLoaded extends CategoryState {
+  const CategoryCacheLoaded({required super.categories});
+  @override
+  List<Object> get props => [];
+}
+
 class CategoryLoaded extends CategoryState {
   const CategoryLoaded({required super.categories});
   @override
@@ -24,8 +30,8 @@ class CategoryLoaded extends CategoryState {
 }
 
 class CategoryError extends CategoryState {
-  final String message;
-  const CategoryError({required super.categories, required this.message});
+  final Failure failure;
+  const CategoryError({required super.categories, required this.failure});
   @override
   List<Object> get props => [];
 }

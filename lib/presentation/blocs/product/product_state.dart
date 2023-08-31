@@ -31,9 +31,12 @@ class ProductLoaded extends ProductState {
 }
 
 class ProductError extends ProductState {
-  final String message;
-  const ProductError({required super.products, required super.metaData,
-    required this.message});
+  final Failure failure;
+  const ProductError({
+    required super.products,
+    required super.metaData,
+    required this.failure,
+  });
   @override
   List<Object> get props => [];
 }

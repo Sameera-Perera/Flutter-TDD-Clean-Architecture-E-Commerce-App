@@ -1,17 +1,31 @@
+import 'package:eshop/core/constant/colors.dart';
 import 'package:flutter/material.dart';
 
-abstract class AppTheme {
-  static ThemeData get light {
-    return ThemeData(
-      appBarTheme: const AppBarTheme(
-        elevation: 0,
-        color: Colors.white,
-      ),
-      scaffoldBackgroundColor: Colors.white,
-      primaryColor: Colors.black,
-      splashColor: Colors.transparent,
-      fontFamily: 'IBM',
-      colorScheme: ColorScheme.fromSwatch().copyWith(secondary: Colors.black),
-    );
-  }
+class AppTheme {
+  const AppTheme._();
+
+  static final lightTheme = ThemeData(
+    brightness: Brightness.light,
+    primaryColor: kLightPrimaryColor,
+    visualDensity: VisualDensity.adaptivePlatformDensity,
+    scaffoldBackgroundColor: kLightBackgroundColor,
+    appBarTheme: AppBarTheme(
+      backgroundColor: ThemeData().scaffoldBackgroundColor,
+      foregroundColor: kLightSecondaryColor,
+      elevation: 0,
+    ),
+    textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(foregroundColor: kLightSecondaryColor)),
+    colorScheme: ColorScheme.light(secondary: kLightSecondaryColor)
+        .copyWith(background: kLightBackgroundColor),
+  );
+
+  // static final darkTheme = ThemeData(
+  //     brightness: Brightness.dark,
+  //     primaryColor: darkPrimaryColor,
+  //     visualDensity: VisualDensity.adaptivePlatformDensity,
+  //     textButtonTheme: TextButtonThemeData(
+  //         style: TextButton.styleFrom(foregroundColor: darkTextColor)),
+  //     colorScheme: ColorScheme.light(secondary: lightSecondaryColor)
+  //         .copyWith(background: darkBackgroundColor));
 }

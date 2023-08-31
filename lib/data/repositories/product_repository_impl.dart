@@ -5,7 +5,7 @@ import '../../../../core/error/exceptions.dart';
 import '../../core/network/network_info.dart';
 import '../../domain/entities/product/product_response.dart';
 import '../../domain/repositories/product_repository.dart';
-import '../../domain/usecases/product/filter_product_usecase.dart';
+import '../../domain/usecases/product/get_product_usecase.dart';
 import '../data_sources/local/product_local_data_source.dart';
 import '../data_sources/remote/product_remote_data_source.dart';
 import '../models/product/product_response_model.dart';
@@ -24,23 +24,9 @@ class ProductRepositoryImpl implements ProductRepository {
   });
 
   @override
-  Future<Either<Failure, ProductResponse>> getProducts() async {
+  Future<Either<Failure, ProductResponse>> getProducts(FilterProductParams params) async {
     return await _getProduct(() {
-      return remoteDataSource.getProducts();
-    });
-  }
-
-  @override
-  Future<Either<Failure, ProductResponse>> searchProducts(params) async {
-    return await _getProduct(() {
-      return remoteDataSource.getProducts();
-    });
-  }
-
-  @override
-  Future<Either<Failure, ProductResponse>> filterProducts(FilterProductParams params) async {
-    return await _getProduct(() {
-      return remoteDataSource.filterProducts(params);
+      return remoteDataSource.getProducts(params);
     });
   }
 

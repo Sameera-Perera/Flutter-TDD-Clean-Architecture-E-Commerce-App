@@ -1,4 +1,3 @@
-import 'package:eshop/presentation/blocs/category/category_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'core/constant/string.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'domain/usecases/product/get_product_usecase.dart';
+import 'presentation/blocs/cart/cart_bloc.dart';
+import 'presentation/blocs/category/category_bloc.dart';
+import 'presentation/blocs/filter/filter_cubit.dart';
 import 'presentation/blocs/home/home_bloc.dart';
 
 import 'core/services/services_locator.dart' as di;
@@ -29,19 +32,27 @@ class MyApp extends StatelessWidget {
           create: (context) => HomeBloc(),
         ),
         BlocProvider(
-          create: (context) => di.sl<ProductBloc>()..add(const GetProducts()),
+          create: (context) => di.sl<ProductBloc>()
+            ..add(const GetProducts(FilterProductParams())),
         ),
         BlocProvider(
-          create: (context) => di.sl<CategoryBloc>()..add(const GetCategories()),
+          create: (context) =>
+              di.sl<CategoryBloc>()..add(const GetCategories()),
+        ),
+        BlocProvider(
+          create: (context) => CartBloc(),
+        ),
+        BlocProvider(
+          create: (context) => FilterCubit(),
         ),
       ],
       child: OKToast(
-        child: MaterialApp.router(
+        child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          routerDelegate: appRouter.delegate(),
-          routeInformationParser: appRouter.defaultRouteParser(),
+          initialRoute: AppRouter.home,
+          onGenerateRoute: AppRouter.onGenerateRoute,
           title: appTitle,
-          theme: AppTheme.light,
+          theme: AppTheme.lightTheme,
         ),
       ),
     );

@@ -5,7 +5,8 @@ abstract class ProductEvent extends Equatable {
 }
 
 class GetProducts extends ProductEvent {
-  const GetProducts();
+  final FilterProductParams params;
+  const GetProducts(this.params);
 
   @override
   List<Object> get props => [];

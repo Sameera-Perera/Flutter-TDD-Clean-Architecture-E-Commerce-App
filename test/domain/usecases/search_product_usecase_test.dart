@@ -23,7 +23,7 @@ void main() {
     'should get products from the repository',
     () async {
       // arrange
-      const params = SearchProductParams(title: "Text");
+      const params = SearchProductParams(keyword: "Text");
       when(() => mockNumberProductRepository.searchProducts(params))
           .thenAnswer((_) async => const Right(tProductModelList));
       // act

@@ -46,8 +46,6 @@ dependencies:
   get_it: ^7.6.0
 
   http: ^0.13.3
-#  dio: ^5.3.0
-  auto_route: ^7.7.1
   equatable: ^2.0.5
   dartz: ^0.10.1
   internet_connection_checker: ^1.0.0+1
@@ -57,6 +55,8 @@ dependencies:
   flutter_snake_navigationbar: ^0.6.1
   shimmer:
   cached_network_image: ^3.2.3
+  carousel_slider: ^4.2.1
+  smooth_page_indicator: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -65,10 +65,7 @@ dev_dependencies:
 #  mockito: ^5.4.2
   mocktail: ^0.3.0
 
-  auto_route_generator:
-  build_runner:
-
-    # The "flutter_lints" package below contains a set of recommended lints to
+  # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
@@ -89,6 +86,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/navbar_icons/
+    - assets/status_image/
+    - assets/dev/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

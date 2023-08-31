@@ -1,12 +1,11 @@
-import 'package:auto_route/annotations.dart';
-import 'package:eshop/presentation/views/main/cart/cart_view.dart';
-import 'package:eshop/presentation/views/main/home/home_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 
+import 'cart/cart_view.dart';
 import 'category/category_view.dart';
+import 'home/home_view.dart';
+import 'other/other_view.dart';
 
-@RoutePage(name: 'MainViewRoute')
 class MainView extends StatefulWidget {
   const MainView({Key? key}) : super(key: key);
 
@@ -28,11 +27,11 @@ class _MainViewState extends State<MainView> {
             child: PageView(
               physics: const NeverScrollableScrollPhysics(),
               controller: controller,
-              children:  <Widget>[
-                const HomeView(),
-                const CategoryView(),
-                const CartView(),
-                Container(),
+              children: const <Widget>[
+                HomeView(),
+                CategoryView(),
+                CartView(),
+                OtherView(),
               ],
             ),
           ),
@@ -57,10 +56,10 @@ class _MainViewState extends State<MainView> {
                     : null,
                 unselectedItemColor: Colors.white,
                 selectedLabelStyle: const TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 12
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                  fontStyle: FontStyle.italic,
+                  fontSize: 12,
                 ),
                 showUnselectedLabels: false,
                 showSelectedLabels: true,
@@ -73,13 +72,10 @@ class _MainViewState extends State<MainView> {
                 }),
                 items: const [
                   BottomNavigationBarItem(
-                      icon: Hero(
-                        tag: '1',
-                        child: ImageIcon(
-                          AssetImage("assets/navbar_icons/home.png"),
-                          color: Colors.white,
-                          size: 26,
-                        ),
+                      icon: ImageIcon(
+                        AssetImage("assets/navbar_icons/home.png"),
+                        color: Colors.white,
+                        size: 26,
                       ),
                       activeIcon: Padding(
                         padding: EdgeInsets.all(5.0),
