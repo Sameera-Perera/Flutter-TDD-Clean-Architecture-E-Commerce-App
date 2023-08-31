@@ -14,6 +14,8 @@ abstract class UserLocalDataSource {
   Future<UserModel> getUser();
 
   Future<void> cacheUser(UserModel user);
+
+  Future<bool> isTokenAvailable();
 }
 
 const CACHED_TOKEN = 'TOKEN';
@@ -56,5 +58,11 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       CACHED_USER,
       json.encode(userModelToJson(user)),
     );
+  }
+
+  @override
+  Future<bool> isTokenAvailable() async {
+    String? token = await secureStorage.read(key: CACHED_TOKEN);
+    return Future.value((token != null));
   }
 }

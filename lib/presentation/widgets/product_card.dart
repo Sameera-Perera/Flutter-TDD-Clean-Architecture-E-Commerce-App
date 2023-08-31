@@ -122,13 +122,13 @@ class ProductCard extends StatelessWidget {
               )
             ],
           ),
-          Positioned(
-            top: 10,
-            right: 0,
-            child: FavoriteIconButton(
-              // cloth: cloth,
-            ),
-          ),
+          // Positioned(
+          //   top: 10,
+          //   right: 0,
+          //   child: FavoriteIconButton(
+          //     // cloth: cloth,
+          //   ),
+          // ),
         ],
       ),
     );

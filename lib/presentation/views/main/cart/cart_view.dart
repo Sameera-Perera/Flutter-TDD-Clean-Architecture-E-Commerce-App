@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../blocs/cart/cart_bloc.dart';
 import '../../../widgets/cart_card.dart';
-import '../../../widgets/product_card.dart';
 
 class CartView extends StatelessWidget {
   const CartView({Key? key}) : super(key: key);
@@ -19,18 +20,29 @@ class CartView extends StatelessWidget {
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: ListView.builder(
-                  itemCount: 10,
-                  padding: const EdgeInsets.only(top: 14),
-                  // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  //   crossAxisCount: 2,
-                  //   childAspectRatio: 0.55,
-                  //   crossAxisSpacing: 6,
-                  // ),
-                  physics: const BouncingScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (BuildContext context, int index) {
-                    return const CartCard();
+                child: BlocBuilder<CartBloc, CartState>(
+                  builder: (context, state) {
+                    return ListView.builder(
+                      itemCount: (state is CartLoading && state.cart.isEmpty)
+                          ? 10
+                          : state.cart.length,
+                      padding: const EdgeInsets.only(top: 14),
+                      physics: const BouncingScrollPhysics(),
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        if (state is CartLoading && state.cart.isEmpty) {
+                          return const CartCard();
+                        } else if (state is CartError) {
+                          return const Center(
+                            child: Text("Error"),
+                          );
+                        } else {
+                          return CartCard(
+                            cartItem: state.cart[index],
+                          );
+                        }
+                      },
+                    );
                   },
                 ),
               ),
