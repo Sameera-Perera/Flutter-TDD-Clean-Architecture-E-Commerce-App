@@ -1,7 +1,12 @@
-import 'package:eshop/presentation/blocs/user/user_bloc.dart';
+import 'package:eshop/core/error/failures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../../../core/constant/images.dart';
+import '../../../core/router/app_router.dart';
+import '../../../domain/usecases/user/sign_in_usecase.dart';
+import '../../blocs/user/user_bloc.dart';
 import '../../widgets/input_form_button.dart';
 import '../../widgets/input_text_form_field.dart';
 
@@ -20,15 +25,22 @@ class _SignInViewState extends State<SignInView> {
   Widget build(BuildContext context) {
     return BlocListener<UserBloc, UserState>(
       listener: (context, state) {
-        // EasyLoading.dismiss();
-        // if (state is AuthLoading) {
-        //   EasyLoading.show(status: 'Loading...');
-        // } else if (state is AuthSuccess) {
-        //   Navigator.of(context).pushNamedAndRemoveUntil(
-        //     AppRouter.home,
-        //     ModalRoute.withName(''),
-        //   );
-        // }
+        EasyLoading.dismiss();
+        if (state is UserLoading) {
+          EasyLoading.show(status: 'Loading...');
+        } else if (state is UserLogged) {
+          Navigator.of(context).pushNamedAndRemoveUntil(
+            AppRouter.home,
+            ModalRoute.withName(''),
+          );
+        } else if(state is UserLoggedFail){
+          // print(state.failure);
+          if(state.failure is CredentialFailure){
+            EasyLoading.showError("Username/Password Wrong!");
+          } else {
+            EasyLoading.showError("Error");
+          }
+        }
       },
       child: Scaffold(
         body: SafeArea(
@@ -38,14 +50,20 @@ class _SignInViewState extends State<SignInView> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(
-                  height: 50,
+                  height: 75,
                 ),
                 SizedBox(
-                    height: 180,
-                    child: Image.asset("assets/images/app_logo.png")),
+                    height: 80,
+                    child: Image.asset(
+                      kAppLogo,
+                      color: Colors.black,
+                    )),
+                const SizedBox(
+                  height: 20,
+                ),
                 const Text(
                   "Please enter your e-mail address and password to sign-in",
-                  style: TextStyle(fontSize: 16, color: Colors.grey),
+                  style: TextStyle(fontSize: 16, color: Colors.black54),
                   textAlign: TextAlign.center,
                 ),
                 const Spacer(
@@ -87,10 +105,24 @@ class _SignInViewState extends State<SignInView> {
                   height: 24,
                 ),
                 InputFormButton(
+                  color: Colors.black87,
                   onClick: () {
-                    // context.read<AuthBloc>().add(SignInAuth());
+                    context.read<UserBloc>().add(SignInUser(SignInParams(
+                          username: emailController.text,
+                          password: passwordController.text,
+                        )));
                   },
                   titleText: 'Sign In',
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                InputFormButton(
+                  color: Colors.black87,
+                  onClick: () {
+                    Navigator.of(context).pop();
+                  },
+                  titleText: 'Back',
                 ),
                 const Spacer(),
                 Padding(
@@ -106,13 +138,13 @@ class _SignInViewState extends State<SignInView> {
                       ),
                       InkWell(
                         onTap: () {
-                          // Navigator.pushNamed(context, AppRouter.signUp);
+                          Navigator.pushNamed(context, AppRouter.signUp);
                         },
                         child: const Text(
                           'Register',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.red,
+                            color: Colors.black,
                             fontWeight: FontWeight.w600,
                           ),
                         ),

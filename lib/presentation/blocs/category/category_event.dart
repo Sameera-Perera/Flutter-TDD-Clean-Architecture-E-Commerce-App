@@ -10,3 +10,11 @@ class GetCategories extends CategoryEvent {
   @override
   List<Object> get props => [];
 }
+
+class FilterCategories extends CategoryEvent {
+  final String keyword;
+  const FilterCategories(this.keyword);
+
+  @override
+  List<Object> get props => [];
+}

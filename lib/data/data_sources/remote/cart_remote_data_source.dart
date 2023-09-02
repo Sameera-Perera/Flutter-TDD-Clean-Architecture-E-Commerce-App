@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
-import '../../../core/constant/string.dart';
+import '../../../core/constant/strings.dart';
 import '../../../domain/entities/cart/cart_item.dart';
 import '../../models/cart/cart_item_model.dart';
 
@@ -12,9 +12,9 @@ abstract class CartRemoteDataSource {
   Future<List<CartItem>> getCart();
 }
 
-class CategoryRemoteDataSourceImpl implements CartRemoteDataSource {
+class CartRemoteDataSourceSourceImpl implements CartRemoteDataSource {
   final http.Client client;
-  CategoryRemoteDataSourceImpl({required this.client});
+  CartRemoteDataSourceSourceImpl({required this.client});
 
   @override
   Future<List<CartItem>> getCart()  =>

@@ -1,41 +1,51 @@
 import 'dart:convert';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/error/exceptions.dart';
-import '../../models/category/category_response_model.dart';
+import '../../models/cart/cart_item_model.dart';
 
 abstract class CartLocalDataSource {
-  /// Gets the cached [List<CategoryModel>] which was gotten the last time
-  /// the user had an internet connection.
-  ///
-  /// Throws [CacheException] if no cached data is present.
-  Future<CategoryResponseModel> getCategories();
-
-  Future<void> cacheCategories(CategoryResponseModel categoriesToCache);
+  Future<List<CartItemModel>> getCart();
+  Future<void> cacheCart(List<CartItemModel> cart);
+  Future<void> cacheCartItem(CartItemModel cartItem);
 }
 
-const CACHED_CATEGORIES = 'CACHED_CATEGORIES';
+const CACHED_CART = 'CACHED_CART';
 
-class CategoryLocalDataSourceImpl implements CartLocalDataSource {
+class CartLocalDataSourceImpl implements CartLocalDataSource {
   final SharedPreferences sharedPreferences;
-  CategoryLocalDataSourceImpl({required this.sharedPreferences});
+  CartLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<CategoryResponseModel> getCategories() {
-    final jsonString = sharedPreferences.getString(CACHED_CATEGORIES);
-    if (jsonString != null) {
-      return Future.value(
-          categoryResponseModelFromJson(jsonDecode(jsonString)));
-    } else {
-      throw CacheException();
-    }
+  Future<void> cacheCart(List<CartItemModel> cart) {
+    return sharedPreferences.setString(
+      CACHED_CART,
+      json.encode(cartItemModelToJson(cart)),
+    );
   }
 
   @override
-  Future<void> cacheCategories(CategoryResponseModel categoriesToCache) {
+  Future<void> cacheCartItem(CartItemModel cartItem) {
+    final jsonString = sharedPreferences.getString(CACHED_CART);
+    final List<CartItemModel> cart = [];
+    if (jsonString != null) {
+      cart.addAll(cartItemModelFromJson(jsonDecode(jsonString)));
+    }
+    cart.add(cartItem);
     return sharedPreferences.setString(
-      CACHED_CATEGORIES,
-      json.encode(categoryResponseModelToJson(categoriesToCache)),
+      CACHED_CART,
+      json.encode(cartItemModelToJson(cart)),
     );
+  }
+
+  @override
+  Future<List<CartItemModel>> getCart() {
+    final jsonString = sharedPreferences.getString(CACHED_CART);
+    if (jsonString != null) {
+      return Future.value(cartItemModelFromJson(jsonDecode(jsonString)));
+    } else {
+      throw CacheException();
+    }
   }
 }

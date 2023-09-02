@@ -4,9 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../blocs/category/category_bloc.dart';
 import '../../../widgets/category_card.dart';
 
-class CategoryView extends StatelessWidget {
+class CategoryView extends StatefulWidget {
   const CategoryView({Key? key}) : super(key: key);
 
+  @override
+  State<CategoryView> createState() => _CategoryViewState();
+}
+
+class _CategoryViewState extends State<CategoryView> {
+  final TextEditingController _textEditingController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,27 +21,21 @@ class CategoryView extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(
-              height: (MediaQuery.of(context).padding.top + 10),
-            ),
-            const Row(
-              children: [
-                Text(
-                  "Sameera Perera",
-                  style: TextStyle(fontSize: 26),
-                ),
-                Spacer(),
-                Icon(
-                  Icons.notifications_none,
-                  color: Colors.black45,
-                )
-              ],
+              height: (MediaQuery.of(context).padding.top + 8),
             ),
             Padding(
               padding: const EdgeInsets.only(
                 top: 12,
               ),
               child: TextField(
+                controller: _textEditingController,
                 autofocus: false,
+                onSubmitted: (val) {
+                  context.read<CategoryBloc>().add(FilterCategories(val));
+                },
+                onChanged: (val) => setState(() {
+                  context.read<CategoryBloc>().add(FilterCategories(val));
+                }),
                 decoration: InputDecoration(
                     contentPadding:
                         const EdgeInsets.only(left: 20, bottom: 22, top: 22),
@@ -43,6 +43,18 @@ class CategoryView extends StatelessWidget {
                       padding: EdgeInsets.only(left: 8),
                       child: Icon(Icons.search),
                     ),
+                    suffixIcon: _textEditingController.text.isNotEmpty
+                        ? Padding(
+                      padding: const EdgeInsets.only(right: 8),
+                      child: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _textEditingController.clear();
+                            });
+                          },
+                          icon: const Icon(Icons.clear)),
+                    )
+                        : null,
                     border: const OutlineInputBorder(),
                     hintText: "Search Category",
                     fillColor: Colors.grey.shade100,

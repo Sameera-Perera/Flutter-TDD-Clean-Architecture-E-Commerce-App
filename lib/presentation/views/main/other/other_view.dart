@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/constant/images.dart';
+import '../../../../core/router/app_router.dart';
+import '../../../blocs/user/user_bloc.dart';
 import '../../../widgets/other_item_card.dart';
 
 class OtherView extends StatelessWidget {
@@ -13,37 +17,75 @@ class OtherView extends StatelessWidget {
           const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Row(
-              children: [
-                const Hero(
-                  tag: "C001",
-                  child: CircleAvatar(
-                    radius: 40.0,
-                    backgroundImage:
-                    AssetImage('assets/dev/user.jpg'),
-                    backgroundColor: Colors.transparent,
-                  ),
-                ),
-                const SizedBox(width: 12),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Wanda R. Fincher",
-                      style: Theme.of(context).textTheme.titleLarge,
+            child: BlocBuilder<UserBloc, UserState>(
+              builder: (context, state) {
+                if (state is UserLogged) {
+                  return Row(
+                    children: [
+                      const Hero(
+                        tag: "C001",
+                        child: CircleAvatar(
+                          radius: 36.0,
+                          backgroundImage: AssetImage('assets/dev/user.jpg'),
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Wanda R. Fincher",
+                            style: Theme.of(context).textTheme.titleLarge,
+                          ),
+                          const Text("WandaRFincher@teleworm.us")
+                        ],
+                      ),
+                    ],
+                  );
+                } else {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(AppRouter.signIn);
+                    },
+                    child: Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 36.0,
+                          backgroundImage: AssetImage(kUserAvatar),
+                          backgroundColor: Colors.transparent,
+                        ),
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Login in your account",
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                            const Text("")
+                          ],
+                        ),
+                      ],
                     ),
-                    const Text("WandaRFincher@teleworm.us")
-                  ],
-                ),
-              ],
+                  );
+                }
+              },
             ),
           ),
           const SizedBox(height: 30),
-          OtherItemCard(
-            onClick: () {
-              // Navigator.of(context).pushNamed(AppRouter.profile);
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              return OtherItemCard(
+                onClick: () {
+                  if (state is UserLogged) {
+                  } else {
+                    Navigator.of(context).pushNamed(AppRouter.signIn);
+                  }
+                },
+                title: "Profile",
+              );
             },
-            title: "Profile",
           ),
           const SizedBox(height: 6),
           OtherItemCard(
@@ -67,11 +109,19 @@ class OtherView extends StatelessWidget {
             title: "About",
           ),
           const SizedBox(height: 6),
-          OtherItemCard(
-            onClick: () {
-              // context.read<AuthBloc>().add(SignOutAuth());
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              if (state is UserLogged) {
+                return OtherItemCard(
+                  onClick: () {
+                    // context.read<AuthBloc>().add(SignOutAuth());
+                  },
+                  title: "Sign Out",
+                );
+              } else {
+                return const SizedBox();
+              }
             },
-            title: "Sign Out",
           ),
         ],
       ),

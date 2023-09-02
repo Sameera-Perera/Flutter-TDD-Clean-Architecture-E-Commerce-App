@@ -11,3 +11,10 @@ class AddProduct extends CartEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetCart extends CartEvent {
+  const GetCart();
+
+  @override
+  List<Object> get props => [];
+}

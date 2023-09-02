@@ -1,7 +1,7 @@
 import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
-import '../../../core/constant/string.dart';
+import '../../../core/constant/strings.dart';
 import '../../models/category/category_response_model.dart';
 
 abstract class CategoryRemoteDataSource {

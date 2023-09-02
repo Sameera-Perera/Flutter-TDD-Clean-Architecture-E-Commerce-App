@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:eshop/core/error/failures.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
-import '../../../core/constant/string.dart';
+import '../../../core/constant/strings.dart';
 import '../../../domain/usecases/user/sign_in_usecase.dart';
 import '../../../domain/usecases/user/sign_up_usecase.dart';
 import '../../models/user/authentication_response_model.dart';
@@ -16,10 +17,10 @@ abstract class UserRemoteDataSource {
   Future<AuthenticationResponseModel> signUp(SignUpParams params);
 }
 
-class AuthenticationRemoteDataSourceImpl
+class UserRemoteDataSourceImpl
     implements UserRemoteDataSource {
   final http.Client client;
-  AuthenticationRemoteDataSourceImpl({required this.client});
+  UserRemoteDataSourceImpl({required this.client});
 
   @override
   Future<AuthenticationResponseModel> signIn(params) => _authenticate(
@@ -50,6 +51,8 @@ class AuthenticationRemoteDataSourceImpl
         body: json.encode(body));
     if (response.statusCode == 200) {
       return authenticationResponseModelFromJson(response.body);
+    } else if(response.statusCode == 400 || response.statusCode == 401) {
+      throw CredentialFailure();
     } else {
       throw ServerException();
     }

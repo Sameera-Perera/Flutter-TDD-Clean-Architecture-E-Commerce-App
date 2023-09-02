@@ -5,9 +5,9 @@ import '../../../../../core/usecases/usecase.dart';
 import '../../entities/user/user.dart';
 import '../../repositories/user_repository.dart';
 
-class GetCartUseCase implements UseCase<User, SignInParams> {
+class SignInUseCase implements UseCase<User, SignInParams> {
   final UserRepository repository;
-  GetCartUseCase(this.repository);
+  SignInUseCase(this.repository);
 
   @override
   Future<Either<Failure, User>> call(SignInParams params) async {

@@ -47,6 +47,8 @@ class UserRepositoryImpl implements UserRepository {
         return Right(remoteResponse.user);
       } on ServerException {
         return Left(ServerFailure());
+      } on CredentialFailure {
+        return Left(CredentialFailure());
       }
     } else {
       return Left(NetworkFailure());

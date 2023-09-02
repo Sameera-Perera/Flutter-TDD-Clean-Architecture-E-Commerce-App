@@ -27,7 +27,10 @@ class CartLoaded extends CartState {
 }
 
 class CartError extends CartState {
-  const CartError({required super.cart});
+  final Failure failure;
+  const CartError({
+    required this.failure,
+    required super.cart});
 
   @override
   List<Object> get props => [];

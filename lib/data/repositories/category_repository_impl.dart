@@ -23,7 +23,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
   });
 
   @override
-  Future<Either<Failure, CategoryResponse>> getCategories() async {
+  Future<Either<Failure, CategoryResponse>> getRemoteCategories() async {
     return await _getCategory(() {
       return remoteDataSource.getCategories();
     });
@@ -34,6 +34,20 @@ class CategoryRepositoryImpl implements CategoryRepository {
     return await _getCacheCategory(() {
       return localDataSource.getCategories();
     });
+  }
+
+  @override
+  Future<Either<Failure, CategoryResponse>> filterCachedCategories(
+      params) async {
+    try {
+      final localProducts = await localDataSource.getCategories();
+      final categories = localProducts.categories;
+      final filteredCategories =
+          categories.where((element) => element.name.toLowerCase().contains(params.toLowerCase())).toList();
+      return Right(CategoryResponse(categories: filteredCategories));
+    } on CacheException {
+      return Left(CacheFailure());
+    }
   }
 
   Future<Either<Failure, CategoryResponse>> _getCategory(
@@ -49,8 +63,8 @@ class CategoryRepositoryImpl implements CategoryRepository {
       }
     } else {
       try {
-        final localProducts = await localDataSource.getCategories();
-        return Right(localProducts);
+        final localCategories = await localDataSource.getCategories();
+        return Right(localCategories);
       } on CacheException {
         return Left(CacheFailure());
       }

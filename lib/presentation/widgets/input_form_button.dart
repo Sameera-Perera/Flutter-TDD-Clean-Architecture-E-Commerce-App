@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class InputFormButton extends StatelessWidget {
   final Function() onClick;
   final String titleText;
+  final Color? color;
 
   const InputFormButton({
     Key? key,
     required this.onClick,
     required this.titleText,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -22,7 +24,7 @@ class InputFormButton extends StatelessWidget {
         minimumSize:
             MaterialStateProperty.all<Size>(const Size(double.maxFinite, 50)),
         backgroundColor:
-            MaterialStateProperty.all<Color>(Theme.of(context).primaryColor),
+            MaterialStateProperty.all<Color>(color??Theme.of(context).primaryColor),
         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
         ),

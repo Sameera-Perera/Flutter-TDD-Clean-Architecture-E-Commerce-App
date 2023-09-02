@@ -13,7 +13,7 @@ String cartItemModelToJson(List<CartItemModel> data) =>
 
 class CartItemModel extends CartItem {
   CartItemModel({
-    required String id,
+    String? id,
     required ProductModel product,
     required PriceTagModel priceTag,
   }) : super(id: id, product: product, priceTag: priceTag);
@@ -29,4 +29,12 @@ class CartItemModel extends CartItem {
         "product": (product as ProductModel).toJson(),
         "priceTag": (priceTag as PriceTagModel).toJson(),
       };
+
+  factory CartItemModel.fromParent(CartItem cartItem) {
+    return CartItemModel(
+      id: cartItem.id,
+      product: cartItem.product as ProductModel,
+      priceTag: cartItem.priceTag as PriceTagModel,
+    );
+  }
 }

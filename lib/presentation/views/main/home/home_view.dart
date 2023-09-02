@@ -1,10 +1,13 @@
-import 'package:eshop/core/error/failures.dart';
-import 'package:eshop/domain/usecases/product/get_product_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
+import '../../../../core/constant/images.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/router/app_router.dart';
+import '../../../../domain/usecases/product/get_product_usecase.dart';
 import '../../../blocs/product/product_bloc.dart';
+import '../../../blocs/user/user_bloc.dart';
 import '../../../widgets/product_card.dart';
 
 class HomeView extends StatefulWidget {
@@ -22,28 +25,71 @@ class _HomeViewState extends State<HomeView> {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(
               height: (MediaQuery.of(context).padding.top + 10),
             ),
-            const Row(
-              children: [
-                Text(
-                  "Wanda R. Fincher",
-                  style: TextStyle(fontSize: 26),
-                ),
-                Spacer(),
-                SizedBox(
-                  width: 8,
-                ),
-                CircleAvatar(
-                  radius: 24.0,
-                  backgroundImage:
-                      AssetImage('assets/dev/user.jpg'),
-                  backgroundColor: Colors.transparent,
-                )
-              ],
-            ),
+            BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+              if (state is UserLogged) {
+                return Row(
+                  children: [
+                    Text(
+                      "${state.user.firstName} ${state.user.lastName}",
+                      style: const TextStyle(fontSize: 26),
+                    ),
+                    Spacer(),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    const CircleAvatar(
+                      radius: 24.0,
+                      backgroundImage: AssetImage('assets/dev/user.jpg'),
+                      backgroundColor: Colors.transparent,
+                    )
+                  ],
+                );
+              } else {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          "Welcome,",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 36),
+                        ),
+                        Text(
+                          "E-Shop mobile store",
+                          style: TextStyle(
+                              fontWeight: FontWeight.normal, fontSize: 22),
+                        ),
+                      ],
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(AppRouter.signIn);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: CircleAvatar(
+                          radius: 24.0,
+                          backgroundImage: AssetImage(kUserAvatar),
+                          backgroundColor: Colors.transparent,
+                        ),
+                      ),
+                    )
+                  ],
+                );
+              }
+            }),
             Padding(
               padding: const EdgeInsets.only(
                 top: 12,
@@ -71,7 +117,7 @@ class _HomeViewState extends State<HomeView> {
                                     _textEditingController.clear();
                                   });
                                 },
-                                icon: Icon(Icons.clear)),
+                                icon: const Icon(Icons.clear)),
                           )
                         : null,
                     border: const OutlineInputBorder(),
