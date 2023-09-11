@@ -23,14 +23,20 @@ class CartRepositoryImpl implements CartRepository {
   });
 
   @override
-  Future<Either<Failure, void>> addToCart(CartItem params) async {
+  Future<Either<Failure, CartItem>> addToCart(CartItem params) async {
     if (await userLocalDataSource.isTokenAvailable()) {
-      // final remoteProducts = await remoteDataSource.addToCArt;
-      return Left(CacheFailure());
+      final localProducts =
+          await localDataSource.cacheCartItem(CartItemModel.fromParent(params));
+      final String token = await userLocalDataSource.getToken();
+      final remoteProduct = await remoteDataSource.addToCart(
+        CartItemModel.fromParent(params),
+        token,
+      );
+      return Right(remoteProduct);
     } else {
       final localProducts =
           await localDataSource.cacheCartItem(CartItemModel.fromParent(params));
-      return Right(localProducts);
+      return Right(params);
     }
   }
 
@@ -43,12 +49,31 @@ class CartRepositoryImpl implements CartRepository {
   @override
   Future<Either<Failure, List<CartItem>>> getCachedCart() async {
     final localProducts = await localDataSource.getCart();
-    return Right(localProducts);
+    if (localProducts != null) {
+      return Right(localProducts);
+    } else {
+      return Left(CacheFailure());
+    }
   }
 
   @override
   Future<Either<Failure, List<CartItem>>> getRemoteCart() {
     // TODO: implement getRemoteCart
     throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<CartItem>>> syncCart() async {
+    if (await userLocalDataSource.isTokenAvailable()) {
+      final localCartItems = await localDataSource.getCart();
+      final String token = await userLocalDataSource.getToken();
+      final syncedResult = await remoteDataSource.syncCart(
+        localCartItems ?? [],
+        token,
+      );
+      return Right(syncedResult);
+    } else {
+      return Left(NetworkFailure());
+    }
   }
 }

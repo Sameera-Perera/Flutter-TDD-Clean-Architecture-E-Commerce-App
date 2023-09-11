@@ -21,6 +21,7 @@ Future<void> main() async {
   await di.init();
 
   runApp(const MyApp());
+  configLoading();
 }
 
 class MyApp extends StatelessWidget {
@@ -48,7 +49,7 @@ class MyApp extends StatelessWidget {
           create: (context) => FilterCubit(),
         ),
         BlocProvider(
-          create: (context) => di.sl<UserBloc>(),
+          create: (context) => di.sl<UserBloc>()..add(CheckUser()),
         ),
       ],
       child: OKToast(
@@ -73,7 +74,7 @@ void configLoading() {
     ..indicatorSize = 45.0
     ..radius = 10.0
     ..progressColor = Colors.white
-    ..backgroundColor = Colors.white
+    ..backgroundColor = Colors.black
     ..indicatorColor = Colors.white
     ..textColor = Colors.white
     ..userInteractions = false

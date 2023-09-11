@@ -11,8 +11,10 @@ import 'package:eshop/domain/repositories/user_repository.dart';
 import 'package:eshop/domain/usecases/cart/add_cart_item_usecase.dart';
 import 'package:eshop/domain/usecases/cart/get_cached_cart_usecase.dart';
 import 'package:eshop/domain/usecases/cart/get_remote_cart_usecase.dart';
+import 'package:eshop/domain/usecases/cart/sync_cart_usecase.dart';
 import 'package:eshop/domain/usecases/category/filter_category_usecase.dart';
 import 'package:eshop/domain/usecases/category/get_remote_category_usecase.dart';
+import 'package:eshop/domain/usecases/user/get_cached_user_usecase.dart';
 import 'package:eshop/domain/usecases/user/sign_in_usecase.dart';
 import 'package:eshop/presentation/blocs/cart/cart_bloc.dart';
 import 'package:eshop/presentation/blocs/category/category_bloc.dart';
@@ -88,12 +90,13 @@ Future<void> init() async {
   //Features - Cart
   // Bloc
   sl.registerFactory(
-    () => CartBloc(sl(), sl()),
+    () => CartBloc(sl(), sl(), sl()),
   );
   // Use cases
   sl.registerLazySingleton(() => GetCachedCartUseCase(sl()));
   sl.registerLazySingleton(() => GetRemoteCartUseCase(sl()));
   sl.registerLazySingleton(() => AddCartUseCase(sl()));
+  sl.registerLazySingleton(() => SyncCartUseCase(sl()));
   // Repository
   sl.registerLazySingleton<CartRepository>(
     () => CartRepositoryImpl(
@@ -115,10 +118,11 @@ Future<void> init() async {
   //Features - User
   // Bloc
   sl.registerFactory(
-        () => UserBloc(sl()),
+        () => UserBloc(sl(),sl()),
   );
   // Use cases
   sl.registerLazySingleton(() => SignInUseCase(sl()));
+  sl.registerLazySingleton(() => GetCachedUserUseCase(sl()));
   // Repository
   sl.registerLazySingleton<UserRepository>(
         () => UserRepositoryImpl(

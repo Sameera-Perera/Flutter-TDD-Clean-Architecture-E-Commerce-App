@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-
 class Category {
   final String id;
   final String name;

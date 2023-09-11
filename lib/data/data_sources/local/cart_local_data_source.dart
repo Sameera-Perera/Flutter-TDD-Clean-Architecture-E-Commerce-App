@@ -2,11 +2,10 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../core/error/exceptions.dart';
 import '../../models/cart/cart_item_model.dart';
 
 abstract class CartLocalDataSource {
-  Future<List<CartItemModel>> getCart();
+  Future<List<CartItemModel>?> getCart();
   Future<void> cacheCart(List<CartItemModel> cart);
   Future<void> cacheCartItem(CartItemModel cartItem);
 }
@@ -30,9 +29,13 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
     final jsonString = sharedPreferences.getString(CACHED_CART);
     final List<CartItemModel> cart = [];
     if (jsonString != null) {
-      cart.addAll(cartItemModelFromJson(jsonDecode(jsonString)));
+      cart.addAll(cartItemModelListFromJson(jsonDecode(jsonString)));
     }
-    cart.add(cartItem);
+    if (!cart.any((element) =>
+        element.product.id == cartItem.product.id &&
+        element.priceTag.id == cartItem.priceTag.id)) {
+      cart.add(cartItem);
+    }
     return sharedPreferences.setString(
       CACHED_CART,
       json.encode(cartItemModelToJson(cart)),
@@ -40,12 +43,12 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
   }
 
   @override
-  Future<List<CartItemModel>> getCart() {
+  Future<List<CartItemModel>?> getCart() {
     final jsonString = sharedPreferences.getString(CACHED_CART);
     if (jsonString != null) {
-      return Future.value(cartItemModelFromJson(jsonDecode(jsonString)));
+      return Future.value(cartItemModelListFromJson(jsonDecode(jsonString)));
     } else {
-      throw CacheException();
+      return Future.value(null);
     }
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,23 +23,29 @@ class OtherView extends StatelessWidget {
                 if (state is UserLogged) {
                   return Row(
                     children: [
-                      const Hero(
-                        tag: "C001",
-                        child: CircleAvatar(
-                          radius: 36.0,
-                          backgroundImage: AssetImage('assets/dev/user.jpg'),
-                          backgroundColor: Colors.transparent,
-                        ),
-                      ),
+                      state.user.image != null
+                          ? CachedNetworkImage(
+                              imageUrl: state.user.image!,
+                              imageBuilder: (context, image) => CircleAvatar(
+                                radius: 36.0,
+                                backgroundImage: image,
+                                backgroundColor: Colors.transparent,
+                              ),
+                            )
+                          : const CircleAvatar(
+                              radius: 36.0,
+                              backgroundImage: AssetImage(kUserAvatar),
+                              backgroundColor: Colors.transparent,
+                            ),
                       const SizedBox(width: 12),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Wanda R. Fincher",
+                            "${state.user.firstName} ${state.user.lastName}",
                             style: Theme.of(context).textTheme.titleLarge,
                           ),
-                          const Text("WandaRFincher@teleworm.us")
+                          Text(state.user.email)
                         ],
                       ),
                     ],

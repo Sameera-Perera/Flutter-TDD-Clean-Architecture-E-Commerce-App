@@ -4,6 +4,10 @@ import '../../../domain/entities/cart/cart_item.dart';
 import '../product/price_tag_model.dart';
 import '../product/product_model.dart';
 
+List<CartItemModel> cartItemModelListFromJson(String str) =>
+    List<CartItemModel>.from(
+        json.decode(str).map((x) => CartItemModel.fromJson(x)));
+
 List<CartItemModel> cartItemModelFromJson(String str) =>
     List<CartItemModel>.from(
         json.decode(str).map((x) => CartItemModel.fromJson(x)));
@@ -18,16 +22,24 @@ class CartItemModel extends CartItem {
     required PriceTagModel priceTag,
   }) : super(id: id, product: product, priceTag: priceTag);
 
-  factory CartItemModel.fromJson(Map<String, dynamic> json) => CartItemModel(
-        id: json["_id"],
-        product: ProductModel.fromJson(json["product"]),
-        priceTag: PriceTagModel.fromJson(json["priceTag"]),
-      );
+  factory CartItemModel.fromJson(Map<String, dynamic> json) {
+    return CartItemModel(
+      id: json["_id"],
+      product: ProductModel.fromJson(json["product"]),
+      priceTag: PriceTagModel.fromJson(json["priceTag"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "_id": id,
         "product": (product as ProductModel).toJson(),
         "priceTag": (priceTag as PriceTagModel).toJson(),
+      };
+
+  Map<String, dynamic> toBodyJson() => {
+        "_id": id,
+        "product": product.id,
+        "priceTag": priceTag.id,
       };
 
   factory CartItemModel.fromParent(CartItem cartItem) {

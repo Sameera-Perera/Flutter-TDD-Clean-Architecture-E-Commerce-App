@@ -8,5 +8,5 @@ import '../usecases/user/sign_up_usecase.dart';
 abstract class UserRepository {
   Future<Either<Failure, User>> signIn(SignInParams params);
   Future<Either<Failure, User>> signUp(SignUpParams params);
-  Future<Either<Failure, User>> getUser();
+  Future<Either<Failure, User>> getCachedUser();
 }

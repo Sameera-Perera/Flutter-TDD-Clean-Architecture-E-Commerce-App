@@ -56,8 +56,12 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, User>> getUser() {
-    // TODO: implement getUser
-    throw UnimplementedError();
+  Future<Either<Failure, User>> getCachedUser() async {
+    try {
+      final user = await localDataSource.getUser();
+      return Right(user);
+    } on CacheFailure {
+      return Left(CacheFailure());
+    }
   }
 }

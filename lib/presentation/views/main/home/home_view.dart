@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -8,6 +9,7 @@ import '../../../../core/router/app_router.dart';
 import '../../../../domain/usecases/product/get_product_usecase.dart';
 import '../../../blocs/product/product_bloc.dart';
 import '../../../blocs/user/user_bloc.dart';
+import '../../../widgets/alert_card.dart';
 import '../../../widgets/product_card.dart';
 
 class HomeView extends StatefulWidget {
@@ -39,15 +41,24 @@ class _HomeViewState extends State<HomeView> {
                       "${state.user.firstName} ${state.user.lastName}",
                       style: const TextStyle(fontSize: 26),
                     ),
-                    Spacer(),
-                    SizedBox(
+                    const Spacer(),
+                    const SizedBox(
                       width: 8,
                     ),
-                    const CircleAvatar(
-                      radius: 24.0,
-                      backgroundImage: AssetImage('assets/dev/user.jpg'),
-                      backgroundColor: Colors.transparent,
-                    )
+                    state.user.image != null
+                        ? CachedNetworkImage(
+                            imageUrl: state.user.image!,
+                            imageBuilder: (context, image) => CircleAvatar(
+                              radius: 24.0,
+                              backgroundImage: image,
+                              backgroundColor: Colors.transparent,
+                            ),
+                          )
+                        : const CircleAvatar(
+                            radius: 24.0,
+                            backgroundImage: AssetImage(kUserAvatar),
+                            backgroundColor: Colors.transparent,
+                          )
                   ],
                 );
               } else {
@@ -142,19 +153,24 @@ class _HomeViewState extends State<HomeView> {
                       builder: (context, state) {
                     //Result Empty and No Error
                     if (state is ProductLoaded && state.products.isEmpty) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Image.asset('assets/status_image/empty.png'),
-                          const Text("Products not found!"),
-                          SizedBox(
-                            height: MediaQuery.of(context).size.height * 0.1,
-                          )
-                        ],
+                      return const AlertCard(
+                        image: kEmpty,
+                        message: "Products not found!",
                       );
                     }
                     //Error and no preloaded data
                     if (state is ProductError && state.products.isEmpty) {
+                      if(state.failure is NetworkFailure){
+                        return AlertCard(
+                          image: kNoConnection,
+                          message: "Network failure\nTry again!",
+                          onClick: (){
+                            context.read<ProductBloc>().add(GetProducts(
+                                FilterProductParams(
+                                    keyword: _textEditingController.text)));
+                          },
+                        );
+                      }
                       return Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
