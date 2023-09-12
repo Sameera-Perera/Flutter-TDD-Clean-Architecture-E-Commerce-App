@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'package:eshop/core/error/failures.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/error/exceptions.dart';
+import '../../models/category/category_model.dart';
 import '../../models/category/category_response_model.dart';
 
 abstract class CategoryLocalDataSource {
@@ -9,9 +11,9 @@ abstract class CategoryLocalDataSource {
   /// the user had an internet connection.
   ///
   /// Throws [CacheException] if no cached data is present.
-  Future<CategoryResponseModel> getCategories();
+  Future<List<CategoryModel>> getCategories();
 
-  Future<void> cacheCategories(CategoryResponseModel categoriesToCache);
+  Future<void> cacheCategories(List<CategoryModel> categoriesToCache);
 }
 
 const CACHED_CATEGORIES = 'CACHED_CATEGORIES';
@@ -21,21 +23,20 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   CategoryLocalDataSourceImpl({required this.sharedPreferences});
 
   @override
-  Future<CategoryResponseModel> getCategories() {
+  Future<List<CategoryModel>> getCategories() {
     final jsonString = sharedPreferences.getString(CACHED_CATEGORIES);
     if (jsonString != null) {
-      return Future.value(
-          categoryResponseModelFromJson(jsonDecode(jsonString)));
+      return Future.value(categoryModelListFromLocalJson(jsonString));
     } else {
-      throw CacheException();
+      throw CacheFailure();
     }
   }
 
   @override
-  Future<void> cacheCategories(CategoryResponseModel categoriesToCache) {
+  Future<void> cacheCategories(List<CategoryModel> categoriesToCache) {
     return sharedPreferences.setString(
       CACHED_CATEGORIES,
-      json.encode(categoryResponseModelToJson(categoriesToCache)),
+      categoryModelToJson(categoriesToCache),
     );
   }
 }

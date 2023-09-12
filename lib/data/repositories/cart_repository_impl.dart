@@ -71,6 +71,7 @@ class CartRepositoryImpl implements CartRepository {
         localCartItems ?? [],
         token,
       );
+      await localDataSource.cacheCart(syncedResult);
       return Right(syncedResult);
     } else {
       return Left(NetworkFailure());

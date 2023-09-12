@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/error/failures.dart';
-import '../entities/category/category_response.dart';
+import '../entities/category/category.dart';
 
 abstract class CategoryRepository {
-  Future<Either<Failure, CategoryResponse>> getRemoteCategories();
-  Future<Either<Failure, CategoryResponse>> getCachedCategories();
-  Future<Either<Failure, CategoryResponse>> filterCachedCategories(String keyword);
+  Future<Either<Failure, List<Category>>> getRemoteCategories();
+  Future<Either<Failure, List<Category>>> getCachedCategories();
+  Future<Either<Failure, List<Category>>> filterCachedCategories(String keyword);
 }

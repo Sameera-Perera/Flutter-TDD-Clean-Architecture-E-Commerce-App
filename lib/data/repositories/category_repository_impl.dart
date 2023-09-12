@@ -1,15 +1,13 @@
 import 'package:dartz/dartz.dart';
+import 'package:eshop/domain/entities/category/category.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../../../core/error/exceptions.dart';
 import '../../core/network/network_info.dart';
-import '../../domain/entities/category/category_response.dart';
 import '../../domain/repositories/category_repository.dart';
 import '../data_sources/local/category_local_data_source.dart';
 import '../data_sources/remote/category_data_source.dart';
-import '../models/category/category_response_model.dart';
 
-typedef _CategorySourceChooser = Future<CategoryResponseModel> Function();
 
 class CategoryRepositoryImpl implements CategoryRepository {
   final CategoryRemoteDataSource remoteDataSource;
@@ -23,60 +21,45 @@ class CategoryRepositoryImpl implements CategoryRepository {
   });
 
   @override
-  Future<Either<Failure, CategoryResponse>> getRemoteCategories() async {
-    return await _getCategory(() {
-      return remoteDataSource.getCategories();
-    });
-  }
-
-  @override
-  Future<Either<Failure, CategoryResponse>> getCachedCategories() async {
-    return await _getCacheCategory(() {
-      return localDataSource.getCategories();
-    });
-  }
-
-  @override
-  Future<Either<Failure, CategoryResponse>> filterCachedCategories(
-      params) async {
-    try {
-      final localProducts = await localDataSource.getCategories();
-      final categories = localProducts.categories;
-      final filteredCategories =
-          categories.where((element) => element.name.toLowerCase().contains(params.toLowerCase())).toList();
-      return Right(CategoryResponse(categories: filteredCategories));
-    } on CacheException {
-      return Left(CacheFailure());
-    }
-  }
-
-  Future<Either<Failure, CategoryResponse>> _getCategory(
-    _CategorySourceChooser getConcreteOrProducts,
-  ) async {
+  Future<Either<Failure, List<Category>>> getRemoteCategories() async {
     if (await networkInfo.isConnected) {
       try {
-        final remoteProducts = await getConcreteOrProducts();
+        final remoteProducts = await remoteDataSource.getCategories();
         localDataSource.cacheCategories(remoteProducts);
         return Right(remoteProducts);
-      } on ServerException {
-        return Left(ServerFailure());
+      } on Failure catch (failure) {
+        return Left(failure);
       }
     } else {
       try {
         final localCategories = await localDataSource.getCategories();
         return Right(localCategories);
-      } on CacheException {
-        return Left(CacheFailure());
+      } on Failure catch (failure) {
+        return Left(failure);
       }
     }
   }
 
-  Future<Either<Failure, CategoryResponse>> _getCacheCategory(
-    _CategorySourceChooser getConcreteOrProducts,
-  ) async {
+  @override
+  Future<Either<Failure, List<Category>>> getCachedCategories() async {
     try {
       final localProducts = await localDataSource.getCategories();
       return Right(localProducts);
+    } on Failure catch (failure) {
+      return Left(failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<Category>>> filterCachedCategories(params) async {
+    try {
+      final cachedCategories = await localDataSource.getCategories();
+      final categories = cachedCategories;
+      final filteredCategories = categories
+          .where((element) =>
+              element.name.toLowerCase().contains(params.toLowerCase()))
+          .toList();
+      return Right(filteredCategories);
     } on CacheException {
       return Left(CacheFailure());
     }

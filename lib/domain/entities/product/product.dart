@@ -1,7 +1,9 @@
+import 'package:equatable/equatable.dart';
+
 import '../category/category.dart';
 import 'price_tag.dart';
 
-class Product {
+class Product extends Equatable {
   final String id;
   final String name;
   final String description;
@@ -11,7 +13,7 @@ class Product {
   final DateTime createdAt;
   final DateTime updatedAt;
 
-  Product({
+  const Product({
     required this.id,
     required this.name,
     required this.description,
@@ -22,4 +24,6 @@ class Product {
     required this.updatedAt,
   });
 
+  @override
+  List<Object?> get props => [id];
 }

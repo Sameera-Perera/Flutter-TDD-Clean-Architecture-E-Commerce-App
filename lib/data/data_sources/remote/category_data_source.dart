@@ -1,14 +1,16 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
 import '../../../core/constant/strings.dart';
-import '../../models/category/category_response_model.dart';
+import '../../models/category/category_model.dart';
 
 abstract class CategoryRemoteDataSource {
   /// Calls the base-url/categories endpoint.
   ///
   /// Throws a [ServerException] for all error codes.
-  Future<CategoryResponseModel> getCategories();
+  Future<List<CategoryModel>> getCategories();
 }
 
 class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
@@ -16,10 +18,10 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
   CategoryRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<CategoryResponseModel> getCategories() =>
+  Future<List<CategoryModel>> getCategories() =>
       _getCategoryFromUrl('$baseUrl/categories');
 
-  Future<CategoryResponseModel> _getCategoryFromUrl(String url) async {
+  Future<List<CategoryModel>> _getCategoryFromUrl(String url) async {
     final response = await client.get(
       Uri.parse(url),
       headers: {
@@ -27,7 +29,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
       },
     );
     if (response.statusCode == 200) {
-      return categoryResponseModelFromJson(response.body);
+      return categoryModelListFromRemoteJson(response.body);
     } else {
       throw ServerException();
     }

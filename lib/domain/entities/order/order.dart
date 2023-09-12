@@ -3,7 +3,7 @@ import 'package:eshop/domain/entities/user/delivery_info.dart';
 import 'package:eshop/domain/entities/product/product.dart';
 
 class Order extends Equatable {
-  final int id;
+  final String id;
   final List<Product> products;
   final DeliveryInfo address;
 

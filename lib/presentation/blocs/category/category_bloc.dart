@@ -33,8 +33,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       final cashedResult = await _getCashedCategoryUseCase(NoParams());
       cashedResult.fold(
         (failure) => (),
-        (categoryResponse) => emit(CategoryCacheLoaded(
-          categories: categoryResponse.categories,
+        (categories) => emit(CategoryCacheLoaded(
+          categories: categories,
         )),
       );
 
@@ -47,11 +47,12 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
           categories: state.categories,
           failure: failure,
         )),
-        (categoryResponse) => emit(CategoryLoaded(
-          categories: categoryResponse.categories,
+        (categories) => emit(CategoryLoaded(
+          categories: categories,
         )),
       );
     } catch (e) {
+      print('Error - '+e.toString());
       emit(CategoryError(
         categories: state.categories,
         failure: ExceptionFailure(),
@@ -71,8 +72,8 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         (failure) => emit(CategoryLoading(
           categories: state.categories,
         )),
-        (categoryResponse) => emit(CategoryCacheLoaded(
-          categories: categoryResponse.categories,
+        (categories) => emit(CategoryCacheLoaded(
+          categories: categories,
         )),
       );
     } catch (e) {

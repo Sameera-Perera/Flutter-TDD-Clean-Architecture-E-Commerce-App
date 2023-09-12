@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class DeliveryInfo extends Equatable {
-  final int id;
+  final String id;
   final String receiver;
   final String addressLineOne;
   final String addressLineTwo;

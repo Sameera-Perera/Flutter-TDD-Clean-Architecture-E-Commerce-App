@@ -2,7 +2,11 @@ import 'dart:convert';
 
 import '../../../domain/entities/category/category.dart';
 
-List<CategoryModel> categoryModelFromJson(String str) =>
+List<CategoryModel> categoryModelListFromRemoteJson(String str) =>
+    List<CategoryModel>.from(
+        json.decode(str)['data'].map((x) => CategoryModel.fromJson(x)));
+
+List<CategoryModel> categoryModelListFromLocalJson(String str) =>
     List<CategoryModel>.from(
         json.decode(str).map((x) => CategoryModel.fromJson(x)));
 
