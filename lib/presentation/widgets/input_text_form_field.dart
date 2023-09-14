@@ -5,12 +5,14 @@ class InputTextFormField extends StatefulWidget {
   final bool isSecureField;
   final bool autoCorrect;
   final String? hint;
+  final String? Function(String?)? validation;
   const InputTextFormField({
     Key? key,
     required this.controller,
     this.isSecureField = false,
     this.autoCorrect = false,
     this.hint,
+    this.validation,
   }) : super(key: key);
 
   @override
@@ -26,6 +28,8 @@ class _InputTextFormFieldState extends State<InputTextFormField> {
       obscureText: widget.isSecureField && !_passwordVisible,
       enableSuggestions: !widget.isSecureField,
       autocorrect: widget.autoCorrect,
+      validator: widget.validation,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       decoration: InputDecoration(
         filled: true,
         hintText: widget.hint,

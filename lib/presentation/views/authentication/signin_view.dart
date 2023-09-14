@@ -21,6 +21,7 @@ class SignInView extends StatefulWidget {
 class _SignInViewState extends State<SignInView> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -35,9 +36,9 @@ class _SignInViewState extends State<SignInView> {
             AppRouter.home,
             ModalRoute.withName(''),
           );
-        } else if(state is UserLoggedFail){
+        } else if (state is UserLoggedFail) {
           // print(state.failure);
-          if(state.failure is CredentialFailure){
+          if (state.failure is CredentialFailure) {
             EasyLoading.showError("Username/Password Wrong!");
           } else {
             EasyLoading.showError("Error");
@@ -45,116 +46,134 @@ class _SignInViewState extends State<SignInView> {
         }
       },
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const SizedBox(
-                  height: 75,
-                ),
-                SizedBox(
-                    height: 80,
-                    child: Image.asset(
-                      kAppLogo,
-                      color: Colors.black,
-                    )),
-                const SizedBox(
-                  height: 20,
-                ),
-                const Text(
-                  "Please enter your e-mail address and password to sign-in",
-                  style: TextStyle(fontSize: 16, color: Colors.black54),
-                  textAlign: TextAlign.center,
-                ),
-                const Spacer(
-                  flex: 2,
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                InputTextFormField(
-                  controller: emailController,
-                  hint: 'Email',
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                InputTextFormField(
-                  controller: passwordController,
-                  hint: 'Password',
-                  isSecureField: true,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Align(
-                  alignment: Alignment.centerRight,
-                  child: InkWell(
-                    onTap: () {
-                      // Navigator.pushNamed(context, AppRouter.forgotPassword);
-                    },
-                    child: const Text(
-                      'Forgot Password?',
-                      style: TextStyle(
-                        fontSize: 14,
-                      ),
-                    ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(
+                    height: 50,
                   ),
-                ),
-                const SizedBox(
-                  height: 24,
-                ),
-                InputFormButton(
-                  color: Colors.black87,
-                  onClick: () {
-                    context.read<UserBloc>().add(SignInUser(SignInParams(
-                          username: emailController.text,
-                          password: passwordController.text,
-                        )));
-                  },
-                  titleText: 'Sign In',
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                InputFormButton(
-                  color: Colors.black87,
-                  onClick: () {
-                    Navigator.of(context).pop();
-                  },
-                  titleText: 'Back',
-                ),
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Don\'t have an account! ',
+                  SizedBox(
+                      height: 80,
+                      child: Image.asset(
+                        kAppLogo,
+                        color: Colors.black,
+                      )),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  const Text(
+                    "Please enter your e-mail address and password to sign-in",
+                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                    textAlign: TextAlign.center,
+                  ),
+                  const Spacer(
+                    flex: 2,
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  InputTextFormField(
+                    controller: emailController,
+                    hint: 'Email',
+                    validation: (String? val) {
+                      if (val == null || val.isEmpty) {
+                        return 'This field can\'t be empty';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  InputTextFormField(
+                    controller: passwordController,
+                    hint: 'Password',
+                    isSecureField: true,
+                    validation: (String? val) {
+                      if (val == null || val.isEmpty) {
+                        return 'This field can\'t be empty';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: InkWell(
+                      onTap: () {
+                        // Navigator.pushNamed(context, AppRouter.forgotPassword);
+                      },
+                      child: const Text(
+                        'Forgot Password?',
                         style: TextStyle(
                           fontSize: 14,
                         ),
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, AppRouter.signUp);
-                        },
-                        child: const Text(
-                          'Register',
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  InputFormButton(
+                    color: Colors.black87,
+                    onClick: () {
+                      if (_formKey.currentState!.validate()) {
+                        context.read<UserBloc>().add(SignInUser(SignInParams(
+                              username: emailController.text,
+                              password: passwordController.text,
+                            )));
+                      }
+                    },
+                    titleText: 'Sign In',
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  InputFormButton(
+                    color: Colors.black87,
+                    onClick: () {
+                      Navigator.of(context).pop();
+                    },
+                    titleText: 'Back',
+                  ),
+                  const Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Don\'t have an account! ',
                           style: TextStyle(
                             fontSize: 14,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-                    ],
+                        InkWell(
+                          onTap: () {
+                            Navigator.pushNamed(context, AppRouter.signUp);
+                          },
+                          child: const Text(
+                            'Register',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

@@ -17,8 +17,7 @@ abstract class UserRemoteDataSource {
   Future<AuthenticationResponseModel> signUp(SignUpParams params);
 }
 
-class UserRemoteDataSourceImpl
-    implements UserRemoteDataSource {
+class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   final http.Client client;
   UserRemoteDataSourceImpl({required this.client});
 
@@ -37,7 +36,7 @@ class UserRemoteDataSourceImpl
         {
           'firstName': params.firstName,
           'lastName': params.lastName,
-          'email': params.username,
+          'email': params.email,
           'password': params.password,
         },
       );
@@ -51,7 +50,7 @@ class UserRemoteDataSourceImpl
         body: json.encode(body));
     if (response.statusCode == 200) {
       return authenticationResponseModelFromJson(response.body);
-    } else if(response.statusCode == 400 || response.statusCode == 401) {
+    } else if (response.statusCode == 400 || response.statusCode == 401) {
       throw CredentialFailure();
     } else {
       throw ServerException();

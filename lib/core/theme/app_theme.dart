@@ -8,7 +8,7 @@ class AppTheme {
     brightness: Brightness.light,
     primaryColor: kLightPrimaryColor,
     visualDensity: VisualDensity.adaptivePlatformDensity,
-    scaffoldBackgroundColor: kLightBackgroundColor,
+    scaffoldBackgroundColor: kBackgroundColor,
     appBarTheme: AppBarTheme(
       backgroundColor: ThemeData().scaffoldBackgroundColor,
       foregroundColor: kLightSecondaryColor,

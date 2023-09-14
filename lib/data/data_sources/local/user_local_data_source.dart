@@ -9,11 +9,13 @@ import '../../models/user/user_model.dart';
 abstract class UserLocalDataSource {
   Future<String> getToken();
 
-  Future<void> cacheToken(String token);
-
   Future<UserModel> getUser();
 
+  Future<void> cacheToken(String token);
+
   Future<void> cacheUser(UserModel user);
+
+  Future<void> clearCache();
 
   Future<bool> isTokenAvailable();
 }
@@ -68,5 +70,11 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   Future<bool> isTokenAvailable() async {
     String? token = await secureStorage.read(key: CACHED_TOKEN);
     return Future.value((token != null));
+  }
+
+  @override
+  Future<void> clearCache() async {
+    await secureStorage.deleteAll();
+    await sharedPreferences.clear();
   }
 }

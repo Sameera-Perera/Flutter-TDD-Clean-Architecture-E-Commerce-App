@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
@@ -52,7 +53,7 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
         )),
       );
     } catch (e) {
-      print('Error - '+e.toString());
+      EasyLoading.showError(e.toString());
       emit(CategoryError(
         categories: state.categories,
         failure: ExceptionFailure(),

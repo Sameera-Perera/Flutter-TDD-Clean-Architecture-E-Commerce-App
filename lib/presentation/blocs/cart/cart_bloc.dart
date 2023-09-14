@@ -1,12 +1,12 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:eshop/domain/usecases/cart/sync_cart_usecase.dart';
 
 import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
 import '../../../domain/entities/cart/cart_item.dart';
 import '../../../domain/usecases/cart/add_cart_item_usecase.dart';
 import '../../../domain/usecases/cart/get_cached_cart_usecase.dart';
+import '../../../domain/usecases/cart/sync_cart_usecase.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
@@ -18,8 +18,9 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   CartBloc(
       this._getCachedCartUseCase, this._addCartUseCase, this._syncCartUseCase)
       : super(const CartInitial(cart: [])) {
-    on<AddProduct>(_onAddToCart);
     on<GetCart>(_onGetCart);
+    on<AddProduct>(_onAddToCart);
+    on<ClearCart>(_onClearCart);
   }
 
   void _onGetCart(GetCart event, Emitter<CartState> emit) async {
@@ -48,9 +49,18 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       cart.addAll(state.cart);
       cart.add(event.cartItem);
       emit(CartLoaded(cart: cart));
-      final result = await _addCartUseCase(event.cartItem);
+      await _addCartUseCase(event.cartItem);
     } catch (e) {
       emit(CartError(cart: state.cart, failure: ExceptionFailure()));
+    }
+  }
+
+  void _onClearCart(ClearCart event, Emitter<CartState> emit) async {
+    try {
+      emit(const CartLoading(cart: []));
+      emit(const CartLoaded(cart: []));
+    } catch (e) {
+      emit(CartError(cart: const [], failure: ExceptionFailure()));
     }
   }
 }

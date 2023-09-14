@@ -1,0 +1,78 @@
+import 'package:eshop/core/constant/images.dart';
+import 'package:flutter/material.dart';
+
+import '../../widgets/input_form_button.dart';
+import '../../widgets/input_text_form_field.dart';
+
+class UserProfileScreen extends StatefulWidget {
+  const UserProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
+}
+
+class _UserProfileScreenState extends State<UserProfileScreen> {
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        title: const Text('Profile'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+        child: ListView(
+          children: [
+            Hero(
+              tag: "C001",
+              child: CircleAvatar(
+                radius: 75.0,
+                backgroundColor: Colors.grey.shade200,
+                child: Image.asset(kUserAvatar),
+              ),
+            ),
+            const SizedBox(
+              height: 50,
+            ),
+            InputTextFormField(
+              controller: firstNameController,
+              hint: 'First Name',
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            InputTextFormField(
+              controller: firstNameController,
+              hint: 'Last Name',
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            InputTextFormField(
+              controller: firstNameController,
+              hint: 'Email Address',
+            ),
+            const SizedBox(
+              height: 12,
+            ),
+            InputTextFormField(
+              controller: firstNameController,
+              hint: 'Contact Number',
+            ),
+          ],
+        ),
+      ),
+      bottomNavigationBar: SafeArea(
+          child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        child: InputFormButton(
+          onClick: () {},
+          titleText: "Update",
+          color: Colors.black87,
+        ),
+      )),
+    );
+  }
+}

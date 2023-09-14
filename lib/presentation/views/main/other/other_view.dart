@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eshop/presentation/blocs/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -86,12 +87,47 @@ class OtherView extends StatelessWidget {
               return OtherItemCard(
                 onClick: () {
                   if (state is UserLogged) {
+                    Navigator.of(context).pushNamed(AppRouter.userProfile);
                   } else {
                     Navigator.of(context).pushNamed(AppRouter.signIn);
                   }
                 },
                 title: "Profile",
               );
+            },
+          ),
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              if (state is UserLogged) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: OtherItemCard(
+                    onClick: () {
+                      // Navigator.of(context).pushNamed(AppRouter.settings);
+                    },
+                    title: "Orders",
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
+          ),
+          BlocBuilder<UserBloc, UserState>(
+            builder: (context, state) {
+              if (state is UserLogged) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 6),
+                  child: OtherItemCard(
+                    onClick: () {
+                      // Navigator.of(context).pushNamed(AppRouter.settings);
+                    },
+                    title: "Delivery Info",
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
             },
           ),
           const SizedBox(height: 6),
@@ -121,7 +157,8 @@ class OtherView extends StatelessWidget {
               if (state is UserLogged) {
                 return OtherItemCard(
                   onClick: () {
-                    // context.read<AuthBloc>().add(SignOutAuth());
+                    context.read<UserBloc>().add(SignOutUser());
+                    context.read<CartBloc>().add(const ClearCart());
                   },
                   title: "Sign Out",
                 );
