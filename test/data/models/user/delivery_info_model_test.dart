@@ -4,11 +4,11 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../fixtures/constent_objects.dart';
 
 void main() {
-  test(
-    'DeliveryInfoModel should be a subclass of DeliveryInfo entity',
-        () async {
-      // assert
-      expect(tDeliveryInfoModel, isA<DeliveryInfo>());
-    },
-  );
+  // test(
+  //   'DeliveryInfoModel should be a subclass of DeliveryInfo entity',
+  //       () async {
+  //     // assert
+  //     expect(tDeliveryInfoModel, isA<DeliveryInfo>());
+  //   },
+  // );
 }

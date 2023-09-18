@@ -1,8 +1,10 @@
+import 'package:eshop/core/constant/images.dart';
 import 'package:flutter/material.dart';
 
 class InputFormButton extends StatelessWidget {
   final Function() onClick;
-  final String titleText;
+  final String? titleText;
+  final Icon? icon;
   final Color? color;
   final double? cornerRadius;
   final EdgeInsets padding;
@@ -10,7 +12,8 @@ class InputFormButton extends StatelessWidget {
   const InputFormButton(
       {Key? key,
       required this.onClick,
-      required this.titleText,
+      this.titleText,
+      this.icon,
       this.color,
       this.cornerRadius,
       this.padding = const EdgeInsets.symmetric(horizontal: 16)})
@@ -33,10 +36,15 @@ class InputFormButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(cornerRadius ?? 12.0)),
         ),
       ),
-      child: Text(
-        titleText,
-        style: const TextStyle(color: Colors.white),
-      ),
+      child: titleText != null
+          ? Text(
+              titleText!,
+              style: const TextStyle(color: Colors.white),
+            )
+          : Image.asset(
+              kFilterIcon,
+              color: Colors.white,
+            ),
     );
   }
 }

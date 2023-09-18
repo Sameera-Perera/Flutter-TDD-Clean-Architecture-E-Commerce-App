@@ -1,12 +1,18 @@
+import 'package:eshop/presentation/views/main/other/about/about_view.dart';
+import 'package:eshop/presentation/views/main/other/notification/notification_view.dart';
+import 'package:eshop/presentation/views/main/other/orders/order_view.dart';
+import 'package:eshop/presentation/views/main/other/settings/settings_view.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/cart/cart_item.dart';
 import '../../domain/entities/product/product.dart';
 import '../../presentation/views/authentication/signin_view.dart';
 import '../../presentation/views/authentication/signup_view.dart';
 import '../../presentation/views/main/main_view.dart';
-import '../../presentation/views/main/other/product/product_details_view.dart';
+import '../../presentation/views/main/other/delivery_info/delivery_info.dart';
+import '../../presentation/views/main/other/profile/profile_screen.dart';
 import '../../presentation/views/order_chekout/order_checkout_view.dart';
-import '../../presentation/views/profile/profile_screen.dart';
+import '../../presentation/views/product/product_details_view.dart';
 import '../error/exceptions.dart';
 
 class AppRouter {
@@ -20,6 +26,11 @@ class AppRouter {
   //other
   static const String userProfile = '/user-profile';
   static const String orderCheckout = '/order-checkout';
+  static const String deliveryDetails = '/delivery-details';
+  static const String orders = '/orders';
+  static const String settings = '/settings';
+  static const String notifications = '/notifications';
+  static const String about = '/about';
 
   static Route<dynamic> onGenerateRoute(RouteSettings routeSettings) {
     switch (routeSettings.name) {
@@ -36,7 +47,21 @@ class AppRouter {
       case userProfile:
         return MaterialPageRoute(builder: (_) => const UserProfileScreen());
       case orderCheckout:
-        return MaterialPageRoute(builder: (_) => const OrderCheckoutView());
+        List<CartItem> items = routeSettings.arguments as List<CartItem>;
+        return MaterialPageRoute(
+            builder: (_) => OrderCheckoutView(
+                  items: items,
+                ));
+      case deliveryDetails:
+        return MaterialPageRoute(builder: (_) => const DeliveryInfoView());
+      case orders:
+        return MaterialPageRoute(builder: (_) => const OrderView());
+      case settings:
+        return MaterialPageRoute(builder: (_) => const SettingsView());
+      case notifications:
+        return MaterialPageRoute(builder: (_) => const NotificationView());
+      case about:
+        return MaterialPageRoute(builder: (_) => const AboutView());
       default:
         throw const RouteException('Route not found!');
     }

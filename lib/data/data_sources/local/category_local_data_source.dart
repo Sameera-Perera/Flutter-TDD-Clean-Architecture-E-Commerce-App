@@ -1,10 +1,8 @@
-import 'dart:convert';
 import 'package:eshop/core/error/failures.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/error/exceptions.dart';
 import '../../models/category/category_model.dart';
-import '../../models/category/category_response_model.dart';
 
 abstract class CategoryLocalDataSource {
   /// Gets the cached [List<CategoryModel>] which was gotten the last time

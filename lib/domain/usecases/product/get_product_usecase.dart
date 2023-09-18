@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/usecase.dart';
+import '../../entities/category/category.dart';
 import '../../entities/product/product_response.dart';
 import '../../repositories/product_repository.dart';
 
@@ -19,7 +20,7 @@ class GetProductUseCase
 
 class FilterProductParams {
   final String? keyword;
-  final String? category;
+  final Category? category;
   final double? minPrice;
   final double? maxPrice;
   final int? skip;
@@ -27,7 +28,7 @@ class FilterProductParams {
 
   const FilterProductParams({
     this.keyword='',
-    this.category='',
+    this.category,
     this.minPrice,
     this.maxPrice,
     this.skip = 0,

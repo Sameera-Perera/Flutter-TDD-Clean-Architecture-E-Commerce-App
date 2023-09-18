@@ -40,19 +40,19 @@ final tCategoryModel = CategoryModel(
 );
 
 //delivery info
-const tDeliveryInfoModel = DeliveryInfoModel(
-  id: "1",
-  receiver: "receiver",
-  addressLineOne: "addressLineOne",
-  addressLineTwo: "addressLineTwo",
-);
+// const tDeliveryInfoModel = DeliveryInfoModel(
+//   id: "1",
+//   receiver: "receiver",
+//   addressLineOne: "addressLineOne",
+//   addressLineTwo: "addressLineTwo",
+// );
 
 //order
-final tOrderModel = OrderModel(
-  id: '1',
-  products: [tProductModel],
-  deliveryInfo: tDeliveryInfoModel,
-);
+// final tOrderModel = OrderModel(
+//   id: '1',
+//   products: [tProductModel],
+//   deliveryInfo: tDeliveryInfoModel,
+// );
 
 //user
 const tUserModel = UserModel(

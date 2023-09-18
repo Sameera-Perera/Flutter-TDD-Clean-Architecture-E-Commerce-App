@@ -5,15 +5,20 @@ class InputTextFormField extends StatefulWidget {
   final bool isSecureField;
   final bool autoCorrect;
   final String? hint;
+  final EdgeInsets? contentPadding;
   final String? Function(String?)? validation;
-  const InputTextFormField({
-    Key? key,
-    required this.controller,
-    this.isSecureField = false,
-    this.autoCorrect = false,
-    this.hint,
-    this.validation,
-  }) : super(key: key);
+  final double hintTextSize;
+  const InputTextFormField(
+      {Key? key,
+      required this.controller,
+      this.isSecureField = false,
+      this.autoCorrect = false,
+      this.hint,
+      this.validation,
+      this.contentPadding,
+        this.hintTextSize = 14
+      })
+      : super(key: key);
 
   @override
   State<InputTextFormField> createState() => _InputTextFormFieldState();
@@ -33,6 +38,10 @@ class _InputTextFormFieldState extends State<InputTextFormField> {
       decoration: InputDecoration(
         filled: true,
         hintText: widget.hint,
+        hintStyle: TextStyle(
+          fontSize: widget.hintTextSize,
+        ),
+        contentPadding: widget.contentPadding,
         suffixIcon: widget.isSecureField
             ? IconButton(
                 icon: Icon(

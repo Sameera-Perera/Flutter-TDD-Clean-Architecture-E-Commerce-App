@@ -3,7 +3,7 @@ import '../category/category_model.dart';
 import 'price_tag_model.dart';
 
 class ProductModel extends Product {
-  ProductModel({
+  const ProductModel({
     required String id,
     required String name,
     required String description,

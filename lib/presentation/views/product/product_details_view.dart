@@ -7,8 +7,9 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../../../../domain/entities/cart/cart_item.dart';
 import '../../../../../domain/entities/product/price_tag.dart';
 import '../../../../../domain/entities/product/product.dart';
-import '../../../../blocs/cart/cart_bloc.dart';
-import '../../../../widgets/input_form_button.dart';
+import '../../../core/router/app_router.dart';
+import '../../blocs/cart/cart_bloc.dart';
+import '../../widgets/input_form_button.dart';
 
 class ProductDetailsView extends StatefulWidget {
   final Product product;
@@ -220,8 +221,13 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               width: 90,
               child: InputFormButton(
                 onClick: () {
-                  // Navigator.of(context)
-                  //     .pushNamed(AppRouter.orderDetails, arguments: [cloth]);
+                  Navigator.of(context)
+                      .pushNamed(AppRouter.orderCheckout, arguments: [
+                    CartItem(
+                      product: widget.product,
+                      priceTag: _selectedPriceTag,
+                    )
+                  ]);
                 },
                 titleText: "Buy",
               ),

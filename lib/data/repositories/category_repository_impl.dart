@@ -6,7 +6,7 @@ import '../../../../core/error/exceptions.dart';
 import '../../core/network/network_info.dart';
 import '../../domain/repositories/category_repository.dart';
 import '../data_sources/local/category_local_data_source.dart';
-import '../data_sources/remote/category_data_source.dart';
+import '../data_sources/remote/category_remote_data_source.dart';
 
 
 class CategoryRepositoryImpl implements CategoryRepository {

@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eshop/presentation/blocs/filter/filter_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 import '../../domain/entities/category/category.dart';
+import '../blocs/home/navbar_cubit.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category? category;
@@ -12,6 +15,16 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        if(category!=null){
+          context.read<NavbarCubit>().controller.animateToPage(
+              0,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.linear);
+          context.read<NavbarCubit>().update(0);
+          context.read<FilterCubit>().update(
+            category: category
+          );
+        }
         // Navigator.of(context).pushNamed(AppRouter.clothDetails, arguments: cloth);
       },
       child: category != null

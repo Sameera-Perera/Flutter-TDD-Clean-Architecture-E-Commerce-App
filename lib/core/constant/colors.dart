@@ -4,7 +4,6 @@ Color kLightBackgroundColor = const Color(0xffffffff);
 Color kBackgroundColor = const Color(0xFFFFFFFF);
 Color kLightPrimaryColor = const Color(0xffff8900);
 Color kLightSecondaryColor = const Color(0xff040415);
-// Color kLightAccentColor = Colors.blueGrey.shade200;
 Color kLightParticlesColor = const Color(0x44948282);
 Color kLightTextColor = Colors.black54;
 

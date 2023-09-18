@@ -5,11 +5,11 @@ import 'package:shimmer/shimmer.dart';
 
 import '../../core/router/app_router.dart';
 
-class CartCard extends StatelessWidget {
+class CartItemCard extends StatelessWidget {
   final CartItem? cartItem;
   final Function? onFavoriteToggle;
   final Function? onClick;
-  const CartCard({
+  const CartItemCard({
     Key? key,
     this.cartItem,
     this.onFavoriteToggle,
@@ -43,26 +43,36 @@ class CartCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                width: 100,
-                height: 100,
-                child: Card(
-                  color: Colors.white,
-                  elevation: 2,
-                  clipBehavior: Clip.antiAlias,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: cartItem == null
-                      ? Padding(
-                          padding: const EdgeInsets.all(24.0),
-                          child: Container(
-                            color: Colors.grey.shade300,
-                          ),
-                        )
-                      : Hero(
-                          tag: '',
-                          child: Padding(
+              Container(
+                padding: const EdgeInsets.all(2),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.shade50,
+                      blurRadius: 1,
+                      // offset: Offset(4, 8), // Shadow position
+                    ),
+                  ],
+                ),
+                child: SizedBox(
+                  width: 100,
+                  height: 100,
+                  child: Card(
+                    color: Colors.white,
+                    elevation: 2,
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: cartItem == null
+                        ? Padding(
+                            padding: const EdgeInsets.all(24.0),
+                            child: Container(
+                              color: Colors.grey.shade300,
+                            ),
+                          )
+                        : Padding(
                             padding: const EdgeInsets.all(24.0),
                             child: CachedNetworkImage(
                               imageUrl: cartItem!.product.images.first,
@@ -72,7 +82,7 @@ class CartCard extends StatelessWidget {
                                   const Center(child: Icon(Icons.error)),
                             ),
                           ),
-                        ),
+                  ),
                 ),
               ),
               Expanded(

@@ -13,8 +13,9 @@ class OtherView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
+    return SizedBox(
+      child: ListView(
+        physics: const BouncingScrollPhysics(),
         children: [
           const SizedBox(height: 10),
           Padding(
@@ -22,34 +23,39 @@ class OtherView extends StatelessWidget {
             child: BlocBuilder<UserBloc, UserState>(
               builder: (context, state) {
                 if (state is UserLogged) {
-                  return Row(
-                    children: [
-                      state.user.image != null
-                          ? CachedNetworkImage(
-                              imageUrl: state.user.image!,
-                              imageBuilder: (context, image) => CircleAvatar(
+                  return GestureDetector(
+                    onTap: () {
+                        Navigator.of(context).pushNamed(AppRouter.userProfile);
+                    },
+                    child: Row(
+                      children: [
+                        state.user.image != null
+                            ? CachedNetworkImage(
+                                imageUrl: state.user.image!,
+                                imageBuilder: (context, image) => CircleAvatar(
+                                  radius: 36.0,
+                                  backgroundImage: image,
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              )
+                            : const CircleAvatar(
                                 radius: 36.0,
-                                backgroundImage: image,
+                                backgroundImage: AssetImage(kUserAvatar),
                                 backgroundColor: Colors.transparent,
                               ),
-                            )
-                          : const CircleAvatar(
-                              radius: 36.0,
-                              backgroundImage: AssetImage(kUserAvatar),
-                              backgroundColor: Colors.transparent,
+                        const SizedBox(width: 12),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${state.user.firstName} ${state.user.lastName}",
+                              style: Theme.of(context).textTheme.titleLarge,
                             ),
-                      const SizedBox(width: 12),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "${state.user.firstName} ${state.user.lastName}",
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                          Text(state.user.email)
-                        ],
-                      ),
-                    ],
+                            Text(state.user.email)
+                          ],
+                        ),
+                      ],
+                    ),
                   );
                 } else {
                   return GestureDetector(
@@ -103,7 +109,7 @@ class OtherView extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 6),
                   child: OtherItemCard(
                     onClick: () {
-                      // Navigator.of(context).pushNamed(AppRouter.settings);
+                      Navigator.of(context).pushNamed(AppRouter.orders);
                     },
                     title: "Orders",
                   ),
@@ -120,7 +126,7 @@ class OtherView extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 6),
                   child: OtherItemCard(
                     onClick: () {
-                      // Navigator.of(context).pushNamed(AppRouter.settings);
+                      Navigator.of(context).pushNamed(AppRouter.deliveryDetails);
                     },
                     title: "Delivery Info",
                   ),
@@ -133,21 +139,21 @@ class OtherView extends StatelessWidget {
           const SizedBox(height: 6),
           OtherItemCard(
             onClick: () {
-              // Navigator.of(context).pushNamed(AppRouter.settings);
+              Navigator.of(context).pushNamed(AppRouter.settings);
             },
             title: "Settings",
           ),
           const SizedBox(height: 6),
           OtherItemCard(
             onClick: () {
-              // Navigator.of(context).pushNamed(AppRouter.notifications);
+              Navigator.of(context).pushNamed(AppRouter.notifications);
             },
             title: "Notifications",
           ),
           const SizedBox(height: 6),
           OtherItemCard(
             onClick: () {
-              // Navigator.of(context).pushNamed(AppRouter.about);
+              Navigator.of(context).pushNamed(AppRouter.about);
             },
             title: "About",
           ),
@@ -167,6 +173,7 @@ class OtherView extends StatelessWidget {
               }
             },
           ),
+          SizedBox(height: (MediaQuery.of(context).padding.bottom + 50 )),
         ],
       ),
     );

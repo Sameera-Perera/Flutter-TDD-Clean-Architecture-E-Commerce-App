@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constant/images.dart';
 import '../../../blocs/cart/cart_bloc.dart';
-import '../../../widgets/cart_card.dart';
+import '../../../widgets/cart_item_card.dart';
 import '../../../widgets/input_form_button.dart';
 
 class CartView extends StatelessWidget {
@@ -20,15 +20,15 @@ class CartView extends StatelessWidget {
           children: [
             Column(
               children: [
-                SizedBox(
-                  height: (MediaQuery.of(context).padding.top + 10),
-                ),
+                // SizedBox(
+                //   height: (MediaQuery.of(context).padding.top + 10),
+                // ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: BlocBuilder<CartBloc, CartState>(
                       builder: (context, state) {
-                        if (state is CartError && state.cart.isNotEmpty) {
+                        if (state is CartError && state.cart.isEmpty) {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -63,16 +63,16 @@ class CartView extends StatelessWidget {
                                   ? 10
                                   : state.cart.length,
                           padding: EdgeInsets.only(
-                              top: 14,
+                              top: (MediaQuery.of(context).padding.top + 20),
                               bottom:
                                   MediaQuery.of(context).padding.bottom + 200),
                           physics: const BouncingScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
                             if (state is CartLoading && state.cart.isEmpty) {
-                              return const CartCard();
+                              return const CartItemCard();
                             } else {
-                              return CartCard(
+                              return CartItemCard(
                                 cartItem: state.cart[index],
                               );
                             }
@@ -94,36 +94,42 @@ class CartView extends StatelessWidget {
                 right: 0,
                 child: Container(
                   color: Colors.white,
-                  padding: const EdgeInsets.all(8),
-                  child: Column(
+                  padding: const EdgeInsets.symmetric(horizontal: 0,
+                  vertical: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(bottom: 4, left: 8, right: 8),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        padding:
+                            const EdgeInsets.only(bottom: 4, left: 8, right: 8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               'Total (${state.cart.length} items)',
-                              style: const TextStyle(fontSize: 18),
+                              style: const TextStyle(fontSize: 16),
                             ),
                             Text(
-                              '\$${state.cart.fold(0.0, (previousValue, element) => (element.priceTag.price+previousValue))}',
-                              style: TextStyle(fontSize: 18),
+                              '\$${state.cart.fold(0.0, (previousValue, element) => (element.priceTag.price + previousValue))}',
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w500),
                             ),
                           ],
                         ),
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      InputFormButton(
-                        color: Colors.black87,
-                        cornerRadius: 36,
-                        padding: EdgeInsets.zero,
-                        onClick: () {
-                          Navigator.of(context).pushNamed(AppRouter.orderCheckout);
-                        },
-                        titleText: 'Checkout',
+                      SizedBox(
+                        height: 40,
+                        width: 100,
+                        child: InputFormButton(
+                          color: Colors.black87,
+                          cornerRadius: 36,
+                          padding: EdgeInsets.zero,
+                          onClick: () {
+                            Navigator.of(context)
+                                .pushNamed(AppRouter.orderCheckout, arguments: state.cart);
+                          },
+                          titleText: 'Checkout',
+                        ),
                       ),
                     ],
                   ),

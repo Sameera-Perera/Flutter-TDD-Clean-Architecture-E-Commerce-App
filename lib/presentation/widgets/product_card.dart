@@ -42,42 +42,54 @@ class ProductCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-              child: Card(
-            color: Colors.white,
-            elevation: 4,
-            margin: const EdgeInsets.all(4),
-            clipBehavior: Clip.antiAlias,
-            shape: RoundedRectangleBorder(
+              child: Container(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.shade100,
+                  blurRadius: 4,
+                  // offset: Offset(4, 8), // Shadow position
+                ),
+              ],
             ),
-            child: product == null
-                ? Material(
-                    child: GridTile(
-                      footer: Container(),
+            child: Card(
+              color: Colors.white,
+              elevation: 2,
+              margin: const EdgeInsets.all(4),
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: product == null
+                  ? Material(
+                      child: GridTile(
+                        footer: Container(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(24.0),
+                          child: Container(
+                            color: Colors.grey.shade300,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Hero(
+                      tag: product!.id,
                       child: Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Container(
-                          color: Colors.grey.shade300,
+                        padding: const EdgeInsets.all(32.0),
+                        child: CachedNetworkImage(
+                          imageUrl: product!.images.first,
+                          placeholder: (context, url) => Shimmer.fromColors(
+                            baseColor: Colors.grey.shade100,
+                            highlightColor: Colors.white,
+                            child: Container(),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              const Center(child: Icon(Icons.error)),
                         ),
                       ),
                     ),
-                  )
-                : Hero(
-                    tag: product!.id,
-                    child: Padding(
-                      padding: const EdgeInsets.all(24.0),
-                      child: CachedNetworkImage(
-                        imageUrl: product!.images.first,
-                        placeholder: (context, url) => Shimmer.fromColors(
-                          baseColor: Colors.grey.shade100,
-                          highlightColor: Colors.white,
-                          child: Container(),
-                        ),
-                        errorWidget: (context, url, error) =>
-                            const Center(child: Icon(Icons.error)),
-                      ),
-                    ),
-                  ),
+            ),
           )),
           Padding(
               padding: const EdgeInsets.fromLTRB(4, 4, 4, 0),

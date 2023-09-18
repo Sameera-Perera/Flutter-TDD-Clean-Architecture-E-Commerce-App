@@ -1,8 +1,8 @@
 import 'package:eshop/core/constant/images.dart';
 import 'package:flutter/material.dart';
 
-import '../../widgets/input_form_button.dart';
-import '../../widgets/input_text_form_field.dart';
+import '../../../../widgets/input_form_button.dart';
+import '../../../../widgets/input_text_form_field.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({Key? key}) : super(key: key);

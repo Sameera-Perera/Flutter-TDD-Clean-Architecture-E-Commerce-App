@@ -62,9 +62,9 @@ class _CategoryViewState extends State<CategoryView> {
                     focusedBorder: OutlineInputBorder(
                         borderSide:
                             const BorderSide(color: Colors.white, width: 3.0),
-                        borderRadius: BorderRadius.circular(32)),
+                        borderRadius: BorderRadius.circular(26)),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(32),
+                      borderRadius: BorderRadius.circular(26),
                       borderSide:
                           const BorderSide(color: Colors.white, width: 3.0),
                     )),

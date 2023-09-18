@@ -6,7 +6,7 @@ import '../../core/network/network_info.dart';
 import '../../domain/entities/user/user.dart';
 import '../../domain/repositories/user_repository.dart';
 import '../data_sources/local/user_local_data_source.dart';
-import '../data_sources/remote/user_data_source.dart';
+import '../data_sources/remote/user_remote_data_source.dart';
 import '../models/user/authentication_response_model.dart';
 
 typedef _DataSourceChooser = Future<AuthenticationResponseModel> Function();
