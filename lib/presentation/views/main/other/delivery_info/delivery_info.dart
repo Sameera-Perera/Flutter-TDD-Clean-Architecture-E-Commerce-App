@@ -1,10 +1,13 @@
+import 'package:eshop/core/extension/string_extension.dart';
 import 'package:eshop/data/models/user/delivery_info_model.dart';
 import 'package:eshop/presentation/blocs/delivery_info/delivery_info_add/delivery_info_add_cubit.dart';
 import 'package:eshop/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:shimmer/shimmer.dart';
 
+import '../../../../../domain/entities/user/delivery_info.dart';
 import '../../../../widgets/input_form_button.dart';
 import '../../../../widgets/input_text_form_field.dart';
 import '../../../../widgets/outline_label_card.dart';
@@ -26,6 +29,76 @@ class _DeliveryInfoViewState extends State<DeliveryInfoView> {
         ),
         body: BlocBuilder<DeliveryInfoFetchCubit, DeliveryInfoFetchState>(
           builder: (context, state) {
+            if(state is DeliveryInfoFetchLoading){
+              return ListView.builder(
+                itemCount: 5,
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                itemBuilder: (context, index) => Shimmer.fromColors(
+                  baseColor: Colors.grey.shade200,
+                  highlightColor: Colors.white,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(),
+                        borderRadius: BorderRadius.circular(12)
+                      ),
+                      child: Container(
+                        padding: const EdgeInsets.only(top: 16, bottom: 8),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Icon(Icons.edit_location),
+                            ),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 20),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      height: 24,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4,),
+                                    Container(
+                                      height: 18,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 8,),
+                                    Container(
+                                      height: 18,
+                                      width: 50,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    const SizedBox(height: 4,),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            }
             return ListView.builder(
               itemCount: state.deliveryInformation.length,
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
@@ -34,18 +107,62 @@ class _DeliveryInfoViewState extends State<DeliveryInfoView> {
                 child: OutlineLabelCard(
                   title: '',
                   child: Container(
-                    height: 150,
-                    padding: const EdgeInsets.only(top: 10, bottom: 8),
-                    child:  Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    padding: const EdgeInsets.only(top: 16, bottom: 8),
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("${state.deliveryInformation[index].firstName} ${state.deliveryInformation[index].lastName}"),
-                        Text("${state.deliveryInformation[index].addressLineOne}"),
-                        Text("${state.deliveryInformation[index].addressLineTwo}"),
-                        Text("${state.deliveryInformation[index].city}"),
-                        Text("${state.deliveryInformation[index].zipCode}"),
-                        Text("${state.deliveryInformation[index].contactNumber}"),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(Icons.edit_location),
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${state.deliveryInformation[index].firstName.capitalize()} ${state.deliveryInformation[index].lastName}, ${state.deliveryInformation[index].contactNumber}",
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                ),
+                              ),
+                              Text(
+                                "${state.deliveryInformation[index].addressLineOne}, ${state.deliveryInformation[index].addressLineTwo}, ${state.deliveryInformation[index].city}, ${state.deliveryInformation[index].zipCode}",
+                                style: const TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w500),
+                              ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                child: InkWell(
+                                  onTap: () {
+                                    showModalBottomSheet<void>(
+                                      context: context,
+                                      isScrollControlled: true,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(24.0),
+                                      ),
+                                      builder: (BuildContext context) {
+                                        return DeliveryInfoForm(
+                                          deliveryInfo:
+                                              state.deliveryInformation[index],
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: const Text(
+                                    "Edit",
+                                    style: TextStyle(color: Colors.blueAccent),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -84,8 +201,10 @@ class _DeliveryInfoViewState extends State<DeliveryInfoView> {
 }
 
 class DeliveryInfoForm extends StatefulWidget {
+  final DeliveryInfo? deliveryInfo;
   const DeliveryInfoForm({
     super.key,
+    this.deliveryInfo,
   });
 
   @override
@@ -103,6 +222,20 @@ class _DeliveryInfoFormState extends State<DeliveryInfoForm> {
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    if (widget.deliveryInfo != null) {
+      firstName.text = widget.deliveryInfo!.firstName;
+      lastName.text = widget.deliveryInfo!.lastName;
+      addressLineOne.text = widget.deliveryInfo!.addressLineOne;
+      addressLineTwo.text = widget.deliveryInfo!.addressLineTwo;
+      city.text = widget.deliveryInfo!.city;
+      zipCode.text = widget.deliveryInfo!.zipCode;
+      contactNumber.text = widget.deliveryInfo!.contactNumber;
+    }
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocListener<DeliveryInfoAddCubit, DeliveryInfoAddState>(
       listener: (context, state) {
@@ -111,7 +244,9 @@ class _DeliveryInfoFormState extends State<DeliveryInfoForm> {
           EasyLoading.show(status: 'Loading...');
         } else if (state is DeliveryInfoAddSuccess) {
           Navigator.of(context).pop();
-          context.read<DeliveryInfoFetchCubit>().addDeliveryInfo(state.deliveryInfo);
+          context
+              .read<DeliveryInfoFetchCubit>()
+              .addDeliveryInfo(state.deliveryInfo);
           EasyLoading.showSuccess("Delivery info successfully added!");
         } else if (state is DeliveryInfoAddFail) {
           EasyLoading.showError("Error");
@@ -232,21 +367,23 @@ class _DeliveryInfoFormState extends State<DeliveryInfoForm> {
                     color: Colors.black87,
                     onClick: () {
                       if (_formKey.currentState!.validate()) {
-                        context
-                            .read<DeliveryInfoAddCubit>()
-                            .addDeliveryInfo(DeliveryInfoModel(
-                              id: '',
-                              firstName: firstName.text,
-                              lastName: lastName.text,
-                              addressLineOne: addressLineOne.text,
-                              addressLineTwo: addressLineTwo.text,
-                              city: city.text,
-                              zipCode: zipCode.text,
-                              contactNumber: contactNumber.text,
-                            ));
+                        if (widget.deliveryInfo == null) {
+                          context
+                              .read<DeliveryInfoAddCubit>()
+                              .addDeliveryInfo(DeliveryInfoModel(
+                                id: '',
+                                firstName: firstName.text,
+                                lastName: lastName.text,
+                                addressLineOne: addressLineOne.text,
+                                addressLineTwo: addressLineTwo.text,
+                                city: city.text,
+                                zipCode: zipCode.text,
+                                contactNumber: contactNumber.text,
+                              ));
+                        }
                       }
                     },
-                    titleText: 'Save',
+                    titleText: widget.deliveryInfo == null ? 'Save' : 'Update',
                   ),
                   const SizedBox(
                     height: 8,
