@@ -17,9 +17,9 @@
 |---------------|-----------------------------------------------------------------------------------------------------|
 | Product       | Get Product UseCase                                                                                 |
 | Category      | Get Cached Category UseCase<br/>Get Remote Category UseCase<br/>Filter Category UseCase             |
-| Cart          | Add Cart Item UseCase<br/>Get Cached Cart UseCase<br/>Get Remote Cart UseCase<br/>Sync Cart UseCase |
-| User          | SignIn UseCase<br/>SignUp UseCase<br/>SignOut UseCase<br/>Get Cached User UseCase                   |
-| Delivery Info | Add Delivery Info UseCase<br/>Get Delivery Info UseCase                                             |
+| Cart          | Get Cached Cart UseCase<br/>Get Remote Cart UseCase<br/>Add Cart Item UseCase<br/>Sync Cart UseCase |
+| User          | Get Cached User UseCase<br/>SignIn UseCase<br/>SignUp UseCase<br/>SignOut UseCase                   |
+| Delivery Info | Get Delivery Info UseCase<br/>Add Delivery Info UseCase                                             |
 | Order         |                                                                                                     |
 
 ---
