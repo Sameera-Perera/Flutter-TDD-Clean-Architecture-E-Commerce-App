@@ -13,12 +13,14 @@
 <!-- Features -->
 ---
 
-| Feature                                                                              | UseCases                                           |
-|--------------------------------------------------------------------------------------|----------------------------------------------------|
-| Product                                                                              | Get Products UseCase                               |
-| Cart                                                                                 | Get Local Cart UseCase<br/>Get Remote Cart UseCase |
-| User                                                                                 | Login UseCase                                      |
-| Order                                                                                | Get Order UseCase                                  |
+| Feature       | UseCases                                                                                            |
+|---------------|-----------------------------------------------------------------------------------------------------|
+| Product       | Get Product UseCase                                                                                 |
+| Category      | Get Cached Category UseCase<br/>Get Remote Category UseCase<br/>Filter Category UseCase             |
+| Cart          | Add Cart Item UseCase<br/>Get Cached Cart UseCase<br/>Get Remote Cart UseCase<br/>Sync Cart UseCase |
+| User          | SignIn UseCase<br/>SignUp UseCase<br/>SignOut UseCase<br/>Get Cached User UseCase                   |
+| Delivery Info | Add Delivery Info UseCase<br/>Get Delivery Info UseCase                                             |
+| Order         |                                                                                                     |
 
 ---
 
