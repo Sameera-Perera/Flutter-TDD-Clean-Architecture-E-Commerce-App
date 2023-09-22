@@ -192,7 +192,9 @@ class _HomeViewState extends State<HomeView> {
                         backgroundColor: Theme.of(context).primaryColor,
                         child: InputFormButton(
                           color: Colors.black87,
-                          onClick: () {},
+                          onClick: () {
+                            Navigator.of(context).pushNamed(AppRouter.filter);
+                          },
                         ),
                       );
                     },

@@ -1,11 +1,13 @@
 import 'package:eshop/core/constant/images.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../domain/entities/user/user.dart';
 import '../../../../widgets/input_form_button.dart';
 import '../../../../widgets/input_text_form_field.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({Key? key}) : super(key: key);
+  final User user;
+  const UserProfileScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<UserProfileScreen> createState() => _UserProfileScreenState();
@@ -14,6 +16,16 @@ class UserProfileScreen extends StatefulWidget {
 class _UserProfileScreenState extends State<UserProfileScreen> {
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController email = TextEditingController();
+
+  @override
+  void initState() {
+    firstNameController.text = widget.user.firstName;
+    lastNameController.text = widget.user.lastName;
+    email.text = widget.user.email;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,16 +63,17 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
               height: 12,
             ),
             InputTextFormField(
-              controller: firstNameController,
+              controller: email,
+              enable: false,
               hint: 'Email Address',
             ),
             const SizedBox(
               height: 12,
             ),
-            InputTextFormField(
-              controller: firstNameController,
-              hint: 'Contact Number',
-            ),
+            // InputTextFormField(
+            //   controller: firstNameController,
+            //   hint: 'Contact Number',
+            // ),
           ],
         ),
       ),

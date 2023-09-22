@@ -25,7 +25,7 @@ class OtherView extends StatelessWidget {
                 if (state is UserLogged) {
                   return GestureDetector(
                     onTap: () {
-                        Navigator.of(context).pushNamed(AppRouter.userProfile);
+                      Navigator.of(context).pushNamed(AppRouter.userProfile);
                     },
                     child: Row(
                       children: [
@@ -93,7 +93,10 @@ class OtherView extends StatelessWidget {
               return OtherItemCard(
                 onClick: () {
                   if (state is UserLogged) {
-                    Navigator.of(context).pushNamed(AppRouter.userProfile);
+                    Navigator.of(context).pushNamed(
+                      AppRouter.userProfile,
+                      arguments: state.user,
+                    );
                   } else {
                     Navigator.of(context).pushNamed(AppRouter.signIn);
                   }
@@ -126,7 +129,8 @@ class OtherView extends StatelessWidget {
                   padding: const EdgeInsets.only(top: 6),
                   child: OtherItemCard(
                     onClick: () {
-                      Navigator.of(context).pushNamed(AppRouter.deliveryDetails);
+                      Navigator.of(context)
+                          .pushNamed(AppRouter.deliveryDetails);
                     },
                     title: "Delivery Info",
                   ),
@@ -173,7 +177,7 @@ class OtherView extends StatelessWidget {
               }
             },
           ),
-          SizedBox(height: (MediaQuery.of(context).padding.bottom + 50 )),
+          SizedBox(height: (MediaQuery.of(context).padding.bottom + 50)),
         ],
       ),
     );

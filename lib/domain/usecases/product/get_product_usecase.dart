@@ -20,7 +20,7 @@ class GetProductUseCase
 
 class FilterProductParams {
   final String? keyword;
-  final Category? category;
+  final List<Category> categories;
   final double? minPrice;
   final double? maxPrice;
   final int? skip;
@@ -28,7 +28,7 @@ class FilterProductParams {
 
   const FilterProductParams({
     this.keyword='',
-    this.category,
+    this.categories = const [],
     this.minPrice,
     this.maxPrice,
     this.skip = 0,

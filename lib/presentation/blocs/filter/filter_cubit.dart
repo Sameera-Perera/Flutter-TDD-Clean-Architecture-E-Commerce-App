@@ -10,16 +10,42 @@ class FilterCubit extends Cubit<FilterProductParams> {
 
   void update({
     String? keyword,
+    List<Category>? categories,
     Category? category,
-  }) =>
-      emit(FilterProductParams(
-        keyword: keyword ?? state.keyword,
-        category: category ?? state.category,
-      ));
+  }) {
+    List<Category> updatedCategories = [];
+    if(category!=null){
+      updatedCategories.add(category);
+    } else if(categories!=null) {
+      updatedCategories.addAll(categories);
+    } else {
+      updatedCategories.addAll(state.categories);
+    }
+    emit(FilterProductParams(
+      keyword: keyword ?? state.keyword,
+      categories: updatedCategories,
+    ));
+  }
+
+  void updateCategory({
+    required Category category,
+  }) {
+    List<Category> updatedCategories = [];
+    updatedCategories.addAll(state.categories);
+    if(updatedCategories.contains(category)){
+      updatedCategories.remove(category);
+    } else {
+      updatedCategories.add(category);
+    }
+    emit(FilterProductParams(
+      categories: updatedCategories,
+    ));
+  }
+
 
   int getFiltersCount() {
     int count = 0;
-    count = (state.category != null ? 1 : 0) + count;
+    count = (state.categories.length) + count;
     return count;
   }
 }

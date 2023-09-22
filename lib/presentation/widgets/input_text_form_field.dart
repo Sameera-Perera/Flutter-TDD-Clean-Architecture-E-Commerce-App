@@ -8,11 +8,13 @@ class InputTextFormField extends StatefulWidget {
   final EdgeInsets? contentPadding;
   final String? Function(String?)? validation;
   final double hintTextSize;
+  final bool enable;
   const InputTextFormField(
       {Key? key,
       required this.controller,
       this.isSecureField = false,
       this.autoCorrect = false,
+      this.enable = true,
       this.hint,
       this.validation,
       this.contentPadding,
@@ -35,6 +37,7 @@ class _InputTextFormFieldState extends State<InputTextFormField> {
       autocorrect: widget.autoCorrect,
       validator: widget.validation,
       autovalidateMode: AutovalidateMode.onUserInteraction,
+      enabled: widget.enable,
       decoration: InputDecoration(
         filled: true,
         hintText: widget.hint,

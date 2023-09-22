@@ -10,6 +10,18 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
 
+<!-- Features -->
+---
+
+| Feature                                                                              | UseCases                                           |
+|--------------------------------------------------------------------------------------|----------------------------------------------------|
+| Product                                                                              | Get Products UseCase                               |
+| Cart                                                                                 | Get Local Cart UseCase<br/>Get Remote Cart UseCase |
+| User                                                                                 | Login UseCase                                      |
+| Order                                                                                | Get Order UseCase                                  |
+
+---
+
 <!-- GETTING STARTED -->
 ## Getting Started
 

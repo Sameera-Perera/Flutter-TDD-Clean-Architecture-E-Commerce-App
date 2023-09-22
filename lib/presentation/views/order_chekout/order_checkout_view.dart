@@ -1,8 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eshop/core/extension/string_extension.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../core/router/app_router.dart';
 import '../../../domain/entities/cart/cart_item.dart';
+import '../../blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import '../../widgets/input_form_button.dart';
 import '../../widgets/outline_label_card.dart';
 
@@ -27,27 +30,56 @@ class OrderCheckoutView extends StatelessWidget {
             ),
             Stack(
               children: [
-                OutlineLabelCard(
-                  title: 'Delivery Details',
-                  child: Container(
-                    height: 90,
-                    padding: const EdgeInsets.only(top: 12, bottom: 8),
-                    child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("Latoya M. Jones"),
-                          Text("3033 Sumner Street"),
-                          Text("Gardena, CA 90247"),
-                        ]),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8),
+                  child: OutlineLabelCard(
+                    title: 'Delivery Details',
+                    child: BlocBuilder<DeliveryInfoFetchCubit,
+                        DeliveryInfoFetchState>(
+                      builder: (context, state) {
+                        if (state.deliveryInformation.isNotEmpty) {
+                          return Container(
+                            padding: const EdgeInsets.only(
+                                top: 16, bottom: 12, left: 4, right: 10),
+                            child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "${state.deliveryInformation.first.firstName.capitalize()} ${state.deliveryInformation.first.lastName}, ${state.deliveryInformation.first.contactNumber}",
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    "${state.deliveryInformation.first.addressLineOne}, ${state.deliveryInformation.first.addressLineTwo}, ${state.deliveryInformation.first.city}, ${state.deliveryInformation.first.zipCode}",
+                                    style: const TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w500),
+                                  ),
+                                ]),
+                          );
+                        } else {
+                          return Container(
+                            height: 50,
+                            padding: const EdgeInsets.only(top: 20, bottom: 8,left: 4),
+                            child: const Text(
+                                "Please select delivery information",
+                            ),
+                          );
+                        }
+                      },
+                    ),
                   ),
                 ),
                 Positioned(
                   right: -4,
-                  top: -4,
+                  top: 0,
                   child: IconButton(
                     onPressed: () {
-                      Navigator.of(context).pushNamed(AppRouter.deliveryDetails);
+                      Navigator.of(context)
+                          .pushNamed(AppRouter.deliveryDetails);
                     },
                     icon: const Icon(
                       Icons.edit,
