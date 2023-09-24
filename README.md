@@ -20,7 +20,7 @@
 | Cart          | Get Cached Cart UseCase<br/>Get Remote Cart UseCase<br/>Add Cart Item UseCase<br/>Sync Cart UseCase |
 | User          | Get Cached User UseCase<br/>SignIn UseCase<br/>SignUp UseCase<br/>SignOut UseCase                   |
 | Delivery Info | Get Delivery Info UseCase<br/>Add Delivery Info UseCase                                             |
-| Order         |                                                                                                     |
+| Order         | Add Order UseCase                                                                                   |
 
 ---
 

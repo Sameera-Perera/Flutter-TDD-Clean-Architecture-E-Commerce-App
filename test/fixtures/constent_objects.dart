@@ -1,6 +1,6 @@
 import 'package:eshop/data/models/cart/cart_item_model.dart';
 import 'package:eshop/data/models/category/category_model.dart';
-import 'package:eshop/data/models/order/order_model.dart';
+import 'package:eshop/data/models/order/order_details_model.dart';
 import 'package:eshop/data/models/product/price_tag_model.dart';
 import 'package:eshop/data/models/product/product_model.dart';
 import 'package:eshop/data/models/user/delivery_info_model.dart';

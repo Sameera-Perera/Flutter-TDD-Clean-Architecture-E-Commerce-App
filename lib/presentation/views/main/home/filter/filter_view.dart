@@ -1,8 +1,9 @@
-import 'package:eshop/domain/usecases/product/get_product_usecase.dart';
-import 'package:eshop/presentation/blocs/category/category_bloc.dart';
-import 'package:eshop/presentation/blocs/filter/filter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../../domain/usecases/product/get_product_usecase.dart';
+import '../../../../blocs/category/category_bloc.dart';
+import '../../../../blocs/filter/filter_cubit.dart';
 
 class FilterView extends StatelessWidget {
   const FilterView({Key? key}) : super(key: key);

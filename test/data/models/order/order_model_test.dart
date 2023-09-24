@@ -1,4 +1,4 @@
-import 'package:eshop/domain/entities/order/order.dart';
+import 'package:eshop/domain/entities/order/order_details.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../fixtures/constent_objects.dart';
