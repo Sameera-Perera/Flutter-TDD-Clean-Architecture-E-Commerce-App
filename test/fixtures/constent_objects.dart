@@ -1,6 +1,7 @@
 import 'package:eshop/data/models/cart/cart_item_model.dart';
 import 'package:eshop/data/models/category/category_model.dart';
 import 'package:eshop/data/models/order/order_details_model.dart';
+import 'package:eshop/data/models/order/order_item_model.dart';
 import 'package:eshop/data/models/product/price_tag_model.dart';
 import 'package:eshop/data/models/product/product_model.dart';
 import 'package:eshop/data/models/user/delivery_info_model.dart';
@@ -39,20 +40,34 @@ final tCategoryModel = CategoryModel(
   image: "image",
 );
 
-//delivery info
-// const tDeliveryInfoModel = DeliveryInfoModel(
-//   id: "1",
-//   receiver: "receiver",
-//   addressLineOne: "addressLineOne",
-//   addressLineTwo: "addressLineTwo",
-// );
+// delivery info
+const tDeliveryInfoModel = DeliveryInfoModel(
+  id: '1',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  addressLineOne: 'addressLineOne',
+  addressLineTwo: 'addressLineTwo',
+  city: 'city',
+  zipCode: 'zipCode',
+  contactNumber: 'contactNumber',
+);
 
-//order
-// final tOrderModel = OrderModel(
-//   id: '1',
-//   products: [tProductModel],
-//   deliveryInfo: tDeliveryInfoModel,
-// );
+// order details
+final tOrderDetailsModel = OrderDetailsModel(
+  id: '1',
+  orderItems: [tOrderItemModel],
+  deliveryInfo: tDeliveryInfoModel,
+  discount: 0,
+);
+
+// order item
+final tOrderItemModel = OrderItemModel(
+  id: '1',
+  product: tProductModel,
+  priceTag: tPriceTagModel,
+  price: 100,
+  quantity: 1,
+);
 
 //user
 const tUserModel = UserModel(
