@@ -9,8 +9,15 @@ List<DeliveryInfoModel> deliveryInfoModelListFromRemoteJson(String str) =>
     List<DeliveryInfoModel>.from(
         json.decode(str)['data'].map((x) => DeliveryInfoModel.fromJson(x)));
 
+List<DeliveryInfoModel> deliveryInfoModelListFromLocalJson(String str) =>
+    List<DeliveryInfoModel>.from(
+        json.decode(str).map((x) => DeliveryInfoModel.fromJson(x)));
+
 String deliveryInfoModelToJson(DeliveryInfoModel data) =>
     json.encode(data.toJson());
+
+String deliveryInfoModelListToJson(List<DeliveryInfoModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DeliveryInfoModel extends DeliveryInfo {
   const DeliveryInfoModel({

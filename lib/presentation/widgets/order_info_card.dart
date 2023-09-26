@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -16,31 +17,86 @@ class OrderInfoCard extends StatelessWidget {
         child: OutlineLabelCard(
           title: '',
           child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 12),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+            padding: const EdgeInsets.only(
+              top: 12
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Order ID : ${orderDetails!.id}",
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                      Text(
-                        "Order Items : ${orderDetails!.orderItems.length}",
-                        style: const TextStyle(
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
+                Text(
+                  "Order ID : ${orderDetails!.id}",
+                  style: const TextStyle(
+                    fontSize: 14,
                   ),
                 ),
+                Text(
+                  "Order Items : ${orderDetails!.orderItems.length}",
+                  style: const TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  "Order Price : ${orderDetails!.orderItems.fold(0.0, (previousValue, element) => (previousValue + (element.price * element.quantity)))}",
+                  style: const TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                Text(
+                  "Discount : ${orderDetails!.discount}",
+                  style: const TextStyle(
+                    fontSize: 14,
+                  ),
+                ),
+                Column(
+                  children: orderDetails!.orderItems
+                      .map((product) => Padding(
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: Row(
+                      children: [
+                        SizedBox(
+                          width: 75,
+                          child: AspectRatio(
+                            aspectRatio: 0.88,
+                            child: ClipRRect(
+                                borderRadius:
+                                BorderRadius.circular(8.0),
+                                child: Padding(
+                                  padding:
+                                  const EdgeInsets.all(8.0),
+                                  child: CachedNetworkImage(
+                                    imageUrl: product
+                                        .product.images.first,
+                                  ),
+                                )),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        Flexible(
+                          child: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            mainAxisAlignment:
+                            MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                product.product.name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge,
+                              ),
+                              const SizedBox(
+                                height: 4,
+                              ),
+                              Text(
+                                  '\$${product.priceTag.price.toStringAsFixed(2)}')
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ))
+                      .toList(),
+                )
               ],
             ),
           ),

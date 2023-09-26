@@ -15,7 +15,7 @@ abstract class ProductLocalDataSource {
   Future<void> cacheProducts(ProductResponseModel productsToCache);
 }
 
-const CACHED_PRODUCTS = 'CACHED_PRODUCTS';
+const cachedProducts = 'CACHED_PRODUCTS';
 
 class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -23,7 +23,7 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
 
   @override
   Future<ProductResponseModel> getLastProducts() {
-    final jsonString = sharedPreferences.getString(CACHED_PRODUCTS);
+    final jsonString = sharedPreferences.getString(cachedProducts);
     if (jsonString != null) {
       return Future.value(productResponseModelFromJson(jsonDecode(jsonString)));
     } else {
@@ -34,7 +34,7 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   @override
   Future<void> cacheProducts(ProductResponseModel productsToCache) {
     return sharedPreferences.setString(
-      CACHED_PRODUCTS,
+      cachedProducts,
       json.encode(productResponseModelToJson(productsToCache)),
     );
   }

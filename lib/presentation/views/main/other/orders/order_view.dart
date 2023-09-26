@@ -17,16 +17,31 @@ class OrderView extends StatelessWidget {
         builder: (context, state) {
           if (state is OrderFetchSuccess) {
             return ListView.builder(
+              physics: const BouncingScrollPhysics(),
               itemCount: state.orders.length,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+                bottom: (10 + MediaQuery.of(context).padding.bottom),
+                top: 10,
+              ),
               itemBuilder: (context, index) => OrderInfoCard(
                 orderDetails: state.orders[index],
               ),
             );
+          } else {
+            return ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              itemCount: 6,
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+                bottom: (10 + MediaQuery.of(context).padding.bottom),
+                top: 10,
+              ),
+              itemBuilder: (context, index) => const OrderInfoCard(),
+            );
           }
-          return Container(
-            child: Text("Test"),
-          );
         },
       ),
     );

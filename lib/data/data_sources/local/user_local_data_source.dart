@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/error/exceptions.dart';
 import '../../models/user/user_model.dart';
+import 'cart_local_data_source.dart';
 
 abstract class UserLocalDataSource {
   Future<String> getToken();
@@ -20,8 +21,8 @@ abstract class UserLocalDataSource {
   Future<bool> isTokenAvailable();
 }
 
-const CACHED_TOKEN = 'TOKEN';
-const CACHED_USER = 'USER';
+const cachedToken = 'TOKEN';
+const cachedUser = 'USER';
 
 class UserLocalDataSourceImpl implements UserLocalDataSource {
   final FlutterSecureStorage secureStorage;
@@ -31,7 +32,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
   @override
   Future<String> getToken() async {
-    String? token = await secureStorage.read(key: CACHED_TOKEN);
+    String? token = await secureStorage.read(key: cachedToken);
     if (token != null) {
       return Future.value(token);
     } else {
@@ -41,7 +42,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
 
   @override
   Future<void> cacheToken(String token) async {
-    await secureStorage.write(key: CACHED_TOKEN, value: token);
+    await secureStorage.write(key: cachedToken, value: token);
   }
 
   @override
@@ -50,7 +51,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
       await secureStorage.deleteAll();
       sharedPreferences.setBool('first_run', false);
     }
-    final jsonString = sharedPreferences.getString(CACHED_USER);
+    final jsonString = sharedPreferences.getString(cachedUser);
     if (jsonString != null) {
       return Future.value(userModelFromJson(jsonDecode(jsonString)));
     } else {
@@ -61,20 +62,21 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   @override
   Future<void> cacheUser(UserModel user) {
     return sharedPreferences.setString(
-      CACHED_USER,
+      cachedUser,
       json.encode(userModelToJson(user)),
     );
   }
 
   @override
   Future<bool> isTokenAvailable() async {
-    String? token = await secureStorage.read(key: CACHED_TOKEN);
+    String? token = await secureStorage.read(key: cachedToken);
     return Future.value((token != null));
   }
 
   @override
   Future<void> clearCache() async {
     await secureStorage.deleteAll();
-    await sharedPreferences.clear();
+    await sharedPreferences.remove(cachedCart);
+    await sharedPreferences.remove(cachedUser);
   }
 }

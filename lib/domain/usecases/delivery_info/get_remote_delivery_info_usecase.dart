@@ -5,12 +5,12 @@ import '../../../core/usecases/usecase.dart';
 import '../../entities/user/delivery_info.dart';
 import '../../repositories/delivery_info_repository.dart';
 
-class GetDeliveryInfoUseCase implements UseCase<List<DeliveryInfo>, NoParams> {
+class GetRemoteDeliveryInfoUseCase implements UseCase<List<DeliveryInfo>, NoParams> {
   final DeliveryInfoRepository repository;
-  GetDeliveryInfoUseCase(this.repository);
+  GetRemoteDeliveryInfoUseCase(this.repository);
 
   @override
   Future<Either<Failure, List<DeliveryInfo>>> call(NoParams params) async {
-    return await repository.getDeliveryInfo();
+    return await repository.getRemoteDeliveryInfo();
   }
 }

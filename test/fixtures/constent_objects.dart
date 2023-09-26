@@ -13,7 +13,7 @@ final tProductModel = ProductModel(
   name: "name",
   description: "description",
   priceTags: [PriceTagModel(id: "1", name: "name", price: 100)],
-  categories: [CategoryModel(id: "1", name: "name", image: "image")],
+  categories: const [CategoryModel(id: "1", name: "name", image: "image")],
   images: const ["image"],
   createdAt: DateTime(2000),
   updatedAt: DateTime(2000),
@@ -34,7 +34,7 @@ final tCartItemModel = CartItemModel(
 );
 
 //category
-final tCategoryModel = CategoryModel(
+const tCategoryModel = CategoryModel(
   id: "1",
   name: "name",
   image: "image",

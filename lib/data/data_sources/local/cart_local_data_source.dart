@@ -11,7 +11,7 @@ abstract class CartLocalDataSource {
   Future<bool> clearCart();
 }
 
-const CACHED_CART = 'CACHED_CART';
+const cachedCart = 'CACHED_CART';
 
 class CartLocalDataSourceImpl implements CartLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -20,14 +20,14 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
   @override
   Future<void> cacheCart(List<CartItemModel> cart) {
     return sharedPreferences.setString(
-      CACHED_CART,
+      cachedCart,
       json.encode(cartItemModelToJson(cart)),
     );
   }
 
   @override
   Future<void> cacheCartItem(CartItemModel cartItem) {
-    final jsonString = sharedPreferences.getString(CACHED_CART);
+    final jsonString = sharedPreferences.getString(cachedCart);
     final List<CartItemModel> cart = [];
     if (jsonString != null) {
       cart.addAll(cartItemModelListFromJson(jsonDecode(jsonString)));
@@ -38,14 +38,14 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
       cart.add(cartItem);
     }
     return sharedPreferences.setString(
-      CACHED_CART,
+      cachedCart,
       json.encode(cartItemModelToJson(cart)),
     );
   }
 
   @override
   Future<List<CartItemModel>?> getCart() {
-    final jsonString = sharedPreferences.getString(CACHED_CART);
+    final jsonString = sharedPreferences.getString(cachedCart);
     if (jsonString != null) {
       return Future.value(cartItemModelListFromJson(jsonDecode(jsonString)));
     } else {
@@ -55,6 +55,6 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
 
   @override
   Future<bool> clearCart()async {
-    return sharedPreferences.remove(CACHED_CART);
+    return sharedPreferences.remove(cachedCart);
   }
 }

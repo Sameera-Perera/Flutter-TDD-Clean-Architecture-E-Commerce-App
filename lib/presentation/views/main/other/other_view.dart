@@ -1,10 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop/presentation/blocs/cart/cart_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constant/images.dart';
 import '../../../../core/router/app_router.dart';
+import '../../../blocs/cart/cart_bloc.dart';
 import '../../../blocs/user/user_bloc.dart';
 import '../../../widgets/other_item_card.dart';
 
@@ -25,7 +25,10 @@ class OtherView extends StatelessWidget {
                 if (state is UserLogged) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.of(context).pushNamed(AppRouter.userProfile);
+                      Navigator.of(context).pushNamed(
+                        AppRouter.userProfile,
+                        arguments: state.user,
+                      );
                     },
                     child: Row(
                       children: [

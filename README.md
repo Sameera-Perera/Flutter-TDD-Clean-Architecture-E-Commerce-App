@@ -5,7 +5,7 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 <!-- PROJECT LOGO -->
 <p align="center">
-  <h3 align="center">EShop - Flutter TDD Clean Architecture E-Commerce App</h3>
+  <h3 align="center">Flutter TDD Clean Architecture E-Commerce App - EShop</h3>
 </p>
 
 [![Product Name Screen Shot][product-screenshot]](https://example.com)
@@ -24,7 +24,7 @@
 
 ---
 
-## Examples
+## Demo Sample
 
 <div style="text-align: center">
     <table>

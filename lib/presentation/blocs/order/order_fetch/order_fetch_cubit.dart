@@ -15,13 +15,11 @@ class OrderFetchCubit extends Cubit<OrderFetchState> {
     try {
       emit(OrderFetchLoading());
       final result = await _getOrdersUseCase(NoParams());
-      print("object");
       result.fold(
         (failure) => emit(OrderFetchFail()),
         (orders) => emit(OrderFetchSuccess(orders)),
       );
     } catch (e) {
-      print(e);
       emit(OrderFetchFail());
     }
   }

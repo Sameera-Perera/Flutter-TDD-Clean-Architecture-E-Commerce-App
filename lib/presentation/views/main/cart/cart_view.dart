@@ -1,15 +1,23 @@
-import 'package:eshop/core/error/failures.dart';
-import 'package:eshop/core/router/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/constant/images.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/router/app_router.dart';
+import '../../../../domain/entities/cart/cart_item.dart';
 import '../../../blocs/cart/cart_bloc.dart';
 import '../../../widgets/cart_item_card.dart';
 import '../../../widgets/input_form_button.dart';
 
-class CartView extends StatelessWidget {
+class CartView extends StatefulWidget {
   const CartView({Key? key}) : super(key: key);
+
+  @override
+  State<CartView> createState() => _CartViewState();
+}
+
+class _CartViewState extends State<CartView> {
+  List<CartItem> selectedCartItems = [];
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +82,18 @@ class CartView extends StatelessWidget {
                             } else {
                               return CartItemCard(
                                 cartItem: state.cart[index],
+                                isSelected: selectedCartItems.any(
+                                    (element) => element == state.cart[index]),
+                                onLongClick: () {
+                                  setState(() {
+                                    if(selectedCartItems.any(
+                                            (element) => element == state.cart[index])){
+                                      selectedCartItems.remove(state.cart[index]);
+                                    } else {
+                                      selectedCartItems.add(state.cart[index]);
+                                    }
+                                  });
+                                },
                               );
                             }
                           },
@@ -94,8 +114,8 @@ class CartView extends StatelessWidget {
                 right: 0,
                 child: Container(
                   color: Colors.white,
-                  padding: const EdgeInsets.symmetric(horizontal: 0,
-                  vertical: 8),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -125,8 +145,9 @@ class CartView extends StatelessWidget {
                           cornerRadius: 36,
                           padding: EdgeInsets.zero,
                           onClick: () {
-                            Navigator.of(context)
-                                .pushNamed(AppRouter.orderCheckout, arguments: state.cart);
+                            Navigator.of(context).pushNamed(
+                                AppRouter.orderCheckout,
+                                arguments: state.cart);
                           },
                           titleText: 'Checkout',
                         ),

@@ -9,11 +9,15 @@ class CartItemCard extends StatelessWidget {
   final CartItem? cartItem;
   final Function? onFavoriteToggle;
   final Function? onClick;
+  final Function()? onLongClick;
+  final bool isSelected;
   const CartItemCard({
     Key? key,
     this.cartItem,
     this.onFavoriteToggle,
     this.onClick,
+    this.onLongClick,
+    this.isSelected = false,
   }) : super(key: key);
 
   @override
@@ -38,11 +42,25 @@ class CartItemCard extends StatelessWidget {
               arguments: cartItem!.product);
         }
       },
+      onLongPress: onLongClick,
       child: Stack(
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // if (isSelected)
+              //   Container(
+              //     width: 20,
+              //     alignment: Alignment.center,
+              //     child: Container(
+              //       width: 25,
+              //       height: 25,
+              //       decoration: BoxDecoration(
+              //           color: Colors.black87,
+              //           shape: BoxShape.circle
+              //       ),
+              //     ),
+              //   ),
               Container(
                 padding: const EdgeInsets.all(2),
                 decoration: BoxDecoration(
@@ -51,7 +69,6 @@ class CartItemCard extends StatelessWidget {
                     BoxShadow(
                       color: Colors.grey.shade50,
                       blurRadius: 1,
-                      // offset: Offset(4, 8), // Shadow position
                     ),
                   ],
                 ),

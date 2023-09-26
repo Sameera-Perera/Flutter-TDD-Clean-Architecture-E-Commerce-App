@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:eshop/data/models/order/order_details_model.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../domain/entities/order/order_details.dart';

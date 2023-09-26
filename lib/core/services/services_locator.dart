@@ -1,6 +1,8 @@
+import 'package:eshop/data/data_sources/local/delivery_info_local_data_source.dart';
 import 'package:eshop/data/data_sources/remote/order_remote_data_source.dart';
 import 'package:eshop/data/repositories/order_repository_impl.dart';
 import 'package:eshop/domain/repositories/order_repository.dart';
+import 'package:eshop/domain/usecases/delivery_info/get_cached_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/order/add_order_usecase.dart';
 import 'package:eshop/domain/usecases/order/get_remote_orders_usecase.dart';
 import 'package:eshop/presentation/blocs/order/order_add/order_add_cubit.dart';
@@ -39,7 +41,7 @@ import '../../domain/usecases/category/filter_category_usecase.dart';
 import '../../domain/usecases/category/get_cached_category_usecase.dart';
 import '../../domain/usecases/category/get_remote_category_usecase.dart';
 import '../../domain/usecases/delivery_info/add_dilivey_info_usecase.dart';
-import '../../domain/usecases/delivery_info/get_delivery_info_usecase.dart';
+import '../../domain/usecases/delivery_info/get_remote_delivery_info_usecase.dart';
 import '../../domain/usecases/product/get_product_usecase.dart';
 import '../../domain/usecases/user/get_cached_user_usecase.dart';
 import '../../domain/usecases/user/sign_in_usecase.dart';
@@ -138,16 +140,17 @@ Future<void> init() async {
     () => DeliveryInfoAddCubit(sl()),
   );
   sl.registerFactory(
-    () => DeliveryInfoFetchCubit(sl()),
+    () => DeliveryInfoFetchCubit(sl(),sl()),
   );
   // Use cases
   sl.registerLazySingleton(() => AddDeliveryInfoUseCase(sl()));
-  sl.registerLazySingleton(() => GetDeliveryInfoUseCase(sl()));
+  sl.registerLazySingleton(() => GetRemoteDeliveryInfoUseCase(sl()));
+  sl.registerLazySingleton(() => GetCachedDeliveryInfoUseCase(sl()));
   // Repository
   sl.registerLazySingleton<DeliveryInfoRepository>(
     () => DeliveryInfoRepositoryImpl(
       remoteDataSource: sl(),
-      // localDataSource: sl(),
+      localDataSource: sl(),
       networkInfo: sl(),
       userLocalDataSource: sl(),
     ),
@@ -155,6 +158,9 @@ Future<void> init() async {
   // Data sources
   sl.registerLazySingleton<DeliveryInfoRemoteDataSource>(
     () => DeliveryInfoRemoteDataSourceImpl(client: sl()),
+  );
+  sl.registerLazySingleton<DeliveryInfoLocalDataSource>(
+        () => DeliveryInfoLocalDataSourceImpl(sharedPreferences: sl()),
   );
 
   //Features - Order

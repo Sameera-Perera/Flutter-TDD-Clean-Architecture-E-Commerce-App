@@ -5,6 +5,7 @@ import '../../data/models/user/delivery_info_model.dart';
 import '../entities/user/delivery_info.dart';
 
 abstract class DeliveryInfoRepository {
-  Future<Either<Failure, List<DeliveryInfo>>> getDeliveryInfo();
+  Future<Either<Failure, List<DeliveryInfo>>> getRemoteDeliveryInfo();
+  Future<Either<Failure, List<DeliveryInfo>>> getCachedDeliveryInfo();
   Future<Either<Failure, DeliveryInfo>> addDeliveryInfo(DeliveryInfoModel param);
 }

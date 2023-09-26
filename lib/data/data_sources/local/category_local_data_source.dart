@@ -14,7 +14,7 @@ abstract class CategoryLocalDataSource {
   Future<void> cacheCategories(List<CategoryModel> categoriesToCache);
 }
 
-const CACHED_CATEGORIES = 'CACHED_CATEGORIES';
+const cachedCategories = 'CACHED_CATEGORIES';
 
 class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -22,7 +22,7 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
 
   @override
   Future<List<CategoryModel>> getCategories() {
-    final jsonString = sharedPreferences.getString(CACHED_CATEGORIES);
+    final jsonString = sharedPreferences.getString(cachedCategories);
     if (jsonString != null) {
       return Future.value(categoryModelListFromLocalJson(jsonString));
     } else {
@@ -33,7 +33,7 @@ class CategoryLocalDataSourceImpl implements CategoryLocalDataSource {
   @override
   Future<void> cacheCategories(List<CategoryModel> categoriesToCache) {
     return sharedPreferences.setString(
-      CACHED_CATEGORIES,
+      cachedCategories,
       categoryModelToJson(categoriesToCache),
     );
   }

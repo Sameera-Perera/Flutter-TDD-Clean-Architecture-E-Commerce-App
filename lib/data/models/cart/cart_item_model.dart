@@ -16,7 +16,7 @@ String cartItemModelToJson(List<CartItemModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CartItemModel extends CartItem {
-  CartItemModel({
+  const CartItemModel({
     String? id,
     required ProductModel product,
     required PriceTagModel priceTag,

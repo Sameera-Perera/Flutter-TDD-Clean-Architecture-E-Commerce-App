@@ -2,13 +2,12 @@ import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
 import '../../../core/constant/strings.dart';
-import '../../../domain/entities/user/delivery_info.dart';
 import '../../models/user/delivery_info_model.dart';
 
 abstract class DeliveryInfoRemoteDataSource {
-  Future<List<DeliveryInfo>> getDeliveryInfo(String token);
+  Future<List<DeliveryInfoModel>> getDeliveryInfo(String token);
 
-  Future<DeliveryInfo> addDeliveryInfo(DeliveryInfoModel params, String token);
+  Future<DeliveryInfoModel> addDeliveryInfo(DeliveryInfoModel params, String token);
 }
 
 class DeliveryInfoRemoteDataSourceImpl implements DeliveryInfoRemoteDataSource {
@@ -16,7 +15,7 @@ class DeliveryInfoRemoteDataSourceImpl implements DeliveryInfoRemoteDataSource {
   DeliveryInfoRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<List<DeliveryInfo>> getDeliveryInfo(token) async {
+  Future<List<DeliveryInfoModel>> getDeliveryInfo(token) async {
     final response = await client.get(
       Uri.parse('$baseUrl/users/delivery-info'),
       headers: {
@@ -32,7 +31,7 @@ class DeliveryInfoRemoteDataSourceImpl implements DeliveryInfoRemoteDataSource {
   }
 
   @override
-  Future<DeliveryInfo> addDeliveryInfo(params, token) async {
+  Future<DeliveryInfoModel> addDeliveryInfo(params, token) async {
     final response = await client.post(
       Uri.parse('$baseUrl/users/delivery-info'),
       headers: {

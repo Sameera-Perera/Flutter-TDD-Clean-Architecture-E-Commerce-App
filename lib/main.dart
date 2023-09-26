@@ -1,6 +1,3 @@
-import 'package:eshop/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
-import 'package:eshop/presentation/blocs/order/order_add/order_add_cubit.dart';
-import 'package:eshop/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:oktoast/oktoast.dart';
@@ -13,10 +10,12 @@ import 'domain/usecases/product/get_product_usecase.dart';
 import 'presentation/blocs/cart/cart_bloc.dart';
 import 'presentation/blocs/category/category_bloc.dart';
 import 'presentation/blocs/delivery_info/delivery_info_add/delivery_info_add_cubit.dart';
+import 'presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import 'presentation/blocs/filter/filter_cubit.dart';
 
 import 'core/services/services_locator.dart' as di;
 import 'presentation/blocs/home/navbar_cubit.dart';
+import 'presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
 import 'presentation/blocs/product/product_bloc.dart';
 import 'presentation/blocs/user/user_bloc.dart';
 
