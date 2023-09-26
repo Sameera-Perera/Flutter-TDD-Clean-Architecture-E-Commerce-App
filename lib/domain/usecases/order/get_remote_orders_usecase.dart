@@ -5,12 +5,12 @@ import '../../../core/usecases/usecase.dart';
 import '../../entities/order/order_details.dart';
 import '../../repositories/order_repository.dart';
 
-class AddOrderUseCase implements UseCase<OrderDetails, OrderDetails> {
+class GetRemoteOrdersUseCase implements UseCase<List<OrderDetails>, NoParams> {
   final OrderRepository repository;
-  AddOrderUseCase(this.repository);
+  GetRemoteOrdersUseCase(this.repository);
 
   @override
-  Future<Either<Failure, OrderDetails>> call(OrderDetails params) async {
-    return await repository.addOrder(params);
+  Future<Either<Failure, List<OrderDetails>>> call(NoParams params) async {
+    return await repository.getRemoteOrders();
   }
 }

@@ -9,7 +9,7 @@ class OrderAddLoading extends OrderAddState {}
 
 class OrderAddSuccess extends OrderAddState {
   final OrderDetails order;
-  OrderAddSuccess({required this.order});
+  OrderAddSuccess(this.order);
 }
 
 class OrderAddFail extends OrderAddState {}

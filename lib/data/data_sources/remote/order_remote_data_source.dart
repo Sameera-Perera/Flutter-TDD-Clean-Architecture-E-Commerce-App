@@ -6,16 +6,17 @@ import '../../models/order/order_details_model.dart';
 
 abstract class OrderRemoteDataSource {
   Future<OrderDetailsModel> addOrder(OrderDetailsModel params, String token);
+  Future<List<OrderDetailsModel>> getOrders(String token);
 }
 
-class CartRemoteDataSourceSourceImpl implements OrderRemoteDataSource {
+class OrderRemoteDataSourceSourceImpl implements OrderRemoteDataSource {
   final http.Client client;
-  CartRemoteDataSourceSourceImpl({required this.client});
+  OrderRemoteDataSourceSourceImpl({required this.client});
 
   @override
   Future<OrderDetailsModel> addOrder(params, token) async {
     final response = await client.post(
-      Uri.parse('$baseUrl/order'),
+      Uri.parse('$baseUrl/orders'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
@@ -24,6 +25,22 @@ class CartRemoteDataSourceSourceImpl implements OrderRemoteDataSource {
     );
     if (response.statusCode == 200) {
       return orderDetailsModelFromJson(response.body);
+    } else {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<List<OrderDetailsModel>> getOrders(String token) async {
+    final response = await client.get(
+      Uri.parse('$baseUrl/orders'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      return orderDetailsModelListFromJson(response.body);
     } else {
       throw ServerException();
     }

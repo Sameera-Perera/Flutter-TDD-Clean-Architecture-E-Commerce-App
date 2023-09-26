@@ -31,4 +31,12 @@ class OrderItemModel extends OrderItem {
         "price": price,
         "quantity": quantity,
       };
+
+  factory OrderItemModel.fromEntity(OrderItem entity) => OrderItemModel(
+        id: entity.id,
+        product: ProductModel.fromEntity(entity.product),
+        priceTag: PriceTagModel.fromEntity(entity.priceTag),
+        price: entity.price,
+        quantity: entity.quantity,
+      );
 }

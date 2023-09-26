@@ -5,6 +5,7 @@ import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
 import '../../../domain/entities/cart/cart_item.dart';
 import '../../../domain/usecases/cart/add_cart_item_usecase.dart';
+import '../../../domain/usecases/cart/clear_cart_usecase.dart';
 import '../../../domain/usecases/cart/get_cached_cart_usecase.dart';
 import '../../../domain/usecases/cart/sync_cart_usecase.dart';
 
@@ -15,9 +16,13 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   final GetCachedCartUseCase _getCachedCartUseCase;
   final AddCartUseCase _addCartUseCase;
   final SyncCartUseCase _syncCartUseCase;
+  final ClearCartUseCase _clearCartUseCase;
   CartBloc(
-      this._getCachedCartUseCase, this._addCartUseCase, this._syncCartUseCase)
-      : super(const CartInitial(cart: [])) {
+    this._getCachedCartUseCase,
+    this._addCartUseCase,
+    this._syncCartUseCase,
+    this._clearCartUseCase,
+  ) : super(const CartInitial(cart: [])) {
     on<GetCart>(_onGetCart);
     on<AddProduct>(_onAddToCart);
     on<ClearCart>(_onClearCart);
@@ -59,6 +64,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     try {
       emit(const CartLoading(cart: []));
       emit(const CartLoaded(cart: []));
+      await _clearCartUseCase(NoParams());
     } catch (e) {
       emit(CartError(cart: const [], failure: ExceptionFailure()));
     }

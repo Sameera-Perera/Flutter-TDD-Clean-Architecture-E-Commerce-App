@@ -50,6 +50,7 @@ class _CategoryViewState extends State<CategoryView> {
                           onPressed: () {
                             setState(() {
                               _textEditingController.clear();
+                              context.read<CategoryBloc>().add(const FilterCategories(''));
                             });
                           },
                           icon: const Icon(Icons.clear)),

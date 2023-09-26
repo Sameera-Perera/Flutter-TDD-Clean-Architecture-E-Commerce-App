@@ -6,7 +6,6 @@ import '../../domain/entities/order/order_details.dart';
 import '../../domain/repositories/order_repository.dart';
 import '../data_sources/local/user_local_data_source.dart';
 import '../data_sources/remote/order_remote_data_source.dart';
-import '../models/cart/cart_item_model.dart';
 import '../models/order/order_details_model.dart';
 
 class OrderRepositoryImpl implements OrderRepository {
@@ -22,37 +21,36 @@ class OrderRepositoryImpl implements OrderRepository {
     required this.networkInfo,
   });
 
-  // @override
-  // Future<Either<Failure, CartItem>> addToCart(CartItem params) async {
-  //   if (await userLocalDataSource.isTokenAvailable()) {
-  //     final localProducts =
-  //         await localDataSource.cacheCartItem(CartItemModel.fromParent(params));
-  //     final String token = await userLocalDataSource.getToken();
-  //     final remoteProduct = await remoteDataSource.addToCart(
-  //       CartItemModel.fromParent(params),
-  //       token,
-  //     );
-  //     return Right(remoteProduct);
-  //   } else {
-  //     final localProducts =
-  //         await localDataSource.cacheCartItem(CartItemModel.fromParent(params));
-  //     return Right(params);
-  //   }
-  // }
-
   @override
-  Future<Either<Failure, OrderDetails>> addOrder(OrderDetailsModel params) async {
+  Future<Either<Failure, OrderDetails>> addOrder(OrderDetails params) async {
     if (await userLocalDataSource.isTokenAvailable()) {
-      // final localProducts =
-      //     await localDataSource.cacheCartItem(CartItemModel.fromParent(params));
       final String token = await userLocalDataSource.getToken();
       final remoteProduct = await remoteDataSource.addOrder(
-        params,
+        OrderDetailsModel.fromEntity(params),
         token,
       );
       return Right(remoteProduct);
     } else {
       return Left(NetworkFailure());
     }
+  }
+
+  @override
+  Future<Either<Failure, List<OrderDetails>>> getRemoteOrders() async {
+    if (await userLocalDataSource.isTokenAvailable()) {
+      final String token = await userLocalDataSource.getToken();
+      final remoteProduct = await remoteDataSource.getOrders(
+        token,
+      );
+      return Right(remoteProduct);
+    } else {
+      return Left(NetworkFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<OrderDetails>>> getCachedOrders() {
+    // TODO: implement getCachedOrders
+    throw UnimplementedError();
   }
 }

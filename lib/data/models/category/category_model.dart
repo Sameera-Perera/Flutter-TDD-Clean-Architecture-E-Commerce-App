@@ -14,7 +14,7 @@ String categoryModelToJson(List<CategoryModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CategoryModel extends Category {
-  CategoryModel({
+  const CategoryModel({
     required String id,
     required String name,
     required String image,
@@ -35,4 +35,10 @@ class CategoryModel extends Category {
         "name": name,
         "image": image,
       };
+
+  factory CategoryModel.fromEntity(Category entity) => CategoryModel(
+        id: entity.id,
+        name: entity.name,
+        image: entity.image,
+      );
 }

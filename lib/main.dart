@@ -1,4 +1,6 @@
 import 'package:eshop/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
+import 'package:eshop/presentation/blocs/order/order_add/order_add_cubit.dart';
+import 'package:eshop/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:oktoast/oktoast.dart';
@@ -58,6 +60,9 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => di.sl<DeliveryInfoFetchCubit>()..fetchDeliveryInfo(),
+        ),
+        BlocProvider(
+          create: (context) => di.sl<OrderFetchCubit>()..getOrders(),
         ),
       ],
       child: OKToast(

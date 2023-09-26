@@ -1,8 +1,6 @@
-import 'package:eshop/core/extension/string_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:shimmer/shimmer.dart';
 
 import '../../../../../data/models/user/delivery_info_model.dart';
 import '../../../../../domain/entities/user/delivery_info.dart';
@@ -11,7 +9,7 @@ import '../../../../blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_
 import '../../../../widgets/delivery_info_card.dart';
 import '../../../../widgets/input_form_button.dart';
 import '../../../../widgets/input_text_form_field.dart';
-import '../../../../widgets/outline_label_card.dart';
+
 
 class DeliveryInfoView extends StatefulWidget {
   const DeliveryInfoView({Key? key}) : super(key: key);

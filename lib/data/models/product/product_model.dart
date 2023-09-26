@@ -48,4 +48,19 @@ class ProductModel extends Product {
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
       };
+
+  factory ProductModel.fromEntity(Product entity) => ProductModel(
+        id: entity.id,
+        name: entity.name,
+        description: entity.description,
+        priceTags: entity.priceTags
+            .map((priceTag) => PriceTagModel.fromEntity(priceTag))
+            .toList(),
+        categories: entity.categories
+            .map((category) => CategoryModel.fromEntity(category))
+            .toList(),
+        images: entity.images,
+        createdAt: entity.createdAt,
+        updatedAt: entity.updatedAt,
+      );
 }

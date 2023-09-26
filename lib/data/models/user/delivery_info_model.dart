@@ -9,7 +9,8 @@ List<DeliveryInfoModel> deliveryInfoModelListFromRemoteJson(String str) =>
     List<DeliveryInfoModel>.from(
         json.decode(str)['data'].map((x) => DeliveryInfoModel.fromJson(x)));
 
-String deliveryInfoModelToJson(DeliveryInfoModel data) => json.encode(data.toJson());
+String deliveryInfoModelToJson(DeliveryInfoModel data) =>
+    json.encode(data.toJson());
 
 class DeliveryInfoModel extends DeliveryInfo {
   const DeliveryInfoModel({
@@ -34,13 +35,13 @@ class DeliveryInfoModel extends DeliveryInfo {
 
   factory DeliveryInfoModel.fromJson(Map<String, dynamic> json) =>
       DeliveryInfoModel(
+        id: json["_id"],
         firstName: json["firstName"],
         lastName: json["lastName"],
         addressLineOne: json["addressLineOne"],
         addressLineTwo: json["addressLineTwo"],
         city: json["city"],
         zipCode: json["zipCode"],
-        id: json["_id"],
         contactNumber: json["contactNumber"],
       );
 
@@ -54,4 +55,16 @@ class DeliveryInfoModel extends DeliveryInfo {
         "contactNumber": contactNumber,
         "_id": id,
       };
+
+  factory DeliveryInfoModel.fromEntity(DeliveryInfo entity) =>
+      DeliveryInfoModel(
+        id: entity.id,
+        firstName: entity.firstName,
+        lastName: entity.lastName,
+        addressLineOne: entity.addressLineOne,
+        addressLineTwo: entity.addressLineTwo,
+        city: entity.city,
+        zipCode: entity.zipCode,
+        contactNumber: entity.contactNumber,
+      );
 }

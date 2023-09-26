@@ -1,48 +1,56 @@
-import 'package:eshop/data/data_sources/local/cart_local_data_source.dart';
-import 'package:eshop/data/data_sources/local/category_local_data_source.dart';
-import 'package:eshop/data/data_sources/remote/cart_remote_data_source.dart';
-import 'package:eshop/data/data_sources/remote/category_remote_data_source.dart';
-import 'package:eshop/data/data_sources/remote/delivery_info_remote_data_source.dart';
-import 'package:eshop/data/repositories/cart_repository_impl.dart';
-import 'package:eshop/data/repositories/category_repository_impl.dart';
-import 'package:eshop/data/repositories/delivery_info_impl.dart';
-import 'package:eshop/data/repositories/user_repository_impl.dart';
-import 'package:eshop/domain/repositories/cart_repository.dart';
-import 'package:eshop/domain/repositories/category_repository.dart';
-import 'package:eshop/domain/repositories/delivery_info_repository.dart';
-import 'package:eshop/domain/repositories/user_repository.dart';
-import 'package:eshop/domain/usecases/cart/add_cart_item_usecase.dart';
-import 'package:eshop/domain/usecases/cart/get_cached_cart_usecase.dart';
-import 'package:eshop/domain/usecases/cart/get_remote_cart_usecase.dart';
-import 'package:eshop/domain/usecases/cart/sync_cart_usecase.dart';
-import 'package:eshop/domain/usecases/category/filter_category_usecase.dart';
-import 'package:eshop/domain/usecases/category/get_remote_category_usecase.dart';
-import 'package:eshop/domain/usecases/delivery_info/add_dilivey_info_usecase.dart';
-import 'package:eshop/domain/usecases/delivery_info/get_delivery_info_usecase.dart';
-import 'package:eshop/domain/usecases/user/get_cached_user_usecase.dart';
-import 'package:eshop/domain/usecases/user/sign_in_usecase.dart';
-import 'package:eshop/domain/usecases/user/sign_out_usecase.dart';
-import 'package:eshop/domain/usecases/user/sign_up_usecase.dart';
-import 'package:eshop/presentation/blocs/cart/cart_bloc.dart';
-import 'package:eshop/presentation/blocs/category/category_bloc.dart';
-import 'package:eshop/presentation/blocs/delivery_info/delivery_info_add/delivery_info_add_cubit.dart';
-import 'package:eshop/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
-import 'package:eshop/presentation/blocs/user/user_bloc.dart';
+import 'package:eshop/data/data_sources/remote/order_remote_data_source.dart';
+import 'package:eshop/data/repositories/order_repository_impl.dart';
+import 'package:eshop/domain/repositories/order_repository.dart';
+import 'package:eshop/domain/usecases/order/add_order_usecase.dart';
+import 'package:eshop/domain/usecases/order/get_remote_orders_usecase.dart';
+import 'package:eshop/presentation/blocs/order/order_add/order_add_cubit.dart';
+import 'package:eshop/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../data/data_sources/local/cart_local_data_source.dart';
+import '../../data/data_sources/local/category_local_data_source.dart';
 import '../../data/data_sources/local/product_local_data_source.dart';
 import '../../data/data_sources/local/user_local_data_source.dart';
+import '../../data/data_sources/remote/cart_remote_data_source.dart';
+import '../../data/data_sources/remote/category_remote_data_source.dart';
+import '../../data/data_sources/remote/delivery_info_remote_data_source.dart';
 import '../../data/data_sources/remote/product_remote_data_source.dart';
 import '../../data/data_sources/remote/user_remote_data_source.dart';
+import '../../data/repositories/cart_repository_impl.dart';
+import '../../data/repositories/category_repository_impl.dart';
+import '../../data/repositories/delivery_info_impl.dart';
 import '../../data/repositories/product_repository_impl.dart';
+import '../../data/repositories/user_repository_impl.dart';
+import '../../domain/repositories/cart_repository.dart';
+import '../../domain/repositories/category_repository.dart';
+import '../../domain/repositories/delivery_info_repository.dart';
 import '../../domain/repositories/product_repository.dart';
+import '../../domain/repositories/user_repository.dart';
+import '../../domain/usecases/cart/add_cart_item_usecase.dart';
+import '../../domain/usecases/cart/clear_cart_usecase.dart';
+import '../../domain/usecases/cart/get_cached_cart_usecase.dart';
+import '../../domain/usecases/cart/get_remote_cart_usecase.dart';
+import '../../domain/usecases/cart/sync_cart_usecase.dart';
+import '../../domain/usecases/category/filter_category_usecase.dart';
 import '../../domain/usecases/category/get_cached_category_usecase.dart';
+import '../../domain/usecases/category/get_remote_category_usecase.dart';
+import '../../domain/usecases/delivery_info/add_dilivey_info_usecase.dart';
+import '../../domain/usecases/delivery_info/get_delivery_info_usecase.dart';
 import '../../domain/usecases/product/get_product_usecase.dart';
+import '../../domain/usecases/user/get_cached_user_usecase.dart';
+import '../../domain/usecases/user/sign_in_usecase.dart';
+import '../../domain/usecases/user/sign_out_usecase.dart';
+import '../../domain/usecases/user/sign_up_usecase.dart';
+import '../../presentation/blocs/cart/cart_bloc.dart';
+import '../../presentation/blocs/category/category_bloc.dart';
+import '../../presentation/blocs/delivery_info/delivery_info_add/delivery_info_add_cubit.dart';
+import '../../presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import '../../presentation/blocs/product/product_bloc.dart';
+import '../../presentation/blocs/user/user_bloc.dart';
 import '../network/network_info.dart';
 
 final sl = GetIt.instance;
@@ -99,13 +107,14 @@ Future<void> init() async {
   //Features - Cart
   // Bloc
   sl.registerFactory(
-    () => CartBloc(sl(), sl(), sl()),
+    () => CartBloc(sl(), sl(), sl(), sl()),
   );
   // Use cases
   sl.registerLazySingleton(() => GetCachedCartUseCase(sl()));
   sl.registerLazySingleton(() => GetRemoteCartUseCase(sl()));
   sl.registerLazySingleton(() => AddCartUseCase(sl()));
   sl.registerLazySingleton(() => SyncCartUseCase(sl()));
+  sl.registerLazySingleton(() => ClearCartUseCase(sl()));
   // Repository
   sl.registerLazySingleton<CartRepository>(
     () => CartRepositoryImpl(
@@ -146,6 +155,31 @@ Future<void> init() async {
   // Data sources
   sl.registerLazySingleton<DeliveryInfoRemoteDataSource>(
     () => DeliveryInfoRemoteDataSourceImpl(client: sl()),
+  );
+
+  //Features - Order
+  // Bloc
+  sl.registerFactory(
+    () => OrderAddCubit(sl()),
+  );
+  sl.registerFactory(
+    () => OrderFetchCubit(sl()),
+  );
+  // Use cases
+  sl.registerLazySingleton(() => AddOrderUseCase(sl()));
+  sl.registerLazySingleton(() => GetRemoteOrdersUseCase(sl()));
+  // Repository
+  sl.registerLazySingleton<OrderRepository>(
+    () => OrderRepositoryImpl(
+      remoteDataSource: sl(),
+      // localDataSource: sl(),
+      networkInfo: sl(),
+      userLocalDataSource: sl(),
+    ),
+  );
+  // Data sources
+  sl.registerLazySingleton<OrderRemoteDataSource>(
+    () => OrderRemoteDataSourceSourceImpl(client: sl()),
   );
 
   //Features - User

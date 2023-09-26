@@ -77,4 +77,14 @@ class CartRepositoryImpl implements CartRepository {
       return Left(NetworkFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> clearCart() async {
+    bool result = await localDataSource.clearCart();
+    if (result) {
+      return Right(result);
+    } else {
+      return Left(CacheFailure());
+    }
+  }
 }

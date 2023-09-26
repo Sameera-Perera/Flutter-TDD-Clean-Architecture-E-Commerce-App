@@ -1,8 +1,28 @@
 import 'package:bloc/bloc.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/cupertino.dart';
+
+import '../../../../core/usecases/usecase.dart';
+import '../../../../domain/entities/order/order_details.dart';
+import '../../../../domain/usecases/order/get_remote_orders_usecase.dart';
 
 part 'order_fetch_state.dart';
 
 class OrderFetchCubit extends Cubit<OrderFetchState> {
-  OrderFetchCubit() : super(OrderFetchInitial());
+  final GetRemoteOrdersUseCase _getOrdersUseCase;
+  OrderFetchCubit(this._getOrdersUseCase) : super(OrderFetchInitial());
+
+  void getOrders() async {
+    try {
+      emit(OrderFetchLoading());
+      final result = await _getOrdersUseCase(NoParams());
+      print("object");
+      result.fold(
+        (failure) => emit(OrderFetchFail()),
+        (orders) => emit(OrderFetchSuccess(orders)),
+      );
+    } catch (e) {
+      print(e);
+      emit(OrderFetchFail());
+    }
+  }
 }
