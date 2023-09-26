@@ -19,7 +19,7 @@
 | Category      | Get Cached Category UseCase<br/>Get Remote Category UseCase<br/>Filter Category UseCase             |
 | Cart          | Get Cached Cart UseCase<br/>Get Remote Cart UseCase<br/>Add Cart Item UseCase<br/>Sync Cart UseCase |
 | User          | Get Cached User UseCase<br/>SignIn UseCase<br/>SignUp UseCase<br/>SignOut UseCase                   |
-| Delivery Info | Get Delivery Info UseCase<br/>Add Delivery Info UseCase                                             |
+| Delivery Info | Get Cached Delivery Info UseCase<br/>Get Remote Delivery Info UseCase<br/>Add Delivery Info UseCase |
 | Order         | Get Orders UseCase<br/>Add Order UseCase                                                            |
 
 ---
