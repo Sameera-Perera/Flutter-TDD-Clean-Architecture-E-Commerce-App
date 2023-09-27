@@ -48,4 +48,6 @@ class FilterCubit extends Cubit<FilterProductParams> {
     count = (state.categories.length) + count;
     return count;
   }
+
+  void reset() => emit(const FilterProductParams());
 }

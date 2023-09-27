@@ -16,6 +16,14 @@ class FilterView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Filter"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              context.read<FilterCubit>().reset();
+            },
+            icon: const Icon(Icons.refresh),
+          )
+        ],
       ),
       body: ListView(
         children: [
@@ -54,7 +62,8 @@ class FilterView extends StatelessWidget {
                       builder: (context, filterState) {
                         return Checkbox(
                           value: filterState.categories
-                              .contains(categoryState.categories[index]),
+                                  .contains(categoryState.categories[index]) ||
+                              filterState.categories.isEmpty,
                           onChanged: (bool? value) {
                             context.read<FilterCubit>().updateCategory(
                                 category: categoryState.categories[index]);

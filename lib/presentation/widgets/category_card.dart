@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eshop/presentation/blocs/filter/filter_cubit.dart';
+import 'package:eshop/presentation/blocs/product/product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -24,6 +25,7 @@ class CategoryCard extends StatelessWidget {
           context.read<FilterCubit>().update(
             category: category
           );
+          context.read<ProductBloc>().add(GetProducts(context.read<FilterCubit>().state));
         }
         // Navigator.of(context).pushNamed(AppRouter.clothDetails, arguments: cloth);
       },
