@@ -27,7 +27,6 @@ class CategoryCard extends StatelessWidget {
           );
           context.read<ProductBloc>().add(GetProducts(context.read<FilterCubit>().state));
         }
-        // Navigator.of(context).pushNamed(AppRouter.clothDetails, arguments: cloth);
       },
       child: category != null
           ? Stack(

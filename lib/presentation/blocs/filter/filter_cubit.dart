@@ -14,9 +14,9 @@ class FilterCubit extends Cubit<FilterProductParams> {
     Category? category,
   }) {
     List<Category> updatedCategories = [];
-    if(category!=null){
+    if (category != null) {
       updatedCategories.add(category);
-    } else if(categories!=null) {
+    } else if (categories != null) {
       updatedCategories.addAll(categories);
     } else {
       updatedCategories.addAll(state.categories);
@@ -32,20 +32,25 @@ class FilterCubit extends Cubit<FilterProductParams> {
   }) {
     List<Category> updatedCategories = [];
     updatedCategories.addAll(state.categories);
-    if(updatedCategories.contains(category)){
+    if (updatedCategories.contains(category)) {
       updatedCategories.remove(category);
     } else {
       updatedCategories.add(category);
     }
-    emit(FilterProductParams(
+    emit(state.copyWith(
       categories: updatedCategories,
     ));
   }
 
+  void updateRange(double min, double max) => emit(state.copyWith(
+        minPrice: min,
+        maxPrice: max,
+      ));
 
   int getFiltersCount() {
     int count = 0;
     count = (state.categories.length) + count;
+    count = count + ((state.minPrice!=0 || state.maxPrice!=10000)? 1 : 0);
     return count;
   }
 

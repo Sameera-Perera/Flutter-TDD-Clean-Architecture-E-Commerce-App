@@ -50,29 +50,30 @@ class FilterView extends StatelessWidget {
                   horizontal: 20,
                   vertical: 10,
                 ),
-                itemBuilder: (context, index) => Row(
-                  children: [
-                    Text(
-                      categoryState.categories[index].name,
-                      style: const TextStyle(
-                          fontSize: 16, fontWeight: FontWeight.w500),
-                    ),
-                    const Spacer(),
-                    BlocBuilder<FilterCubit, FilterProductParams>(
-                      builder: (context, filterState) {
-                        return Checkbox(
-                          value: filterState.categories
+                itemBuilder: (context, index) =>
+                    Row(
+                      children: [
+                        Text(
+                          categoryState.categories[index].name,
+                          style: const TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.w500),
+                        ),
+                        const Spacer(),
+                        BlocBuilder<FilterCubit, FilterProductParams>(
+                          builder: (context, filterState) {
+                            return Checkbox(
+                              value: filterState.categories
                                   .contains(categoryState.categories[index]) ||
-                              filterState.categories.isEmpty,
-                          onChanged: (bool? value) {
-                            context.read<FilterCubit>().updateCategory(
-                                category: categoryState.categories[index]);
+                                  filterState.categories.isEmpty,
+                              onChanged: (bool? value) {
+                                context.read<FilterCubit>().updateCategory(
+                                    category: categoryState.categories[index]);
+                              },
+                            );
                           },
-                        );
-                      },
-                    )
-                  ],
-                ),
+                        )
+                      ],
+                    ),
               );
             },
           ),
@@ -86,7 +87,14 @@ class FilterView extends StatelessWidget {
               ),
             ),
           ),
-          const RangeSliderExample()
+          BlocBuilder<FilterCubit, FilterProductParams>(
+            builder: (context, state) {
+              return RangeSliderExample(
+                initMin: state.minPrice,
+                initMax: state.maxPrice,
+              );
+            },
+          )
         ],
       ),
       bottomNavigationBar: SafeArea(
@@ -98,7 +106,9 @@ class FilterView extends StatelessWidget {
               onClick: () {
                 context
                     .read<ProductBloc>()
-                    .add(GetProducts(context.read<FilterCubit>().state));
+                    .add(GetProducts(context
+                    .read<FilterCubit>()
+                    .state));
                 Navigator.of(context).pop();
               },
               titleText: 'Continue',
