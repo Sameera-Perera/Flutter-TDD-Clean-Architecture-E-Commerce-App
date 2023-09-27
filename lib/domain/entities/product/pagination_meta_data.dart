@@ -1,10 +1,10 @@
 class PaginationMetaData {
-  final int page;
+  final int limit;
   final int pageSize;
   final int total;
 
   PaginationMetaData({
-    required this.page,
+    required this.limit,
     required this.pageSize,
     required this.total,
   });

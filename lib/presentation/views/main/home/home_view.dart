@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop/presentation/blocs/filter/filter_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -8,11 +7,13 @@ import '../../../../core/constant/images.dart';
 import '../../../../core/error/failures.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../domain/usecases/product/get_product_usecase.dart';
+import '../../../blocs/filter/filter_cubit.dart';
 import '../../../blocs/product/product_bloc.dart';
 import '../../../blocs/user/user_bloc.dart';
 import '../../../widgets/alert_card.dart';
 import '../../../widgets/input_form_button.dart';
 import '../../../widgets/product_card.dart';
+import '../../../../core/services/services_locator.dart' as di;
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -22,6 +23,27 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
+  final ScrollController scrollController = ScrollController();
+
+  void _scrollListener() {
+    double maxScroll = scrollController.position.maxScrollExtent;
+    double currentScroll = scrollController.position.pixels;
+    double scrollPercentage = 0.7;
+    if (currentScroll > (maxScroll * scrollPercentage)) {
+      if (context.read<ProductBloc>().state is ProductLoaded) {
+        context
+            .read<ProductBloc>()
+            .add(const GetMoreProducts());
+      }
+    }
+  }
+
+  @override
+  void initState() {
+    scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -185,10 +207,14 @@ class _HomeViewState extends State<HomeView> {
                       return Badge(
                         alignment: AlignmentDirectional.topEnd,
                         label: Text(
-                          context.read<FilterCubit>().getFiltersCount().toString(),
+                          context
+                              .read<FilterCubit>()
+                              .getFiltersCount()
+                              .toString(),
                           style: const TextStyle(color: Colors.black87),
                         ),
-                        isLabelVisible: context.read<FilterCubit>().getFiltersCount()!=0,
+                        isLabelVisible:
+                            context.read<FilterCubit>().getFiltersCount() != 0,
                         backgroundColor: Theme.of(context).primaryColor,
                         child: InputFormButton(
                           color: Colors.black87,
@@ -265,6 +291,7 @@ class _HomeViewState extends State<HomeView> {
                     child: GridView.builder(
                       itemCount: state.products.length +
                           ((state is ProductLoading) ? 10 : 0),
+                      controller: scrollController,
                       padding: EdgeInsets.only(
                           top: 18,
                           left: 20,

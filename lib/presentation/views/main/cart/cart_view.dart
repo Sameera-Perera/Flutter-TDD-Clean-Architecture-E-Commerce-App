@@ -69,7 +69,8 @@ class _CartViewState extends State<CartView> {
                           itemCount:
                               (state is CartLoading && state.cart.isEmpty)
                                   ? 10
-                                  : state.cart.length,
+                                  : (state.cart.length +
+                                      ((state is CartLoading) ? 10 : 0)),
                           padding: EdgeInsets.only(
                               top: (MediaQuery.of(context).padding.top + 20),
                               bottom:
@@ -80,15 +81,19 @@ class _CartViewState extends State<CartView> {
                             if (state is CartLoading && state.cart.isEmpty) {
                               return const CartItemCard();
                             } else {
+                              if(state.cart.length<index){
+                                return const CartItemCard();
+                              }
                               return CartItemCard(
                                 cartItem: state.cart[index],
                                 isSelected: selectedCartItems.any(
                                     (element) => element == state.cart[index]),
                                 onLongClick: () {
                                   setState(() {
-                                    if(selectedCartItems.any(
-                                            (element) => element == state.cart[index])){
-                                      selectedCartItems.remove(state.cart[index]);
+                                    if (selectedCartItems.any((element) =>
+                                        element == state.cart[index])) {
+                                      selectedCartItems
+                                          .remove(state.cart[index]);
                                     } else {
                                       selectedCartItems.add(state.cart[index]);
                                     }

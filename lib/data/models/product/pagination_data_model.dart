@@ -6,7 +6,7 @@ class PaginationMetaDataModel extends PaginationMetaData {
     required int pageSize,
     required int total,
   }): super(
-    page: page,
+    limit: page,
     pageSize: pageSize,
     total: total,
   );
@@ -18,7 +18,7 @@ class PaginationMetaDataModel extends PaginationMetaData {
   );
 
   Map<String, dynamic> toJson() => {
-    "page": page,
+    "page": limit,
     "pageSize": pageSize,
     "total": total,
   };

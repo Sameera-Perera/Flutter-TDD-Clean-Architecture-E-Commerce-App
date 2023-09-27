@@ -11,3 +11,9 @@ class GetProducts extends ProductEvent {
   @override
   List<Object> get props => [];
 }
+
+class GetMoreProducts extends ProductEvent {
+  const GetMoreProducts();
+  @override
+  List<Object> get props => [];
+}

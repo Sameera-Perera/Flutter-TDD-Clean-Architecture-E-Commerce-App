@@ -1,3 +1,4 @@
+import 'package:eshop/presentation/blocs/product/product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -33,7 +34,7 @@ class FilterView extends StatelessWidget {
           ),
           BlocBuilder<CategoryBloc, CategoryState>(
             builder: (context, categoryState) {
-              return  ListView.builder(
+              return ListView.builder(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: categoryState.categories.length,
@@ -67,10 +68,7 @@ class FilterView extends StatelessWidget {
             },
           ),
           const Padding(
-            padding: EdgeInsets.only(
-              left: 20,
-              top: 10
-            ),
+            padding: EdgeInsets.only(left: 20, top: 10),
             child: Text(
               "Price Range",
               style: TextStyle(
@@ -88,7 +86,12 @@ class FilterView extends StatelessWidget {
           child: Builder(builder: (context) {
             return InputFormButton(
               color: Colors.black87,
-              onClick: () {},
+              onClick: () {
+                context
+                    .read<ProductBloc>()
+                    .add(GetProducts(context.read<FilterCubit>().state));
+                Navigator.of(context).pop();
+              },
               titleText: 'Continue',
             );
           }),

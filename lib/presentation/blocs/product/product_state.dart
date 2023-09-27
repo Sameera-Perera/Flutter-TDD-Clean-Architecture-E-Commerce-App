@@ -3,29 +3,47 @@ part of 'product_bloc.dart';
 abstract class ProductState extends Equatable {
   final List<Product> products;
   final PaginationMetaData metaData;
-  const ProductState({required this.products, required this.metaData});
+  final FilterProductParams params;
+  const ProductState(
+      {required this.products, required this.metaData, required this.params});
 }
 
 class ProductInitial extends ProductState {
-  const ProductInitial({required super.products, required super.metaData});
+  const ProductInitial({
+    required super.products,
+    required super.metaData,
+    required super.params,
+  });
   @override
   List<Object> get props => [];
 }
 
 class ProductEmpty extends ProductState {
-  const ProductEmpty({required super.products, required super.metaData});
+  const ProductEmpty({
+    required super.products,
+    required super.metaData,
+    required super.params,
+  });
   @override
   List<Object> get props => [];
 }
 
 class ProductLoading extends ProductState {
-  const ProductLoading({required super.products, required super.metaData});
+  const ProductLoading({
+    required super.products,
+    required super.metaData,
+    required super.params,
+  });
   @override
   List<Object> get props => [];
 }
 
 class ProductLoaded extends ProductState {
-  const ProductLoaded({required super.products, required super.metaData});
+  const ProductLoaded({
+    required super.products,
+    required super.metaData,
+    required super.params,
+  });
   @override
   List<Object> get props => [products];
 }
@@ -35,6 +53,7 @@ class ProductError extends ProductState {
   const ProductError({
     required super.products,
     required super.metaData,
+    required super.params,
     required this.failure,
   });
   @override

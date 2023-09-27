@@ -23,7 +23,7 @@ class FilterProductParams {
   final List<Category> categories;
   final double? minPrice;
   final double? maxPrice;
-  final int? skip;
+  final int? limit;
   final int? pageSize;
 
   const FilterProductParams({
@@ -31,7 +31,20 @@ class FilterProductParams {
     this.categories = const [],
     this.minPrice,
     this.maxPrice,
-    this.skip = 0,
+    this.limit = 0,
     this.pageSize = 10,
   });
+
+  FilterProductParams copyWith({
+    final int? skip
+  }) =>
+      FilterProductParams(
+        keyword: keyword,
+        categories: categories,
+        minPrice: minPrice,
+        maxPrice: maxPrice,
+        limit: skip??this.limit,
+        pageSize: pageSize,
+      );
+
 }
