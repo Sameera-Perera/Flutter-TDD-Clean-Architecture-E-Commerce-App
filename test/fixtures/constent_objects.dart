@@ -6,8 +6,11 @@ import 'package:eshop/data/models/product/pagination_data_model.dart';
 import 'package:eshop/data/models/product/price_tag_model.dart';
 import 'package:eshop/data/models/product/product_model.dart';
 import 'package:eshop/data/models/product/product_response_model.dart';
+import 'package:eshop/data/models/user/authentication_response_model.dart';
 import 'package:eshop/data/models/user/delivery_info_model.dart';
 import 'package:eshop/data/models/user/user_model.dart';
+import 'package:eshop/domain/usecases/user/sign_in_usecase.dart';
+import 'package:eshop/domain/usecases/user/sign_up_usecase.dart';
 import 'package:flutter/cupertino.dart';
 
 //products
@@ -92,3 +95,10 @@ const tUserModel = UserModel(
   lastName: 'Text',
   email: 'text@gmail.com',
 );
+
+//
+const tAuthenticationResponseModel =
+    AuthenticationResponseModel(token: 'token', user: tUserModel);
+//params
+const tSignInParams = SignInParams(username: 'username', password: 'password');
+const tSignUpParams = SignUpParams(firstName: 'firstName', lastName: 'lastName', email: 'email', password: 'password');

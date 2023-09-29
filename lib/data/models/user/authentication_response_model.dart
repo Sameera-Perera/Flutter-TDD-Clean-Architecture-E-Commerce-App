@@ -12,7 +12,7 @@ class AuthenticationResponseModel {
   final String token;
   final UserModel user;
 
-  AuthenticationResponseModel({
+  const AuthenticationResponseModel({
     required this.token,
     required this.user,
   });

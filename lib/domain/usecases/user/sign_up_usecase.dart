@@ -20,7 +20,7 @@ class SignUpParams {
   final String lastName;
   final String email;
   final String password;
-  SignUpParams({
+  const SignUpParams({
     required this.firstName,
     required this.lastName,
     required this.email,

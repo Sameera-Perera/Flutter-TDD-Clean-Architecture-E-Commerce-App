@@ -65,10 +65,8 @@ class UserRepositoryImpl implements UserRepository {
         localDataSource.cacheToken(remoteResponse.token);
         localDataSource.cacheUser(remoteResponse.user);
         return Right(remoteResponse.user);
-      } on ServerException {
-        return Left(ServerFailure());
-      } on CredentialFailure {
-        return Left(CredentialFailure());
+      } on Failure catch (failure) {
+        return Left(failure);
       }
     } else {
       return Left(NetworkFailure());
