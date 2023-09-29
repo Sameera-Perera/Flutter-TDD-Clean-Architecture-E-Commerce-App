@@ -15,6 +15,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../data/data_sources/local/cart_local_data_source.dart';
 import '../../data/data_sources/local/category_local_data_source.dart';
+import '../../data/data_sources/local/order_local_data_source.dart';
 import '../../data/data_sources/local/product_local_data_source.dart';
 import '../../data/data_sources/local/user_local_data_source.dart';
 import '../../data/data_sources/remote/cart_remote_data_source.dart';
@@ -178,7 +179,7 @@ Future<void> init() async {
   sl.registerLazySingleton<OrderRepository>(
     () => OrderRepositoryImpl(
       remoteDataSource: sl(),
-      // localDataSource: sl(),
+      localDataSource: sl(),
       networkInfo: sl(),
       userLocalDataSource: sl(),
     ),
@@ -186,6 +187,9 @@ Future<void> init() async {
   // Data sources
   sl.registerLazySingleton<OrderRemoteDataSource>(
     () => OrderRemoteDataSourceSourceImpl(client: sl()),
+  );
+  sl.registerLazySingleton<OrderLocalDataSource>(
+        () => OrderLocalDataSourceImpl(sharedPreferences: sl()),
   );
 
   //Features - User

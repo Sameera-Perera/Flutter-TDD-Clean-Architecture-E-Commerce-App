@@ -1,0 +1,14 @@
+{
+  "_id":"1",
+  "orderItems":[
+    {
+      "_id":"1",
+      "product":"1",
+      "priceTag":"1",
+      "price":100,
+      "quantity":1
+    }
+  ],
+  "deliveryInfo":"1",
+  "discount":0
+}

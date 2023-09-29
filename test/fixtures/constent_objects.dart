@@ -2,10 +2,13 @@ import 'package:eshop/data/models/cart/cart_item_model.dart';
 import 'package:eshop/data/models/category/category_model.dart';
 import 'package:eshop/data/models/order/order_details_model.dart';
 import 'package:eshop/data/models/order/order_item_model.dart';
+import 'package:eshop/data/models/product/pagination_data_model.dart';
 import 'package:eshop/data/models/product/price_tag_model.dart';
 import 'package:eshop/data/models/product/product_model.dart';
+import 'package:eshop/data/models/product/product_response_model.dart';
 import 'package:eshop/data/models/user/delivery_info_model.dart';
 import 'package:eshop/data/models/user/user_model.dart';
+import 'package:flutter/cupertino.dart';
 
 //products
 final tProductModel = ProductModel(
@@ -22,6 +25,19 @@ final tProductModel = ProductModel(
 final tProductModelList = [tProductModel, tProductModel];
 final tProductModelListFuture =
     Future<List<ProductModel>>.value([tProductModel, tProductModel]);
+
+//product response
+final tProductResponseModel = ProductResponseModel(
+  meta: PaginationMetaDataModel(
+    page: 0,
+    pageSize: 0,
+    total: 0,
+  ),
+  data: [
+    tProductModel,
+    tProductModel,
+  ],
+);
 
 //price tag
 final tPriceTagModel = PriceTagModel(id: "1", name: "name", price: 100);

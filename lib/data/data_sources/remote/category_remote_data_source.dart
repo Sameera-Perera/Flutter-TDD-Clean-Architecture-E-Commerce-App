@@ -1,3 +1,4 @@
+import 'package:eshop/core/error/failures.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
@@ -29,7 +30,7 @@ class CategoryRemoteDataSourceImpl implements CategoryRemoteDataSource {
     if (response.statusCode == 200) {
       return categoryModelListFromRemoteJson(response.body);
     } else {
-      throw ServerException();
+      throw ServerFailure();
     }
   }
 }

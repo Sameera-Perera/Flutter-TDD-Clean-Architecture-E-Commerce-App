@@ -8,6 +8,13 @@ List<OrderDetailsModel> orderDetailsModelListFromJson(String str) =>
     List<OrderDetailsModel>.from(
         json.decode(str)['data'].map((x) => OrderDetailsModel.fromJson(x)));
 
+List<OrderDetailsModel> orderDetailsModelListFromLocalJson(String str) =>
+    List<OrderDetailsModel>.from(
+        json.decode(str).map((x) => OrderDetailsModel.fromJson(x)));
+
+String orderModelListToJson(List<OrderDetailsModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 OrderDetailsModel orderDetailsModelFromJson(String str) =>
     OrderDetailsModel.fromJson(json.decode(str)['data']);
 
@@ -38,7 +45,8 @@ class OrderDetailsModel extends OrderDetails {
 
   Map<String, dynamic> toJson() => {
         "_id": id,
-        "orderItems": orderItems,
+        "orderItems": List<dynamic>.from(
+            (orderItems as List<OrderItemModel>).map((x) => x.toJson())),
         "deliveryInfo": deliveryInfo.id,
         "discount": discount,
       };

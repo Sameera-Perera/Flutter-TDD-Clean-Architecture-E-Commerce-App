@@ -1,0 +1,58 @@
+{
+  "_id": "1",
+  "orderItems": [
+    {
+      "_id": "651301997eae44a63472d728",
+      "product": {
+        "_id": "64eb722a41cb9b05eb4420b7",
+        "name": "Text name",
+        "description": "Text description",
+        "priceTags": [
+          {
+            "_id": "64eb728341cb9b05eb4420ba",
+            "name": "White",
+            "price": 50.99,
+            "product": "64eb722a41cb9b05eb4420b7"
+          }
+        ],
+        "categories": [
+          {
+            "_id": "64cecb613357eaec7b1ab31b",
+            "name": "Headphone",
+            "image": "https://res.cloudinary.com/dhyttttax/image/upload/v1693148015/category/headphone_pdqwo2.jpg"
+          }
+        ],
+        "images": [
+          "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/vxyyemcdwcuoooyejehj.jpg",
+          "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/vqiw6cswpnzhgryd3s1l.jpg",
+          "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/tkanjwktt2t0qvybk5xf.jpg",
+          "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/yjxkgevogpaim02wonks.jpg",
+          "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/m2bb9pzzobynrpyo9ike.jpg",
+          "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/xhojjofgfyfpbjwo2vox.jpg"
+        ],
+        "createdAt": "2023-08-27T15:56:26.504Z",
+        "updatedAt": "2023-08-27T16:19:16.683Z"
+      },
+      "priceTag": {
+        "_id": "64eb728341cb9b05eb4420ba",
+        "name": "White",
+        "price": 50.99,
+        "product": "64eb722a41cb9b05eb4420b7"
+      },
+      "price": 50.99,
+      "quantity": 1
+    }
+  ],
+  "deliveryInfo": {
+    "_id": "1",
+    "firstName": "Jon",
+    "lastName": "Perera",
+    "addressLineOne": "23/1 Main Road",
+    "addressLineTwo": "Navinna",
+    "city": "Mahragama",
+    "zipCode": "10800",
+    "contactNumber": "0779125803"
+  },
+  "discount": 0,
+  "orderStatus": 0
+}

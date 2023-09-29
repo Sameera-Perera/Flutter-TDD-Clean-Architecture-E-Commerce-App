@@ -31,12 +31,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
         return Left(failure);
       }
     } else {
-      try {
-        final localCategories = await localDataSource.getCategories();
-        return Right(localCategories);
-      } on Failure catch (failure) {
-        return Left(failure);
-      }
+      return Left(NetworkFailure());
     }
   }
 

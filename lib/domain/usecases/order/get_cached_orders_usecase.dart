@@ -2,7 +2,7 @@
 //
 // import '../../../core/error/failures.dart';
 // import '../../../core/usecases/usecase.dart';
-// import '../../entities/order/order_details.dart';
+// import '../../entities/order/order_details.json';
 // import '../../repositories/order_repository.dart';
 //
 // class GetLocalOrdersUseCase implements UseCase<List<OrderDetails>, NoParams> {

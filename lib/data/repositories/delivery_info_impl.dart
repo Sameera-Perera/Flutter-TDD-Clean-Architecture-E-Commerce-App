@@ -37,15 +37,23 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
 
   @override
   Future<Either<Failure, List<DeliveryInfo>>> getRemoteDeliveryInfo() async {
-    if (await userLocalDataSource.isTokenAvailable()) {
-      final String token = await userLocalDataSource.getToken();
-      final result = await remoteDataSource.getDeliveryInfo(
-        token,
-      );
-      await localDataSource.cacheDeliveryInfo(result);
-      return Right(result);
+    if(await networkInfo.isConnected){
+      if (await userLocalDataSource.isTokenAvailable()) {
+        try {
+          final String token = await userLocalDataSource.getToken();
+          final result = await remoteDataSource.getDeliveryInfo(
+            token,
+          );
+          await localDataSource.cacheDeliveryInfo(result);
+          return Right(result);
+        } on Failure catch (failure) {
+          return Left(failure);
+        }
+      } else {
+        return Left(AuthenticationFailure());
+      }
     } else {
-      return Left(AuthenticationFailure());
+      return Left(NetworkFailure());
     }
   }
 

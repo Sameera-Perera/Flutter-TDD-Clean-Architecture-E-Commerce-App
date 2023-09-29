@@ -36,25 +36,6 @@ class UserRepositoryImpl implements UserRepository {
     });
   }
 
-  Future<Either<Failure, User>> _authenticate(
-    _DataSourceChooser getDataSource,
-  ) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteResponse = await getDataSource();
-        localDataSource.cacheToken(remoteResponse.token);
-        localDataSource.cacheUser(remoteResponse.user);
-        return Right(remoteResponse.user);
-      } on ServerException {
-        return Left(ServerFailure());
-      } on CredentialFailure {
-        return Left(CredentialFailure());
-      }
-    } else {
-      return Left(NetworkFailure());
-    }
-  }
-
   @override
   Future<Either<Failure, User>> getCachedUser() async {
     try {
@@ -74,4 +55,24 @@ class UserRepositoryImpl implements UserRepository {
       return Left(CacheFailure());
     }
   }
+
+  Future<Either<Failure, User>> _authenticate(
+      _DataSourceChooser getDataSource,
+      ) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final remoteResponse = await getDataSource();
+        localDataSource.cacheToken(remoteResponse.token);
+        localDataSource.cacheUser(remoteResponse.user);
+        return Right(remoteResponse.user);
+      } on ServerException {
+        return Left(ServerFailure());
+      } on CredentialFailure {
+        return Left(CredentialFailure());
+      }
+    } else {
+      return Left(NetworkFailure());
+    }
+  }
+
 }
