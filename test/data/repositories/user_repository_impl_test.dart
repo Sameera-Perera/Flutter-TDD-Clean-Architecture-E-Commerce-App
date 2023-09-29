@@ -1,12 +1,8 @@
 import 'package:eshop/core/error/failures.dart';
 import 'package:eshop/core/network/network_info.dart';
-import 'package:eshop/data/data_sources/local/order_local_data_source.dart';
 import 'package:eshop/data/data_sources/local/user_local_data_source.dart';
-import 'package:eshop/data/data_sources/remote/order_remote_data_source.dart';
 import 'package:eshop/data/data_sources/remote/user_remote_data_source.dart';
-import 'package:eshop/data/repositories/order_repository_impl.dart';
 import 'package:eshop/data/repositories/user_repository_impl.dart';
-import 'package:eshop/domain/usecases/user/sign_in_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 

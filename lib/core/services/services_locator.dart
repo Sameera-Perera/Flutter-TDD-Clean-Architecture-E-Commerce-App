@@ -36,7 +36,6 @@ import '../../domain/repositories/user_repository.dart';
 import '../../domain/usecases/cart/add_cart_item_usecase.dart';
 import '../../domain/usecases/cart/clear_cart_usecase.dart';
 import '../../domain/usecases/cart/get_cached_cart_usecase.dart';
-import '../../domain/usecases/cart/get_remote_cart_usecase.dart';
 import '../../domain/usecases/cart/sync_cart_usecase.dart';
 import '../../domain/usecases/category/filter_category_usecase.dart';
 import '../../domain/usecases/category/get_cached_category_usecase.dart';
@@ -114,7 +113,6 @@ Future<void> init() async {
   );
   // Use cases
   sl.registerLazySingleton(() => GetCachedCartUseCase(sl()));
-  sl.registerLazySingleton(() => GetRemoteCartUseCase(sl()));
   sl.registerLazySingleton(() => AddCartUseCase(sl()));
   sl.registerLazySingleton(() => SyncCartUseCase(sl()));
   sl.registerLazySingleton(() => ClearCartUseCase(sl()));
