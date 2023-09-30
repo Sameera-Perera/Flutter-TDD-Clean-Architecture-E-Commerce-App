@@ -26,6 +26,14 @@ class OrderItemModel extends OrderItem {
 
   Map<String, dynamic> toJson() => {
         "_id": id,
+        "product": (product as ProductModel).toJson(),
+        "priceTag": (priceTag as PriceTagModel).toJson(),
+        "price": price,
+        "quantity": quantity,
+      };
+
+  Map<String, dynamic> toJsonBody() => {
+        "_id": id,
         "product": product.id,
         "priceTag": priceTag.id,
         "price": price,

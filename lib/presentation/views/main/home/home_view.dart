@@ -13,7 +13,6 @@ import '../../../blocs/user/user_bloc.dart';
 import '../../../widgets/alert_card.dart';
 import '../../../widgets/input_form_button.dart';
 import '../../../widgets/product_card.dart';
-import '../../../../core/services/services_locator.dart' as di;
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key}) : super(key: key);

@@ -1,0 +1,12 @@
+[
+  {
+    "_id": "1",
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "addressLineOne": "addressLineOne",
+    "addressLineTwo": "addressLineTwo",
+    "city": "city",
+    "zipCode": "zipCode",
+    "contactNumber": "contactNumber"
+  }
+]
