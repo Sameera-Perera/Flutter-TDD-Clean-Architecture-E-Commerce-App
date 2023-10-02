@@ -38,7 +38,7 @@ void main() {
       'should return a JSON map containing the proper data',
       () async {
         // arrange
-        final Map<String, dynamic> result = tOrderDetailsModel.toJson();
+        final Map<String, dynamic> result = tOrderDetailsModel.toJsonBody();
         // act
         final Map<String, dynamic> jsonMap =
             json.decode(fixture('order/order_details_body.json'));

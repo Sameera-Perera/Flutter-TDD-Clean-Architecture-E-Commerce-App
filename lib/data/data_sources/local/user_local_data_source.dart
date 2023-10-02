@@ -53,7 +53,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
     }
     final jsonString = sharedPreferences.getString(cachedUser);
     if (jsonString != null) {
-      return Future.value(userModelFromJson(jsonDecode(jsonString)));
+      return Future.value(userModelFromJson(jsonString));
     } else {
       throw CacheException();
     }
@@ -63,7 +63,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   Future<void> cacheUser(UserModel user) {
     return sharedPreferences.setString(
       cachedUser,
-      json.encode(userModelToJson(user)),
+      userModelToJson(user),
     );
   }
 

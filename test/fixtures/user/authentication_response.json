@@ -1,0 +1,9 @@
+{
+  "token": "token",
+  "user": {
+    "_id": "1",
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "email": "email@gmail.com"
+  }
+}

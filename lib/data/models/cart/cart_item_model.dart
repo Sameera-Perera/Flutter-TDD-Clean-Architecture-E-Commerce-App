@@ -4,9 +4,13 @@ import '../../../domain/entities/cart/cart_item.dart';
 import '../product/price_tag_model.dart';
 import '../product/product_model.dart';
 
-List<CartItemModel> cartItemModelListFromJson(String str) =>
+List<CartItemModel> cartItemModelListFromLocalJson(String str) =>
     List<CartItemModel>.from(
         json.decode(str).map((x) => CartItemModel.fromJson(x)));
+
+List<CartItemModel> cartItemModelListFromRemoteJson(String str) =>
+    List<CartItemModel>.from(
+        json.decode(str)["data"].map((x) => CartItemModel.fromJson(x)));
 
 List<CartItemModel> cartItemModelFromJson(String str) =>
     List<CartItemModel>.from(

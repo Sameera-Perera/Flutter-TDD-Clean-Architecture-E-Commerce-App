@@ -4,6 +4,7 @@ import 'package:eshop/data/repositories/order_repository_impl.dart';
 import 'package:eshop/domain/repositories/order_repository.dart';
 import 'package:eshop/domain/usecases/delivery_info/get_cached_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/order/add_order_usecase.dart';
+import 'package:eshop/domain/usecases/order/get_cached_orders_usecase.dart';
 import 'package:eshop/domain/usecases/order/get_remote_orders_usecase.dart';
 import 'package:eshop/presentation/blocs/order/order_add/order_add_cubit.dart';
 import 'package:eshop/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
@@ -168,11 +169,12 @@ Future<void> init() async {
     () => OrderAddCubit(sl()),
   );
   sl.registerFactory(
-    () => OrderFetchCubit(sl()),
+    () => OrderFetchCubit(sl(),sl()),
   );
   // Use cases
   sl.registerLazySingleton(() => AddOrderUseCase(sl()));
   sl.registerLazySingleton(() => GetRemoteOrdersUseCase(sl()));
+  sl.registerLazySingleton(() => GetCachedOrdersUseCase(sl()));
   // Repository
   sl.registerLazySingleton<OrderRepository>(
     () => OrderRepositoryImpl(

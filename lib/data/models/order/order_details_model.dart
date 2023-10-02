@@ -12,14 +12,17 @@ List<OrderDetailsModel> orderDetailsModelListFromLocalJson(String str) =>
     List<OrderDetailsModel>.from(
         json.decode(str).map((x) => OrderDetailsModel.fromJson(x)));
 
-String orderModelListToJson(List<OrderDetailsModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 OrderDetailsModel orderDetailsModelFromJson(String str) =>
     OrderDetailsModel.fromJson(json.decode(str)['data']);
 
+String orderModelListToJsonBody(List<OrderDetailsModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJsonBody())));
+
+String orderModelListToJson(List<OrderDetailsModel> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 String orderDetailsModelToJson(OrderDetailsModel data) =>
-    json.encode(data.toJson());
+    json.encode(data.toJsonBody());
 
 class OrderDetailsModel extends OrderDetails {
   const OrderDetailsModel({
@@ -47,6 +50,14 @@ class OrderDetailsModel extends OrderDetails {
         "_id": id,
         "orderItems": List<dynamic>.from(
             (orderItems as List<OrderItemModel>).map((x) => x.toJson())),
+        "deliveryInfo": (deliveryInfo as DeliveryInfoModel).toJson(),
+        "discount": discount,
+      };
+
+  Map<String, dynamic> toJsonBody() => {
+        "_id": id,
+        "orderItems": List<dynamic>.from(
+            (orderItems as List<OrderItemModel>).map((x) => x.toJsonBody())),
         "deliveryInfo": deliveryInfo.id,
         "discount": discount,
       };
