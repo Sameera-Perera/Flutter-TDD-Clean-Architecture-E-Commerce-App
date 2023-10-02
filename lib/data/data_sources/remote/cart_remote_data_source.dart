@@ -4,15 +4,9 @@ import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
 import '../../../core/constant/strings.dart';
-import '../../../domain/entities/cart/cart_item.dart';
 import '../../models/cart/cart_item_model.dart';
 
 abstract class CartRemoteDataSource {
-  /// Calls the base-url/users/cart endpoint.
-  ///
-  /// Throws a [ServerException] for all error codes.
-  Future<List<CartItem>> getCart();
-
   /// Calls the base-url/users/cart endpoint.
   ///
   /// Throws a [ServerException] for all error codes.
@@ -27,24 +21,6 @@ abstract class CartRemoteDataSource {
 class CartRemoteDataSourceSourceImpl implements CartRemoteDataSource {
   final http.Client client;
   CartRemoteDataSourceSourceImpl({required this.client});
-
-  @override
-  Future<List<CartItem>> getCart() =>
-      _getCategoryFromUrl('$baseUrl/users/cart');
-
-  Future<List<CartItem>> _getCategoryFromUrl(String url) async {
-    final response = await client.get(
-      Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    );
-    if (response.statusCode == 200) {
-      return cartItemModelListFromJson(response.body);
-    } else {
-      throw ServerException();
-    }
-  }
 
   @override
   Future<CartItemModel> addToCart(CartItemModel cartItem, String token) async {
@@ -79,8 +55,7 @@ class CartRemoteDataSourceSourceImpl implements CartRemoteDataSource {
               .toList()
         }));
     if (response.statusCode == 200) {
-      var data = jsonEncode(jsonDecode(response.body)["data"]);
-      var list = cartItemModelListFromJson(data);
+      var list = cartItemModelListFromRemoteJson(response.body);
       return list;
     } else {
       throw ServerException();

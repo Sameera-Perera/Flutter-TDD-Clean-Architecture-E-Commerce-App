@@ -30,7 +30,7 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
     final jsonString = sharedPreferences.getString(cachedCart);
     final List<CartItemModel> cart = [];
     if (jsonString != null) {
-      cart.addAll(cartItemModelListFromJson(jsonString));
+      cart.addAll(cartItemModelListFromLocalJson(jsonString));
     }
     if (!cart.any((element) =>
         element.product.id == cartItem.product.id &&
@@ -47,7 +47,7 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
   Future<List<CartItemModel>?> getCart() {
     final jsonString = sharedPreferences.getString(cachedCart);
     if (jsonString != null) {
-      return Future.value(cartItemModelListFromJson(jsonString));
+      return Future.value(cartItemModelListFromLocalJson(jsonString));
     } else {
       return Future.value(null);
     }
