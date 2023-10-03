@@ -44,7 +44,7 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
           final result = await remoteDataSource.getDeliveryInfo(
             token,
           );
-          await localDataSource.cacheDeliveryInfo(result);
+          await localDataSource.saveDeliveryInfo(result);
           return Right(result);
         } on Failure catch (failure) {
           return Left(failure);

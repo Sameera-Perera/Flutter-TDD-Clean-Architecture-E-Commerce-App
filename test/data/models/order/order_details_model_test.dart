@@ -4,14 +4,14 @@ import 'package:eshop/data/models/order/order_details_model.dart';
 import 'package:eshop/domain/entities/order/order_details.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../fixtures/constent_objects.dart';
+import '../../../fixtures/constant_objects.dart';
 import '../../../fixtures/fixture_reader.dart';
 
 void main() {
   test(
     'OrderDetailsModel should be a subclass of OrderDetails entity',
     () async {
-      // assert
+      /// Assert
       expect(tOrderDetailsModel, isA<OrderDetails>());
     },
   );
@@ -22,12 +22,14 @@ void main() {
           object and ensure that the resulting 
           object matches the expected tOrderDetails''',
       () async {
-        // arrange
+        /// Arrange
         final Map<String, dynamic> jsonMap =
             json.decode(fixture('order/order_details.json'));
-        // act
+
+        /// Act
         final result = OrderDetailsModel.fromJson(jsonMap);
-        // assert
+
+        /// Assert
         expect(result, tOrderDetailsModel);
       },
     );
@@ -37,12 +39,14 @@ void main() {
     test(
       'should return a JSON map containing the proper data',
       () async {
-        // arrange
+        /// Arrange
         final Map<String, dynamic> result = tOrderDetailsModel.toJsonBody();
-        // act
+
+        /// Act
         final Map<String, dynamic> jsonMap =
             json.decode(fixture('order/order_details_body.json'));
-        // assert
+
+        /// Assert
         expect(result, jsonMap);
       },
     );

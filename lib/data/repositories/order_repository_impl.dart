@@ -45,7 +45,7 @@ class OrderRepositoryImpl implements OrderRepository {
           final remoteProduct = await remoteDataSource.getOrders(
             token,
           );
-          await localDataSource.cacheOrders(remoteProduct);
+          await localDataSource.saveOrders(remoteProduct);
           return Right(remoteProduct);
         } on Failure catch (failure) {
           return Left(failure);

@@ -6,7 +6,7 @@ import 'package:eshop/data/repositories/user_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../fixtures/constent_objects.dart';
+import '../../fixtures/constant_objects.dart';
 
 class MockRemoteDataSource extends Mock implements UserRemoteDataSource {}
 
@@ -55,17 +55,19 @@ void main() {
     test(
       'should check if the device is online on signIn',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.signIn(tSignInParams)).thenAnswer(
             (invocation) => Future.value(tAuthenticationResponseModel));
-        when(() => mockLocalDataSource.cacheUser(tUserModel))
+        when(() => mockLocalDataSource.saveUser(tUserModel))
             .thenAnswer((invocation) => Future.value());
-        when(() => mockLocalDataSource.cacheToken('token'))
+        when(() => mockLocalDataSource.saveToken('token'))
             .thenAnswer((invocation) => Future.value());
-        // act
+
+        /// Act
         repository.signIn(tSignInParams);
-        // // assert
+
+        /// Assert
         verify(() => mockNetworkInfo.isConnected);
       },
     );
@@ -73,17 +75,19 @@ void main() {
     test(
       'should check if the device is online on signUp',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
         when(() => mockRemoteDataSource.signUp(tSignUpParams)).thenAnswer(
             (invocation) => Future.value(tAuthenticationResponseModel));
-        when(() => mockLocalDataSource.cacheUser(tUserModel))
+        when(() => mockLocalDataSource.saveUser(tUserModel))
             .thenAnswer((invocation) => Future.value());
-        when(() => mockLocalDataSource.cacheToken('token'))
+        when(() => mockLocalDataSource.saveToken('token'))
             .thenAnswer((invocation) => Future.value());
-        // act
+
+        /// Act
         repository.signUp(tSignUpParams);
-        // // assert
+
+        /// Assert
         verify(() => mockNetworkInfo.isConnected);
       },
     );
@@ -93,16 +97,18 @@ void main() {
     test(
       'should return user data data when the call to sign in source is successful',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockRemoteDataSource.signIn(tSignInParams)).thenAnswer(
             (invocation) => Future.value(tAuthenticationResponseModel));
-        when(() => mockLocalDataSource.cacheUser(tUserModel))
+        when(() => mockLocalDataSource.saveUser(tUserModel))
             .thenAnswer((invocation) => Future.value());
-        when(() => mockLocalDataSource.cacheToken('token'))
+        when(() => mockLocalDataSource.saveToken('token'))
             .thenAnswer((invocation) => Future.value());
-        // act
+
+        /// Act
         final actualResult = await repository.signIn(tSignInParams);
-        // assert
+
+        /// Assert
         actualResult.fold(
           (left) => fail('test failed'),
           (right) => expect(right, tUserModel),
@@ -113,16 +119,18 @@ void main() {
     test(
       'should return user data data when the call to sign up source is successful',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockRemoteDataSource.signUp(tSignUpParams)).thenAnswer(
             (invocation) => Future.value(tAuthenticationResponseModel));
-        when(() => mockLocalDataSource.cacheUser(tUserModel))
+        when(() => mockLocalDataSource.saveUser(tUserModel))
             .thenAnswer((invocation) => Future.value());
-        when(() => mockLocalDataSource.cacheToken('token'))
+        when(() => mockLocalDataSource.saveToken('token'))
             .thenAnswer((invocation) => Future.value());
-        // act
+
+        /// Act
         final actualResult = await repository.signUp(tSignUpParams);
-        // assert
+
+        /// Assert
         actualResult.fold(
           (left) => fail('test failed'),
           (right) => expect(right, tUserModel),
@@ -133,48 +141,54 @@ void main() {
     test(
       'should cache the user data locally when the call to sign in source is successful',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockRemoteDataSource.signIn(tSignInParams)).thenAnswer(
             (invocation) => Future.value(tAuthenticationResponseModel));
-        when(() => mockLocalDataSource.cacheUser(tUserModel))
+        when(() => mockLocalDataSource.saveUser(tUserModel))
             .thenAnswer((invocation) => Future.value());
-        when(() => mockLocalDataSource.cacheToken('token'))
+        when(() => mockLocalDataSource.saveToken('token'))
             .thenAnswer((invocation) => Future.value());
-        // act
+
+        /// Act
         await repository.signIn(tSignInParams);
-        // assert
-        verify(() => mockLocalDataSource.cacheToken('token'));
-        verify(() => mockLocalDataSource.cacheUser(tUserModel));
+
+        /// Assert
+        verify(() => mockLocalDataSource.saveToken('token'));
+        verify(() => mockLocalDataSource.saveUser(tUserModel));
       },
     );
 
     test(
       'should cache the user data locally when the call to sign up source is successful',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockRemoteDataSource.signUp(tSignUpParams)).thenAnswer(
             (invocation) => Future.value(tAuthenticationResponseModel));
-        when(() => mockLocalDataSource.cacheUser(tUserModel))
+        when(() => mockLocalDataSource.saveUser(tUserModel))
             .thenAnswer((invocation) => Future.value());
-        when(() => mockLocalDataSource.cacheToken('token'))
+        when(() => mockLocalDataSource.saveToken('token'))
             .thenAnswer((invocation) => Future.value());
-        // act
+
+        /// Act
         await repository.signUp(tSignUpParams);
-        // assert
-        verify(() => mockLocalDataSource.cacheToken('token'));
-        verify(() => mockLocalDataSource.cacheUser(tUserModel));
+
+        /// Assert
+        verify(() => mockLocalDataSource.saveToken('token'));
+        verify(() => mockLocalDataSource.saveUser(tUserModel));
       },
     );
 
     test(
       'should return server failure when the call to remote sign-in source is unsuccessful',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockRemoteDataSource.signIn(tSignInParams))
             .thenThrow(ServerFailure());
-        // act
+
+        /// Act
         final result = await repository.signIn(tSignInParams);
-        // // assert
+
+        /// Assert
         result.fold(
           (left) => expect(left, ServerFailure()),
           (right) => fail('test failed'),
@@ -185,12 +199,14 @@ void main() {
     test(
       'should return server failure when the call to remote sign-up source is unsuccessful',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockRemoteDataSource.signUp(tSignUpParams))
             .thenThrow(ServerFailure());
-        // act
+
+        /// Act
         final result = await repository.signUp(tSignUpParams);
-        // // assert
+
+        /// Assert
         result.fold(
           (left) => expect(left, ServerFailure()),
           (right) => fail('test failed'),
@@ -201,12 +217,14 @@ void main() {
     test(
       'should return local cached user-data when the call to local data source is successful',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockLocalDataSource.getUser())
             .thenAnswer((_) async => Future.value(tUserModel));
-        // act
+
+        /// Act
         final actualResult = await repository.getCachedUser();
-        // assert
+
+        /// Assert
         actualResult.fold(
           (left) => fail('test failed'),
           (right) => expect(right, tUserModel),
@@ -217,11 +235,13 @@ void main() {
     test(
       'should return [CachedFailure] when the call to local data source is fail',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockLocalDataSource.getUser()).thenThrow(CacheFailure());
-        // act
+
+        /// Act
         final actualResult = await repository.getCachedUser();
-        // assert
+
+        /// Assert
         actualResult.fold(
           (left) => expect(left, CacheFailure()),
           (right) => fail('test failed'),
@@ -234,9 +254,10 @@ void main() {
     test(
       'sign-in method should return network failure when network connection is not available',
       () async {
-        // act
+        /// Act
         final result = await repository.signIn(tSignInParams);
-        // assert
+
+        /// Assert
         verifyZeroInteractions(mockRemoteDataSource);
         verifyZeroInteractions(mockLocalDataSource);
         result.fold(
@@ -248,15 +269,16 @@ void main() {
 
     test(
       'sign-up method should return network failure when network connection is not available',
-          () async {
-        // act
+      () async {
+        /// Act
         final result = await repository.signUp(tSignUpParams);
-        // assert
+
+        /// Assert
         verifyZeroInteractions(mockRemoteDataSource);
         verifyZeroInteractions(mockLocalDataSource);
         result.fold(
-              (left) => expect(left, NetworkFailure()),
-              (right) => fail('test failed'),
+          (left) => expect(left, NetworkFailure()),
+          (right) => fail('test failed'),
         );
       },
     );
@@ -264,15 +286,17 @@ void main() {
     test(
       'should return local cached user-data when the call to local data source is successful',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockLocalDataSource.getUser())
             .thenAnswer((_) async => Future.value(tUserModel));
-        // act
+
+        /// Act
         final actualResult = await repository.getCachedUser();
-        // assert
+
+        /// Assert
         actualResult.fold(
-              (left) => fail('test failed'),
-              (right) => expect(right, tUserModel),
+          (left) => fail('test failed'),
+          (right) => expect(right, tUserModel),
         );
       },
     );
@@ -280,14 +304,16 @@ void main() {
     test(
       'should return [CachedFailure] when the call to local data source is fail',
       () async {
-        // arrange
+        /// Arrange
         when(() => mockLocalDataSource.getUser()).thenThrow(CacheFailure());
-        // act
+
+        /// Act
         final actualResult = await repository.getCachedUser();
-        // assert
+
+        /// Assert
         actualResult.fold(
-              (left) => expect(left, CacheFailure()),
-              (right) => fail('test failed'),
+          (left) => expect(left, CacheFailure()),
+          (right) => fail('test failed'),
         );
       },
     );

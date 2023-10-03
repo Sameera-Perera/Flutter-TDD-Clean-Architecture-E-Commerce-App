@@ -4,14 +4,14 @@ import 'package:eshop/data/models/product/product_model.dart';
 import 'package:eshop/domain/entities/product/product.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../fixtures/constent_objects.dart';
+import '../../../fixtures/constant_objects.dart';
 import '../../../fixtures/fixture_reader.dart';
 
 void main() {
   test(
     'ProductModel should be a subclass of Product entity',
     () async {
-      // assert
+      /// Assert
       expect(tProductModel, isA<Product>());
     },
   );
@@ -22,12 +22,14 @@ void main() {
           object and ensure that the resulting 
           object matches the expected tProductModel''',
       () async {
-        // arrange
+        /// Arrange
         final Map<String, dynamic> jsonMap =
             json.decode(fixture('product/product.json'));
-        // act
+
+        /// Act
         final result = ProductModel.fromJson(jsonMap);
-        // assert
+
+        /// Assert
         expect(result, tProductModel);
       },
     );
@@ -37,12 +39,14 @@ void main() {
        which contains integer values, into a ProductModel object, 
        and ensure that the resulting object matches the expected tProductModel''',
       () async {
-        // arrange
+        /// Arrange
         final Map<String, dynamic> jsonMap =
             json.decode(fixture('product/product_int.json'));
-        // act
+
+        /// Act
         final result = ProductModel.fromJson(jsonMap);
-        // // assert
+
+        /// Assert
         expect(result, tProductModel);
       },
     );
@@ -52,9 +56,10 @@ void main() {
     test(
       'should return a JSON map containing the proper data',
       () async {
-        // act
+        /// Act
         final result = tProductModel.toJson();
-        // assert
+
+        /// Assert
         final expectedMap = {
           '_id': '1',
           'name': 'name',

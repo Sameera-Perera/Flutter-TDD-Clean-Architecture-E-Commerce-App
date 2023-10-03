@@ -12,9 +12,9 @@ abstract class UserLocalDataSource {
 
   Future<UserModel> getUser();
 
-  Future<void> cacheToken(String token);
+  Future<void> saveToken(String token);
 
-  Future<void> cacheUser(UserModel user);
+  Future<void> saveUser(UserModel user);
 
   Future<void> clearCache();
 
@@ -41,7 +41,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   }
 
   @override
-  Future<void> cacheToken(String token) async {
+  Future<void> saveToken(String token) async {
     await secureStorage.write(key: cachedToken, value: token);
   }
 
@@ -60,7 +60,7 @@ class UserLocalDataSourceImpl implements UserLocalDataSource {
   }
 
   @override
-  Future<void> cacheUser(UserModel user) {
+  Future<void> saveUser(UserModel user) {
     return sharedPreferences.setString(
       cachedUser,
       userModelToJson(user),

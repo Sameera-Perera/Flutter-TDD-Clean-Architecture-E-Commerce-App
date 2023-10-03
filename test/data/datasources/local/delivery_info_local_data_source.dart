@@ -5,7 +5,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../fixtures/constent_objects.dart';
+import '../../../fixtures/constant_objects.dart';
 import '../../../fixtures/fixture_reader.dart';
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
@@ -23,28 +23,27 @@ void main() {
   group('getDeliveryInfo', () {
     test('should return a list of DeliveryInfoModel from SharedPreferences',
         () async {
-      // Arrange
+      /// Arrange
       final jsonString = fixture('delivery_info/delivery_info_list.json');
       when(() => mockSharedPreferences.getString(cashedDeliveryInfo))
           .thenReturn(jsonString);
 
-      // Act
+      /// Act
       final result = await dataSource.getDeliveryInfo();
 
-      // Assert
+      /// Assert
       expect(result, isA<List<DeliveryInfoModel>>());
-      // You can add more specific assertions based on your data and model.
     });
 
     test('should throw CacheFailure when SharedPreferences returns null', () {
-      // Arrange
+      /// Arrange
       when(() => mockSharedPreferences.getString(cashedDeliveryInfo))
           .thenReturn(null);
 
-      // Act
+      /// Act
       final call = dataSource.getDeliveryInfo;
 
-      // Assert
+      /// Assert
       expect(() => call(), throwsA(isA<CacheFailure>()));
     });
   });
@@ -52,14 +51,14 @@ void main() {
   group('cacheDeliveryInfo', () {
     test('should call SharedPreferences.setString with the correct arguments',
         () async {
-      // Arrange
+      /// Arrange
       final deliveryInfo = [tDeliveryInfoModel];
       final jsonString = fixture('delivery_info/delivery_info_list.json');
 
-      // Act
-      await dataSource.cacheDeliveryInfo(deliveryInfo);
+      /// Act
+      await dataSource.saveDeliveryInfo(deliveryInfo);
 
-      // Assert
+      /// Assert
       verify(() =>
           mockSharedPreferences.setString(cashedDeliveryInfo, jsonString));
     });

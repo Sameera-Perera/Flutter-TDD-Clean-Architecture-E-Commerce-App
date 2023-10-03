@@ -26,7 +26,7 @@ class CartRepositoryImpl implements CartRepository {
   Future<Either<Failure, CartItem>> addToCart(CartItem params) async {
     if (await userLocalDataSource.isTokenAvailable()) {
       final localProducts =
-          await localDataSource.cacheCartItem(CartItemModel.fromParent(params));
+          await localDataSource.saveCartItem(CartItemModel.fromParent(params));
       final String token = await userLocalDataSource.getToken();
       final remoteProduct = await remoteDataSource.addToCart(
         CartItemModel.fromParent(params),
@@ -35,7 +35,7 @@ class CartRepositoryImpl implements CartRepository {
       return Right(remoteProduct);
     } else {
       final localProducts =
-          await localDataSource.cacheCartItem(CartItemModel.fromParent(params));
+          await localDataSource.saveCartItem(CartItemModel.fromParent(params));
       return Right(params);
     }
   }
@@ -71,7 +71,7 @@ class CartRepositoryImpl implements CartRepository {
             localCartItems ?? [],
             token,
           );
-          await localDataSource.cacheCart(syncedResult);
+          await localDataSource.saveCart(syncedResult);
           return Right(syncedResult);
         } on Failure catch (failure) {
           return Left(failure);

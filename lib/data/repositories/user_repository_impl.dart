@@ -62,8 +62,8 @@ class UserRepositoryImpl implements UserRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteResponse = await getDataSource();
-        localDataSource.cacheToken(remoteResponse.token);
-        localDataSource.cacheUser(remoteResponse.user);
+        localDataSource.saveToken(remoteResponse.token);
+        localDataSource.saveUser(remoteResponse.user);
         return Right(remoteResponse.user);
       } on Failure catch (failure) {
         return Left(failure);
