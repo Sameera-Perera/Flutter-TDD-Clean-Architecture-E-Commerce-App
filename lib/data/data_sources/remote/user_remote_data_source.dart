@@ -10,10 +10,7 @@ import '../../../domain/usecases/user/sign_up_usecase.dart';
 import '../../models/user/authentication_response_model.dart';
 
 abstract class UserRemoteDataSource {
-  /// Throws a [ServerException] for all error codes.
   Future<AuthenticationResponseModel> signIn(SignInParams params);
-
-  /// Throws a [ServerException] for all error codes.
   Future<AuthenticationResponseModel> signUp(SignUpParams params);
 }
 

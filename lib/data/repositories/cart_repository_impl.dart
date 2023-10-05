@@ -25,8 +25,7 @@ class CartRepositoryImpl implements CartRepository {
   @override
   Future<Either<Failure, CartItem>> addToCart(CartItem params) async {
     if (await userLocalDataSource.isTokenAvailable()) {
-      final localProducts =
-          await localDataSource.saveCartItem(CartItemModel.fromParent(params));
+      await localDataSource.saveCartItem(CartItemModel.fromParent(params));
       final String token = await userLocalDataSource.getToken();
       final remoteProduct = await remoteDataSource.addToCart(
         CartItemModel.fromParent(params),
@@ -34,8 +33,7 @@ class CartRepositoryImpl implements CartRepository {
       );
       return Right(remoteProduct);
     } else {
-      final localProducts =
-          await localDataSource.saveCartItem(CartItemModel.fromParent(params));
+      await localDataSource.saveCartItem(CartItemModel.fromParent(params));
       return Right(params);
     }
   }
@@ -50,11 +48,7 @@ class CartRepositoryImpl implements CartRepository {
   Future<Either<Failure, List<CartItem>>> getCachedCart() async {
     try {
       final localProducts = await localDataSource.getCart();
-      if (localProducts != null) {
-        return Right(localProducts);
-      } else {
-        return Left(CacheFailure());
-      }
+      return Right(localProducts);
     } on Failure catch (failure) {
       return Left(failure);
     }
@@ -64,11 +58,14 @@ class CartRepositoryImpl implements CartRepository {
   Future<Either<Failure, List<CartItem>>> syncCart() async {
     if (await networkInfo.isConnected) {
       if (await userLocalDataSource.isTokenAvailable()) {
+        List<CartItemModel> localCartItems = [];
         try {
-          final localCartItems = await localDataSource.getCart();
+          localCartItems = await localDataSource.getCart();
+        } on Failure catch (_) {}
+        try {
           final String token = await userLocalDataSource.getToken();
           final syncedResult = await remoteDataSource.syncCart(
-            localCartItems ?? [],
+            localCartItems,
             token,
           );
           await localDataSource.saveCart(syncedResult);

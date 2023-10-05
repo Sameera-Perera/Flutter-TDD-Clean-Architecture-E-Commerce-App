@@ -8,9 +8,6 @@ import '../../../domain/usecases/product/get_product_usecase.dart';
 import '../../models/product/product_response_model.dart';
 
 abstract class ProductRemoteDataSource {
-  /// Calls the base-url/products endpoint.
-  ///
-  /// Throws a [ServerException] for all error codes.
   Future<ProductResponseModel> getProducts(FilterProductParams params);
 }
 

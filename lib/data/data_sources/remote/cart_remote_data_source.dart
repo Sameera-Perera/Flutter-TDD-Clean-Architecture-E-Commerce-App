@@ -7,14 +7,7 @@ import '../../../core/constant/strings.dart';
 import '../../models/cart/cart_item_model.dart';
 
 abstract class CartRemoteDataSource {
-  /// Calls the base-url/users/cart endpoint.
-  ///
-  /// Throws a [ServerException] for all error codes.
   Future<CartItemModel> addToCart(CartItemModel cartItem, String token);
-
-  /// Calls the base-url/users/cart endpoint.
-  ///
-  /// Throws a [ServerException] for all error codes.
   Future<List<CartItemModel>> syncCart(List<CartItemModel> cart, String token);
 }
 
