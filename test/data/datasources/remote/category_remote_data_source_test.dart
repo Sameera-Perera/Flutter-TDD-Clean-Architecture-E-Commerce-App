@@ -8,8 +8,6 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 
-// Import your classes and constants here
-
 class MockHttpClient extends Mock implements http.Client {}
 
 void main() {
@@ -23,33 +21,33 @@ void main() {
 
   group('getCategories', () {
     test('should perform a GET request to the correct URL', () async {
-      // Arrange
+      /// Arrange
       const expectedUrl = '$baseUrl/categories';
-      final fakeResponse = fixture('category/category_remote_response.json');
+      final fakeResponse = fixture('category/category_get_response.json');
       when(() => mockHttpClient.get(Uri.parse(expectedUrl),
               headers: any(named: 'headers')))
           .thenAnswer((_) async => http.Response(fakeResponse, 200));
 
-      // Act
+      /// Act
       final result = await dataSource.getCategories();
 
-      // Assert
+      /// Assert
       verify(() => mockHttpClient.get(Uri.parse(expectedUrl),
           headers: any(named: 'headers')));
       expect(result, isA<List<CategoryModel>>());
     });
 
     test('should throw a ServerFailure on non-200 status code', () async {
-      // Arrange
+      /// Arrange
       const expectedUrl = '$baseUrl/categories';
       when(() => mockHttpClient.get(Uri.parse(expectedUrl),
               headers: any(named: 'headers')))
           .thenAnswer((_) async => http.Response('Error message', 404));
 
-      // Act
+      /// Act
       final result = dataSource.getCategories();
 
-      // Assert
+      /// Assert
       expect(result, throwsA(isA<ServerFailure>()));
     });
   });

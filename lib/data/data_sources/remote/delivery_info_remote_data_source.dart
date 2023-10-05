@@ -6,8 +6,8 @@ import '../../models/user/delivery_info_model.dart';
 
 abstract class DeliveryInfoRemoteDataSource {
   Future<List<DeliveryInfoModel>> getDeliveryInfo(String token);
-
-  Future<DeliveryInfoModel> addDeliveryInfo(DeliveryInfoModel params, String token);
+  Future<DeliveryInfoModel> addDeliveryInfo(
+      DeliveryInfoModel params, String token);
 }
 
 class DeliveryInfoRemoteDataSourceImpl implements DeliveryInfoRemoteDataSource {

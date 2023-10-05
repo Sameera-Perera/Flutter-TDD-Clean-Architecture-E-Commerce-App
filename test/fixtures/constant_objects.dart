@@ -11,7 +11,6 @@ import 'package:eshop/data/models/user/delivery_info_model.dart';
 import 'package:eshop/data/models/user/user_model.dart';
 import 'package:eshop/domain/usecases/user/sign_in_usecase.dart';
 import 'package:eshop/domain/usecases/user/sign_up_usecase.dart';
-import 'package:flutter/cupertino.dart';
 
 //products
 final tProductModel = ProductModel(

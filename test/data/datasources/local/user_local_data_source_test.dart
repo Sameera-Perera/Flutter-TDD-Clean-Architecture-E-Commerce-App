@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../fixtures/constent_objects.dart';
+import '../../../fixtures/constant_objects.dart';
 
 class MockFlutterSecureStorage extends Mock implements FlutterSecureStorage {}
 
@@ -29,38 +29,50 @@ void main() {
 
   group('getToken', () {
     test('should return a token when it is available', () async {
+      /// Arrange
       when(() => mockSecureStorage.read(key: cachedToken))
           .thenAnswer((_) async => 'token_string');
-      //
+
+      /// Act
       final result = await userLocalDataSource.getToken();
-      //
+
+      /// Assert
       expect(result, 'token_string');
       verify(() => mockSecureStorage.read(key: cachedToken)).called(1);
     });
 
     test('should throw CacheException when token is not available', () async {
+      /// Arrange
       when(() => mockSecureStorage.read(key: cachedToken))
           .thenAnswer((_) async => null);
 
-      expect(() => userLocalDataSource.getToken(), throwsA(isA<CacheException>()));
+      /// Act and Assert
+      expect(
+          () => userLocalDataSource.getToken(), throwsA(isA<CacheException>()));
       verify(() => mockSecureStorage.read(key: cachedToken)).called(1);
     });
   });
 
   group('cacheToken', () {
     test('should cache the token', () async {
-      when(() => mockSecureStorage.write(key: cachedToken, value: 'token_string'))
+      /// Arrange
+      when(() =>
+              mockSecureStorage.write(key: cachedToken, value: 'token_string'))
           .thenAnswer((_) async => Future<void>);
 
-      await userLocalDataSource.cacheToken('token_string');
+      /// Act
+      await userLocalDataSource.saveToken('token_string');
 
-      verify(() => mockSecureStorage.write(key: cachedToken, value: 'token_string'))
+      /// Assert
+      verify(() =>
+              mockSecureStorage.write(key: cachedToken, value: 'token_string'))
           .called(1);
     });
   });
 
   group('getUser', () {
     test('should return a UserModel when it is available', () async {
+      /// Arrange
       when(() => mockSecureStorage.deleteAll())
           .thenAnswer((_) => Future<void>.value());
       when(() => mockSharedPreferences.getBool('first_run'))
@@ -70,38 +82,47 @@ void main() {
       when(() => mockSharedPreferences.getString(cachedUser))
           .thenReturn(userModelToJson(tUserModel));
 
+      /// Act
       final result = await userLocalDataSource.getUser();
 
+      /// Assert
       expect(result, isA<UserModel>());
       verify(() => mockSharedPreferences.getString(cachedUser)).called(1);
     });
 
-    test('should throw CacheException when UserModel is not available', () async {
+    test('should throw CacheException when UserModel is not available',
+        () async {
+      /// Arrange
       when(() => mockSharedPreferences.getBool('first_run'))
           .thenAnswer((_) => false);
-      when(() => mockSharedPreferences.getString(cachedUser))
-          .thenReturn(null);
+      when(() => mockSharedPreferences.getString(cachedUser)).thenReturn(null);
 
-      expect(() => userLocalDataSource.getUser(), throwsA(isA<CacheException>()));
+      /// Act and Assert
+      expect(
+          () => userLocalDataSource.getUser(), throwsA(isA<CacheException>()));
       verify(() => mockSharedPreferences.getString(cachedUser)).called(1);
     });
   });
 
   group('cacheUser', () {
     test('should cache the user', () async {
-      when(() => mockSharedPreferences.setString(cachedUser, userModelToJson(tUserModel)))
+      /// Arrange
+      when(() => mockSharedPreferences.setString(
+              cachedUser, userModelToJson(tUserModel)))
           .thenAnswer((invocation) => Future<bool>.value(true));
 
-      await userLocalDataSource.cacheUser(tUserModel);
+      /// Act
+      await userLocalDataSource.saveUser(tUserModel);
 
+      /// Assert
       verify(() => mockSharedPreferences.setString(
-          cachedUser, userModelToJson(tUserModel)))
-          .called(1);
+          cachedUser, userModelToJson(tUserModel))).called(1);
     });
   });
 
   group('clearCache', () {
     test('should clear the cache', () async {
+      /// Arrange
       when(() => mockSecureStorage.deleteAll())
           .thenAnswer((_) => Future<void>.value());
       when(() => mockSharedPreferences.remove(cachedUser))
@@ -109,8 +130,10 @@ void main() {
       when(() => mockSharedPreferences.remove(cachedCart))
           .thenAnswer((_) => Future<bool>.value(true));
 
+      /// Act
       await userLocalDataSource.clearCache();
 
+      /// Assert
       verify(() => mockSecureStorage.deleteAll()).called(1);
       verify(() => mockSharedPreferences.remove(cachedUser)).called(1);
     });
@@ -118,21 +141,27 @@ void main() {
 
   group('isTokenAvailable', () {
     test('should return true when token is available', () async {
+      /// Arrange
       when(() => mockSecureStorage.read(key: any(named: 'key')))
           .thenAnswer((_) async => 'your_token_here');
 
+      /// Act
       final result = await userLocalDataSource.isTokenAvailable();
 
+      /// Assert
       expect(result, true);
       verify(() => mockSecureStorage.read(key: cachedToken)).called(1);
     });
 
     test('should return false when token is not available', () async {
+      /// Arrange
       when(() => mockSecureStorage.read(key: any(named: 'key')))
           .thenAnswer((_) async => null);
 
+      /// Act
       final result = await userLocalDataSource.isTokenAvailable();
 
+      /// Assert
       expect(result, false);
       verify(() => mockSecureStorage.read(key: cachedToken)).called(1);
     });

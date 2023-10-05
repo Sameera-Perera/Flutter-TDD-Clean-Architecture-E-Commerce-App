@@ -1,14 +1,10 @@
 import 'package:eshop/core/error/failures.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../../core/error/exceptions.dart';
 import '../../../core/constant/strings.dart';
 import '../../models/category/category_model.dart';
 
 abstract class CategoryRemoteDataSource {
-  /// Calls the base-url/categories endpoint.
-  ///
-  /// Throws a [ServerException] for all error codes.
   Future<List<CategoryModel>> getCategories();
 }
 

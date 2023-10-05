@@ -10,7 +10,7 @@ List<CategoryModel> categoryModelListFromLocalJson(String str) =>
     List<CategoryModel>.from(
         json.decode(str).map((x) => CategoryModel.fromJson(x)));
 
-String categoryModelToJson(List<CategoryModel> data) =>
+String categoryModelListToJson(List<CategoryModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CategoryModel extends Category {

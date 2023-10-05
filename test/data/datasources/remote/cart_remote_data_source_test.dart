@@ -3,12 +3,11 @@ import 'package:eshop/core/constant/strings.dart';
 import 'package:eshop/core/error/exceptions.dart';
 import 'package:eshop/data/data_sources/remote/cart_remote_data_source.dart';
 import 'package:eshop/data/models/cart/cart_item_model.dart';
-import 'package:eshop/domain/entities/cart/cart_item.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 
-import '../../../fixtures/constent_objects.dart';
+import '../../../fixtures/constant_objects.dart';
 import '../../../fixtures/fixture_reader.dart';
 
 class MockHttpClient extends Mock implements http.Client {}

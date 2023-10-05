@@ -6,13 +6,8 @@ import '../../../core/error/exceptions.dart';
 import '../../models/product/product_response_model.dart';
 
 abstract class ProductLocalDataSource {
-  /// Gets the cached [List<ProductModel>] which was gotten the last time
-  /// the user had an internet connection.
-  ///
-  /// Throws [CacheException] if no cached data is present.
   Future<ProductResponseModel> getLastProducts();
-
-  Future<void> cacheProducts(ProductResponseModel productsToCache);
+  Future<void> saveProducts(ProductResponseModel productsToCache);
 }
 
 const cachedProducts = 'CACHED_PRODUCTS';
@@ -32,7 +27,7 @@ class ProductLocalDataSourceImpl implements ProductLocalDataSource {
   }
 
   @override
-  Future<void> cacheProducts(ProductResponseModel productsToCache) {
+  Future<void> saveProducts(ProductResponseModel productsToCache) {
     return sharedPreferences.setString(
       cachedProducts,
       json.encode(productResponseModelToJson(productsToCache)),

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
+import 'package:eshop/core/usecases/usecase.dart';
 
 import '../../../../core/error/failures.dart';
-import '../../../../core/error/exceptions.dart';
 import '../../core/network/network_info.dart';
 import '../../domain/entities/user/user.dart';
 import '../../domain/repositories/user_repository.dart';
@@ -47,10 +47,10 @@ class UserRepositoryImpl implements UserRepository {
   }
 
   @override
-  Future<Either<Failure, void>> signOut() async {
+  Future<Either<Failure, NoParams>> signOut() async {
     try {
       var result = await localDataSource.clearCache();
-      return Right(result);
+      return Right(NoParams());
     } on CacheFailure {
       return Left(CacheFailure());
     }
@@ -62,8 +62,8 @@ class UserRepositoryImpl implements UserRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteResponse = await getDataSource();
-        localDataSource.cacheToken(remoteResponse.token);
-        localDataSource.cacheUser(remoteResponse.user);
+        localDataSource.saveToken(remoteResponse.token);
+        localDataSource.saveUser(remoteResponse.user);
         return Right(remoteResponse.user);
       } on Failure catch (failure) {
         return Left(failure);

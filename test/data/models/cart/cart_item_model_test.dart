@@ -4,14 +4,14 @@ import 'package:eshop/data/models/cart/cart_item_model.dart';
 import 'package:eshop/domain/entities/cart/cart_item.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../fixtures/constent_objects.dart';
+import '../../../fixtures/constant_objects.dart';
 import '../../../fixtures/fixture_reader.dart';
 
 void main() {
   test(
     'CartItemModel should be a subclass of CartItem entity',
-        () async {
-      // assert
+    () async {
+      /// Assert
       expect(tCartItemModel, isA<CartItem>());
     },
   );
@@ -21,13 +21,15 @@ void main() {
       '''Should successfully deserialize a JSON map into a CartItemMap
           object and ensure that the resulting 
           object matches the expected tCartItem''',
-          () async {
-        // arrange
+      () async {
+        /// Arrange
         final Map<String, dynamic> jsonMap =
-        json.decode(fixture('cart/cart_item.json'));
-        // act
+            json.decode(fixture('cart/cart_item.json'));
+
+        /// Act
         final result = CartItemModel.fromJson(jsonMap);
-        // assert
+
+        /// Assert
         expect(result, tCartItemModel);
       },
     );
@@ -36,13 +38,15 @@ void main() {
   group('toJson', () {
     test(
       'should return a JSON map containing the proper data',
-          () async {
-        // arrange
+      () async {
+        /// Arrange
         final result = tCartItemModel.toJson();
-        // act
+
+        /// Act
         final Map<String, dynamic> jsonMap =
-        json.decode(fixture('cart/cart_item.json'));
-        // assert
+            json.decode(fixture('cart/cart_item.json'));
+
+        /// Assert
         expect(result, jsonMap);
       },
     );

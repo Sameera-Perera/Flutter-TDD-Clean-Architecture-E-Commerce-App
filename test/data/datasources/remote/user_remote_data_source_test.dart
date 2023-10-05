@@ -27,7 +27,7 @@ void main() {
     test(
         'should perform a POST request to the correct URL with the given parameters',
         () async {
-      // Arrange
+      /// Arrange
       const fakeParams =
           SignInParams(username: 'username', password: 'password');
       const expectedUrl = '$baseUrl/authentication/local/sign-in';
@@ -43,10 +43,10 @@ void main() {
             }),
           )).thenAnswer((_) async => http.Response(fakeResponse, 200));
 
-      // Act
+      /// Act
       final result = await dataSource.signIn(fakeParams);
 
-      // Assert
+      /// Assert
       verify(() => mockHttpClient.post(
             Uri.parse(expectedUrl),
             headers: {
@@ -62,7 +62,7 @@ void main() {
 
     test('should throw a CredentialFailure on 400 or 401 status code',
         () async {
-      // Arrange
+      /// Arrange
       const fakeParams =
           SignInParams(username: 'username', password: 'password');
       const expectedUrl = '$baseUrl/authentication/local/sign-in';
@@ -77,17 +77,17 @@ void main() {
             }),
           )).thenAnswer((_) async => http.Response('Error message', 400));
 
-      // Act
+      /// Act
       final result = dataSource.signIn(fakeParams);
 
-      // Assert
+      /// Assert
       expect(result, throwsA(isA<CredentialFailure>()));
     });
 
     test(
         'should throw a ServerException on non-200 status code other than 400 or 401',
         () async {
-      // Arrange
+      /// Arrange
       const fakeParams =
           SignInParams(username: 'username', password: 'password');
       const expectedUrl = '$baseUrl/authentication/local/sign-in';
@@ -102,10 +102,10 @@ void main() {
             }),
           )).thenAnswer((_) async => http.Response('Error message', 404));
 
-      // Act
+      /// Act
       final result = dataSource.signIn(fakeParams);
 
-      // Assert
+      /// Assert
       expect(result, throwsA(isA<ServerException>()));
     });
   });
@@ -114,7 +114,7 @@ void main() {
     test(
         'should perform a POST request to the correct URL with the given parameters',
         () async {
-      // Arrange
+      /// Arrange
       const fakeParams = SignUpParams(
         firstName: 'John',
         lastName: 'Doe',
@@ -136,10 +136,10 @@ void main() {
             }),
           )).thenAnswer((_) async => http.Response(fakeResponse, 200));
 
-      // Act
+      /// Act
       final result = await dataSource.signUp(fakeParams);
 
-      // Assert
+      /// Assert
       verify(() => mockHttpClient.post(
             Uri.parse(expectedUrl),
             headers: {
@@ -157,7 +157,7 @@ void main() {
 
     test('should throw a CredentialFailure on 400 or 401 status code',
         () async {
-      // Arrange
+      /// Arrange
       const fakeParams = SignUpParams(
         firstName: 'John',
         lastName: 'Doe',
@@ -178,17 +178,17 @@ void main() {
             }),
           )).thenAnswer((_) async => http.Response('Error message', 400));
 
-      // Act
+      /// Act
       final result = dataSource.signUp(fakeParams);
 
-      // Assert
+      /// Assert
       expect(result, throwsA(isA<CredentialFailure>()));
     });
 
     test(
         'should throw a ServerException on non-200 status code other than 400 or 401',
         () async {
-      // Arrange
+      /// Arrange
       const fakeParams = SignUpParams(
         firstName: 'John',
         lastName: 'Doe',
@@ -209,10 +209,10 @@ void main() {
             }),
           )).thenAnswer((_) async => http.Response('Error message', 404));
 
-      // Act
+      /// Act
       final result = dataSource.signUp(fakeParams);
 
-      // Assert
+      /// Assert
       expect(result, throwsA(isA<ServerException>()));
     });
   });

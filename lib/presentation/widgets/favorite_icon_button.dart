@@ -8,9 +8,7 @@ class FavoriteIconButton extends StatelessWidget {
     return SizedBox(
       height: 32,
       child: ElevatedButton(
-        onPressed: () {
-          // context.read<WishlistBloc>().add(ToggleWishlist(cloth: cloth));
-        },
+        onPressed: () {},
         style: ElevatedButton.styleFrom(
           foregroundColor: Colors.white,
           backgroundColor: Colors.black87,
@@ -19,11 +17,10 @@ class FavoriteIconButton extends StatelessWidget {
           padding: const EdgeInsets.all(4),
         ),
         child: const Icon(
-            false
-                ? Icons.favorite
-                : Icons.favorite_border,
-            color: Colors.white,
-        size: 18,),
+          Icons.favorite_border,
+          color: Colors.white,
+          size: 18,
+        ),
       ),
     );
   }

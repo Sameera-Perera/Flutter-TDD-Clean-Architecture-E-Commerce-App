@@ -6,7 +6,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:mocktail/mocktail.dart';
 
-import '../../../fixtures/constent_objects.dart';
+import '../../../fixtures/constant_objects.dart';
 import '../../../fixtures/fixture_reader.dart';
 
 class MockHttpClient extends Mock implements http.Client {}
@@ -21,92 +21,98 @@ void main() {
   });
 
   group('getDeliveryInfo', () {
-    test('should perform a GET request to the correct URL with authorization', () async {
-      // Arrange
+    test('should perform a GET request to the correct URL with authorization',
+        () async {
+      /// Arrange
       const fakeToken = 'fakeToken';
       const expectedUrl = '$baseUrl/users/delivery-info';
       final fakeResponse = fixture('delivery_info/delivery_info_response.json');
-      when(() => mockHttpClient.get(Uri.parse(expectedUrl), headers: any(named: 'headers')))
+      when(() => mockHttpClient.get(Uri.parse(expectedUrl),
+              headers: any(named: 'headers')))
           .thenAnswer((_) async => http.Response(fakeResponse, 200));
 
-      // Act
+      /// Act
       final result = await dataSource.getDeliveryInfo(fakeToken);
 
-      // Assert
+      /// Assert
       verify(() => mockHttpClient.get(
-        Uri.parse(expectedUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $fakeToken',
-        },
-      ));
+            Uri.parse(expectedUrl),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $fakeToken',
+            },
+          ));
       expect(result, isA<List<DeliveryInfoModel>>());
     });
 
     test('should throw a ServerException on non-200 status code', () async {
-      // Arrange
+      /// Arrange
       const fakeToken = 'fakeToken';
       const expectedUrl = '$baseUrl/users/delivery-info';
-      when(() => mockHttpClient.get(Uri.parse(expectedUrl), headers: any(named: 'headers')))
+      when(() => mockHttpClient.get(Uri.parse(expectedUrl),
+              headers: any(named: 'headers')))
           .thenAnswer((_) async => http.Response('Error message', 404));
 
-      // Act
+      /// Act
       final result = dataSource.getDeliveryInfo(fakeToken);
 
-      // Assert
+      /// Assert
       expect(result, throwsA(isA<ServerException>()));
     });
   });
 
   group('addDeliveryInfo', () {
-    test('should perform a POST request to the correct URL with authorization', () async {
-      // Arrange
+    test('should perform a POST request to the correct URL with authorization',
+        () async {
+      /// Arrange
       const fakeToken = 'fakeToken';
       const fakeDeliveryInfo = tDeliveryInfoModel;
       const expectedUrl = '$baseUrl/users/delivery-info';
-      final fakeResponse = fixture('delivery_info/delivery_info_add_response.json');
+      final fakeResponse =
+          fixture('delivery_info/delivery_info_add_response.json');
       when(() => mockHttpClient.post(
-        Uri.parse(expectedUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $fakeToken',
-        },
-        body: deliveryInfoModelToJson(fakeDeliveryInfo),
-      )).thenAnswer((_) async => http.Response(fakeResponse, 200));
+            Uri.parse(expectedUrl),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $fakeToken',
+            },
+            body: deliveryInfoModelToJson(fakeDeliveryInfo),
+          )).thenAnswer((_) async => http.Response(fakeResponse, 200));
 
-      // Act
-      final result = await dataSource.addDeliveryInfo(fakeDeliveryInfo, fakeToken);
+      /// Act
+      final result =
+          await dataSource.addDeliveryInfo(fakeDeliveryInfo, fakeToken);
 
-      // Assert
+      /// Assert
       verify(() => mockHttpClient.post(
-        Uri.parse(expectedUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $fakeToken',
-        },
-        body: deliveryInfoModelToJson(fakeDeliveryInfo),
-      ));
+            Uri.parse(expectedUrl),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $fakeToken',
+            },
+            body: deliveryInfoModelToJson(fakeDeliveryInfo),
+          ));
       expect(result, isA<DeliveryInfoModel>());
     });
 
     test('should throw a ServerException on non-200 status code', () async {
-      // Arrange
+      /// Arrange
       const fakeToken = 'fakeToken';
       const fakeDeliveryInfo = tDeliveryInfoModel;
       const expectedUrl = '$baseUrl/users/delivery-info';
       when(() => mockHttpClient.post(
-        Uri.parse(expectedUrl),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $fakeToken',
-        },
-        body: deliveryInfoModelToJson(fakeDeliveryInfo),
-      )).thenAnswer((_) async => http.Response('Error message', 404));
+            Uri.parse(expectedUrl),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $fakeToken',
+            },
+            body: deliveryInfoModelToJson(fakeDeliveryInfo),
+          )).thenAnswer((_) async => http.Response('Error message', 404));
 
-      // Act
+      /// Act
       final result = dataSource.addDeliveryInfo(fakeDeliveryInfo, fakeToken);
 
-      // Assert
+      /// Assert
       expect(result, throwsA(isA<ServerException>()));
     });
   });

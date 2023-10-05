@@ -25,7 +25,7 @@ class CategoryRepositoryImpl implements CategoryRepository {
     if (await networkInfo.isConnected) {
       try {
         final remoteProducts = await remoteDataSource.getCategories();
-        localDataSource.cacheCategories(remoteProducts);
+        localDataSource.saveCategories(remoteProducts);
         return Right(remoteProducts);
       } on Failure catch (failure) {
         return Left(failure);

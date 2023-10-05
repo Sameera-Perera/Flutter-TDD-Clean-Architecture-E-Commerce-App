@@ -5,7 +5,7 @@ import '../../models/user/delivery_info_model.dart';
 
 abstract class DeliveryInfoLocalDataSource {
   Future<List<DeliveryInfoModel>> getDeliveryInfo();
-  Future<void> cacheDeliveryInfo(List<DeliveryInfoModel> params);
+  Future<void> saveDeliveryInfo(List<DeliveryInfoModel> params);
 }
 
 const cashedDeliveryInfo = 'CACHED_DELIVERY_INFO';
@@ -25,7 +25,7 @@ class DeliveryInfoLocalDataSourceImpl implements DeliveryInfoLocalDataSource {
   }
 
   @override
-  Future<void> cacheDeliveryInfo(List<DeliveryInfoModel> params) {
+  Future<void> saveDeliveryInfo(List<DeliveryInfoModel> params) {
     return sharedPreferences.setString(
       cashedDeliveryInfo,
       deliveryInfoModelListToJson(params),

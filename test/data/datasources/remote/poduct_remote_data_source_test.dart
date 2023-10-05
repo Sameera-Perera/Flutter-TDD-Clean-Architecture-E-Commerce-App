@@ -23,7 +23,7 @@ void main() {
 
   group('getProducts', () {
     test('should perform a GET request to the correct URL', () async {
-      // Arrange
+      /// Arrange
       const fakeParams = FilterProductParams();
       final expectedUrl =
           '$baseUrl/products?keyword=${fakeParams.keyword}&pageSize=${fakeParams.pageSize}&page=${fakeParams.limit}&categories=${jsonEncode(fakeParams.categories.map((e) => e.id).toList())}';
@@ -35,17 +35,17 @@ void main() {
             },
           )).thenAnswer((_) async => http.Response(fakeResponse, 200));
 
-      // Act
+      /// Act
       final result = await dataSource.getProducts(fakeParams);
 
-      // Assert
+      /// Assert
       verify(() => mockHttpClient.get(Uri.parse(expectedUrl),
           headers: any(named: 'headers')));
       expect(result, isA<ProductResponseModel>());
     });
 
     test('should throw a ServerException on non-200 status code', () async {
-      // Arrange
+      /// Arrange
       const fakeParams = FilterProductParams();
       final expectedUrl =
           '$baseUrl/products?keyword=${fakeParams.keyword}&pageSize=${fakeParams.pageSize}&page=${fakeParams.limit}&categories=${jsonEncode(fakeParams.categories.map((e) => e.id).toList())}';
@@ -53,10 +53,10 @@ void main() {
               headers: any(named: 'headers')))
           .thenAnswer((_) async => http.Response('Error message', 404));
 
-      // Act
+      /// Act
       final result = dataSource.getProducts(fakeParams);
 
-      // Assert
+      /// Assert
       expect(result, throwsA(isA<ServerException>()));
     });
   });

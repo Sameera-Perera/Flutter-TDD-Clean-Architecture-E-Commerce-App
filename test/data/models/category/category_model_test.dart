@@ -4,14 +4,14 @@ import 'package:eshop/data/models/category/category_model.dart';
 import 'package:eshop/domain/entities/category/category.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import '../../../fixtures/constent_objects.dart';
+import '../../../fixtures/constant_objects.dart';
 import '../../../fixtures/fixture_reader.dart';
 
 void main() {
   test(
     'CategoryModel should be a subclass of Category entity',
-        () async {
-      // assert
+    () async {
+      /// Assert
       expect(tCategoryModel, isA<Category>());
     },
   );
@@ -21,13 +21,15 @@ void main() {
       '''Should successfully deserialize a JSON map into a CategoryMap
           object and ensure that the resulting 
           object matches the expected tCategory''',
-          () async {
-        // arrange
+      () async {
+        /// Arrange
         final Map<String, dynamic> jsonMap =
-        json.decode(fixture('category/category.json'));
-        // act
+            json.decode(fixture('category/category.json'));
+
+        /// Act
         final result = CategoryModel.fromJson(jsonMap);
-        // assert
+
+        /// Assert
         expect(result, tCategoryModel);
       },
     );
@@ -36,13 +38,15 @@ void main() {
   group('toJson', () {
     test(
       'should return a JSON map containing the proper data',
-          () async {
-        // arrange
+      () async {
+        /// Arrange
         final result = tCategoryModel.toJson();
-        // act
+
+        /// Act
         final Map<String, dynamic> jsonMap =
-        json.decode(fixture('category/category.json'));
-        // assert
+            json.decode(fixture('category/category.json'));
+
+        /// Assert
         expect(result, jsonMap);
       },
     );
