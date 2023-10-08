@@ -53,6 +53,7 @@ class DeliveryInfoModel extends DeliveryInfo {
       );
 
   Map<String, dynamic> toJson() => {
+        "_id": id,
         "firstName": firstName,
         "lastName": lastName,
         "addressLineOne": addressLineOne,
@@ -60,7 +61,6 @@ class DeliveryInfoModel extends DeliveryInfo {
         "city": city,
         "zipCode": zipCode,
         "contactNumber": contactNumber,
-        "_id": id,
       };
 
   factory DeliveryInfoModel.fromEntity(DeliveryInfo entity) =>

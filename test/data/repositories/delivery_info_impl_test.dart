@@ -82,91 +82,194 @@ void main() {
     );
 
     runTestsOnline(() {
-      test(
-        'should return remote data when the call to remote data source is successful',
-        () async {
-          /// Arrange
-          when(() => mockUserLocalDataSource.isTokenAvailable())
-              .thenAnswer((invocation) => Future.value(true));
-          when(() => mockUserLocalDataSource.getToken())
-              .thenAnswer((invocation) => Future.value('token'));
-          when(() => mockRemoteDataSource.getDeliveryInfo('token'))
-              .thenAnswer((_) async => [tDeliveryInfoModel]);
-          when(() => mockLocalDataSource.saveDeliveryInfo([tDeliveryInfoModel]))
-              .thenAnswer((invocation) => Future<void>.value());
+      group('getRemoteDeliveryInfo', () {
+        test(
+          'should return remote data when the call to remote data source is successful',
+          () async {
+            /// Arrange
+            when(() => mockUserLocalDataSource.isTokenAvailable())
+                .thenAnswer((invocation) => Future.value(true));
+            when(() => mockUserLocalDataSource.getToken())
+                .thenAnswer((invocation) => Future.value('token'));
+            when(() => mockRemoteDataSource.getDeliveryInfo('token'))
+                .thenAnswer((_) async => [tDeliveryInfoModel]);
+            when(() =>
+                    mockLocalDataSource.saveDeliveryInfo([tDeliveryInfoModel]))
+                .thenAnswer((invocation) => Future<void>.value());
 
-          /// Act
-          final actualResult = await repository.getRemoteDeliveryInfo();
+            /// Act
+            final actualResult = await repository.getRemoteDeliveryInfo();
 
-          /// Assert
-          actualResult.fold(
-            (left) => fail('test failed'),
-            (right) {
-              verify(() =>
-                  mockLocalDataSource.saveDeliveryInfo([tDeliveryInfoModel]));
-              expect(right, [tDeliveryInfoModel]);
-            },
-          );
-        },
-      );
+            /// Assert
+            actualResult.fold(
+              (left) => fail('test failed'),
+              (right) {
+                verify(() =>
+                    mockLocalDataSource.saveDeliveryInfo([tDeliveryInfoModel]));
+                expect(right, [tDeliveryInfoModel]);
+              },
+            );
+          },
+        );
 
-      test(
-        'should return server failure when the call to remote data source is unsuccessful',
-        () async {
-          /// Arrange
-          when(() => mockUserLocalDataSource.isTokenAvailable())
-              .thenAnswer((invocation) => Future.value(true));
-          when(() => mockUserLocalDataSource.getToken())
-              .thenAnswer((invocation) => Future.value('token'));
-          when(() => mockRemoteDataSource.getDeliveryInfo('token'))
-              .thenThrow(ServerFailure());
+        test(
+          'should return server failure when the call to remote data source is unsuccessful',
+          () async {
+            /// Arrange
+            when(() => mockUserLocalDataSource.isTokenAvailable())
+                .thenAnswer((invocation) => Future.value(true));
+            when(() => mockUserLocalDataSource.getToken())
+                .thenAnswer((invocation) => Future.value('token'));
+            when(() => mockRemoteDataSource.getDeliveryInfo('token'))
+                .thenThrow(ServerFailure());
 
-          /// Act
-          final result = await repository.getRemoteDeliveryInfo();
+            /// Act
+            final result = await repository.getRemoteDeliveryInfo();
 
-          /// Assert
-          result.fold(
-            (left) => expect(left, ServerFailure()),
-            (right) => fail('test failed'),
-          );
-        },
-      );
+            /// Assert
+            result.fold(
+              (left) => expect(left, ServerFailure()),
+              (right) => fail('test failed'),
+            );
+          },
+        );
+      });
 
-      test(
-        'should return local cached data when the call to local data source is successful',
-        () async {
-          /// Arrange
-          when(() => mockLocalDataSource.getDeliveryInfo())
-              .thenAnswer((_) async => [tDeliveryInfoModel]);
+      group('getCachedDeliveryInfo', () {
+        test(
+          'should return local cached data when the call to local data source is successful',
+          () async {
+            /// Arrange
+            when(() => mockLocalDataSource.getDeliveryInfo())
+                .thenAnswer((_) async => [tDeliveryInfoModel]);
 
-          /// Act
-          final actualResult = await repository.getCachedDeliveryInfo();
+            /// Act
+            final actualResult = await repository.getCachedDeliveryInfo();
 
-          /// Assert
-          actualResult.fold(
-            (left) => fail('test failed'),
-            (right) => expect(right, [tDeliveryInfoModel]),
-          );
-        },
-      );
+            /// Assert
+            actualResult.fold(
+              (left) => fail('test failed'),
+              (right) => expect(right, [tDeliveryInfoModel]),
+            );
+          },
+        );
 
-      test(
-        'should return [CachedFailure] when the call to local data source is fail',
-        () async {
-          /// Arrange
-          when(() => mockLocalDataSource.getDeliveryInfo())
-              .thenThrow(CacheFailure());
+        test(
+          'should return [CachedFailure] when the call to local data source is fail',
+          () async {
+            /// Arrange
+            when(() => mockLocalDataSource.getDeliveryInfo())
+                .thenThrow(CacheFailure());
 
-          /// Act
-          final actualResult = await repository.getCachedDeliveryInfo();
+            /// Act
+            final actualResult = await repository.getCachedDeliveryInfo();
 
-          /// Assert
-          actualResult.fold(
-            (left) => expect(left, CacheFailure()),
-            (right) => fail('test failed'),
-          );
-        },
-      );
+            /// Assert
+            actualResult.fold(
+              (left) => expect(left, CacheFailure()),
+              (right) => fail('test failed'),
+            );
+          },
+        );
+      });
+
+      group('addCachedDeliveryInfo', () {
+        test(
+          'should return added DeliveryInfo data when the call to add remote method is successful',
+          () async {
+            /// Arrange
+            when(() => mockUserLocalDataSource.isTokenAvailable())
+                .thenAnswer((invocation) => Future.value(true));
+            when(() => mockUserLocalDataSource.getToken())
+                .thenAnswer((invocation) => Future.value('token'));
+            when(() => mockRemoteDataSource.addDeliveryInfo(
+                    tDeliveryInfoModel, 'token'))
+                .thenAnswer((_) async => tDeliveryInfoModel);
+
+            /// Act
+            final actualResult =
+                await repository.addDeliveryInfo(tDeliveryInfoModel);
+
+            /// Assert
+            actualResult.fold(
+              (left) => fail('test failed'),
+              (right) => expect(right, tDeliveryInfoModel),
+            );
+          },
+        );
+
+        test(
+          'should return [CachedFailure] when the call to remote data source is fail',
+          () async {
+            /// Arrange
+            when(() => mockUserLocalDataSource.isTokenAvailable())
+                .thenAnswer((invocation) => Future.value(true));
+            when(() => mockUserLocalDataSource.getToken())
+                .thenAnswer((invocation) => Future.value('token'));
+            when(() => mockRemoteDataSource.addDeliveryInfo(
+                tDeliveryInfoModel, 'token')).thenThrow(ServerFailure());
+
+            /// Act
+            final actualResult =
+                await repository.addDeliveryInfo(tDeliveryInfoModel);
+
+            /// Assert
+            actualResult.fold(
+              (left) => expect(left, ServerFailure()),
+              (right) => fail('test failed'),
+            );
+          },
+        );
+      });
+
+      group('editCachedDeliveryInfo', () {
+        test(
+          'should return added DeliveryInfo data when the call to add remote method is successful',
+          () async {
+            /// Arrange
+            when(() => mockUserLocalDataSource.isTokenAvailable())
+                .thenAnswer((invocation) => Future.value(true));
+            when(() => mockUserLocalDataSource.getToken())
+                .thenAnswer((invocation) => Future.value('token'));
+            when(() => mockRemoteDataSource.editDeliveryInfo(
+                    tDeliveryInfoModel, 'token'))
+                .thenAnswer((_) async => tDeliveryInfoModel);
+
+            /// Act
+            final actualResult =
+                await repository.editDeliveryInfo(tDeliveryInfoModel);
+
+            /// Assert
+            actualResult.fold(
+              (left) => fail('test failed'),
+              (right) => expect(right, tDeliveryInfoModel),
+            );
+          },
+        );
+
+        test(
+          'should return [CachedFailure] when the call to remote data source is fail',
+          () async {
+            /// Arrange
+            when(() => mockUserLocalDataSource.isTokenAvailable())
+                .thenAnswer((invocation) => Future.value(true));
+            when(() => mockUserLocalDataSource.getToken())
+                .thenAnswer((invocation) => Future.value('token'));
+            when(() => mockRemoteDataSource.editDeliveryInfo(
+                tDeliveryInfoModel, 'token')).thenThrow(ServerFailure());
+
+            /// Act
+            final actualResult =
+                await repository.editDeliveryInfo(tDeliveryInfoModel);
+
+            /// Assert
+            actualResult.fold(
+              (left) => expect(left, ServerFailure()),
+              (right) => fail('test failed'),
+            );
+          },
+        );
+      });
     });
 
     runTestsOffline(() {

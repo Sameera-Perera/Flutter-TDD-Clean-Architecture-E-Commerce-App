@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:eshop/domain/usecases/delivery_info/edit_delivery_info_usecase.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../data/models/user/delivery_info_model.dart';
@@ -9,7 +10,8 @@ part 'delivery_info_add_state.dart';
 
 class DeliveryInfoAddCubit extends Cubit<DeliveryInfoAddState> {
   final AddDeliveryInfoUseCase _deliveryInfoAddUsecase;
-  DeliveryInfoAddCubit(this._deliveryInfoAddUsecase)
+  final EditDeliveryInfoUseCase _editDeliveryInfoUseCase;
+  DeliveryInfoAddCubit(this._deliveryInfoAddUsecase, this._editDeliveryInfoUseCase)
       : super(DeliveryInfoAddInitial());
 
   void addDeliveryInfo(DeliveryInfoModel params) async {
@@ -19,6 +21,19 @@ class DeliveryInfoAddCubit extends Cubit<DeliveryInfoAddState> {
       result.fold(
         (failure) => emit(DeliveryInfoAddFail()),
         (deliveryInfo) => emit(DeliveryInfoAddSuccess(deliveryInfo)),
+      );
+    } catch (e) {
+      emit(DeliveryInfoAddFail());
+    }
+  }
+
+  void editDeliveryInfo(DeliveryInfoModel params) async {
+    try {
+      emit(DeliveryInfoAddLoading());
+      final result = await _editDeliveryInfoUseCase(params);
+      result.fold(
+            (failure) => emit(DeliveryInfoAddFail()),
+            (deliveryInfo) => emit(DeliveryInfoEditSuccess(deliveryInfo)),
       );
     } catch (e) {
       emit(DeliveryInfoAddFail());

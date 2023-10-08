@@ -12,4 +12,9 @@ class DeliveryInfoAddSuccess extends DeliveryInfoAddState {
   DeliveryInfoAddSuccess(this.deliveryInfo);
 }
 
+class DeliveryInfoEditSuccess extends DeliveryInfoAddState {
+  final DeliveryInfo deliveryInfo;
+  DeliveryInfoEditSuccess(this.deliveryInfo);
+}
+
 class DeliveryInfoAddFail extends DeliveryInfoAddState {}

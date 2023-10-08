@@ -43,4 +43,16 @@ class DeliveryInfoFetchCubit extends Cubit<DeliveryInfoFetchState> {
       emit(DeliveryInfoFetchFail(state.deliveryInformation));
     }
   }
+
+  void editDeliveryInfo(DeliveryInfo deliveryInfo) async {
+    try {
+      emit(DeliveryInfoFetchLoading(state.deliveryInformation));
+      final value = state.deliveryInformation;
+      value[value.indexWhere((element) => element == deliveryInfo)] =
+          deliveryInfo;
+      emit(DeliveryInfoFetchSuccess(value));
+    } catch (e) {
+      emit(DeliveryInfoFetchFail(state.deliveryInformation));
+    }
+  }
 }

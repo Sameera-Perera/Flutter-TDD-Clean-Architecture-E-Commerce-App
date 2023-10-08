@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:eshop/data/models/user/delivery_info_model.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../core/network/network_info.dart';
@@ -22,22 +23,8 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
   });
 
   @override
-  Future<Either<Failure, DeliveryInfo>> addDeliveryInfo(params) async {
-    if (await userLocalDataSource.isTokenAvailable()) {
-      final String token = await userLocalDataSource.getToken();
-      final remoteProduct = await remoteDataSource.addDeliveryInfo(
-        params,
-        token,
-      );
-      return Right(remoteProduct);
-    } else {
-      return Left(AuthenticationFailure());
-    }
-  }
-
-  @override
   Future<Either<Failure, List<DeliveryInfo>>> getRemoteDeliveryInfo() async {
-    if(await networkInfo.isConnected){
+    if (await networkInfo.isConnected) {
       if (await userLocalDataSource.isTokenAvailable()) {
         try {
           final String token = await userLocalDataSource.getToken();
@@ -64,6 +51,43 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
       return Right(result);
     } on Failure catch (failure) {
       return Left(failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, DeliveryInfo>> addDeliveryInfo(params) async {
+    if (await userLocalDataSource.isTokenAvailable()) {
+      try {
+        final String token = await userLocalDataSource.getToken();
+        final remoteProduct = await remoteDataSource.addDeliveryInfo(
+          params,
+          token,
+        );
+        return Right(remoteProduct);
+      } on Failure catch (failure) {
+        return Left(failure);
+      }
+    } else {
+      return Left(AuthenticationFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, DeliveryInfo>> editDeliveryInfo(
+      DeliveryInfoModel params) async {
+    if (await userLocalDataSource.isTokenAvailable()) {
+      try {
+        final String token = await userLocalDataSource.getToken();
+        final remoteProduct = await remoteDataSource.editDeliveryInfo(
+          params,
+          token,
+        );
+        return Right(remoteProduct);
+      } on Failure catch (failure) {
+        return Left(failure);
+      }
+    } else {
+      return Left(AuthenticationFailure());
     }
   }
 }
