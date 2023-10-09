@@ -7,9 +7,11 @@ abstract class DeliveryInfoLocalDataSource {
   Future<List<DeliveryInfoModel>> getDeliveryInfo();
   Future<void> saveDeliveryInfo(List<DeliveryInfoModel> params);
   Future<void> updateDeliveryInfo(DeliveryInfoModel params);
+  Future<void> updateSelectedDeliveryInfo(DeliveryInfoModel params);
 }
 
 const cashedDeliveryInfo = 'CACHED_DELIVERY_INFO';
+const cashedSelectedDeliveryInfo = 'CACHED_SELECTED_DELIVERY_INFO';
 
 class DeliveryInfoLocalDataSourceImpl implements DeliveryInfoLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -36,24 +38,29 @@ class DeliveryInfoLocalDataSourceImpl implements DeliveryInfoLocalDataSource {
   @override
   Future<void> updateDeliveryInfo(DeliveryInfoModel params) {
     final jsonString = sharedPreferences.getString(cashedDeliveryInfo);
+    late List<DeliveryInfoModel> data;
     if (jsonString != null) {
-      List<DeliveryInfoModel> data =
-          deliveryInfoModelListFromLocalJson(jsonString);
+      data = deliveryInfoModelListFromLocalJson(jsonString);
       if (data.any((deliveryInfo) => deliveryInfo == params)) {
         data[data.indexWhere((deliveryInfo) => deliveryInfo == params)] =
             params;
       } else {
         data.add(params);
       }
-      return sharedPreferences.setString(
-        cashedDeliveryInfo,
-        deliveryInfoModelListToJson([params]),
-      );
     } else {
-      return sharedPreferences.setString(
-        cashedDeliveryInfo,
-        deliveryInfoModelListToJson([params]),
-      );
+      data = [params];
     }
+    return sharedPreferences.setString(
+      cashedDeliveryInfo,
+      deliveryInfoModelListToJson(data),
+    );
+  }
+
+  @override
+  Future<void> updateSelectedDeliveryInfo(DeliveryInfoModel params) {
+    return sharedPreferences.setString(
+      cashedSelectedDeliveryInfo,
+      deliveryInfoModelToJson(params),
+    );
   }
 }
