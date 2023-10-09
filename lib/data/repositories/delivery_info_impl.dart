@@ -92,4 +92,14 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
       return Left(AuthenticationFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, DeliveryInfo>> selectDeliveryInfo(DeliveryInfoModel params) async {
+    try {
+      await localDataSource.updateSelectedDeliveryInfo(params);
+      return Right(params);
+    } on Failure catch (failure) {
+      return Left(failure);
+    }
+  }
 }
