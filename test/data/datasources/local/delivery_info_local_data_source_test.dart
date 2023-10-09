@@ -48,19 +48,41 @@ void main() {
     });
   });
 
-  group('cacheDeliveryInfo', () {
+  group('saveDeliveryInfo', () {
     test('should call SharedPreferences.setString with the correct arguments',
         () async {
       /// Arrange
       final deliveryInfo = [tDeliveryInfoModel];
-      final jsonString = fixture('delivery_info/delivery_info_list.json');
+      when(() => mockSharedPreferences.setString(
+          cashedDeliveryInfo, deliveryInfoModelListToJson(deliveryInfo)))
+          .thenAnswer((invocation) => Future<bool>.value(true));
 
       /// Act
       await dataSource.saveDeliveryInfo(deliveryInfo);
 
       /// Assert
       verify(() =>
-          mockSharedPreferences.setString(cashedDeliveryInfo, jsonString));
+          mockSharedPreferences.setString(cashedDeliveryInfo, deliveryInfoModelListToJson(deliveryInfo)));
     });
+  });
+
+  group('updateDeliveryInfo', () {
+    test('should call SharedPreferences.setString with the correct arguments',
+            () async {
+          /// Arrange
+          final jsonString = fixture('delivery_info/delivery_info_list.json');
+          when(() => mockSharedPreferences.getString(cashedDeliveryInfo))
+              .thenReturn(jsonString);
+          when(() => mockSharedPreferences.setString(
+              cashedDeliveryInfo, deliveryInfoModelListToJson([tDeliveryInfoModel])))
+              .thenAnswer((invocation) => Future<bool>.value(true));
+
+          /// Act
+          await dataSource.updateDeliveryInfo(tDeliveryInfoModel);
+
+          /// Assert
+          verify(() =>
+              mockSharedPreferences.setString(cashedDeliveryInfo, deliveryInfoModelListToJson([tDeliveryInfoModel])));
+        });
   });
 }
