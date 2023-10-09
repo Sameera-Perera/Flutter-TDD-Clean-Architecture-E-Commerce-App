@@ -1,5 +1,4 @@
 import 'package:dartz/dartz.dart';
-import 'package:eshop/data/models/user/delivery_info_model.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../core/network/network_info.dart';
@@ -8,6 +7,7 @@ import '../../domain/repositories/delivery_info_repository.dart';
 import '../data_sources/local/delivery_info_local_data_source.dart';
 import '../data_sources/local/user_local_data_source.dart';
 import '../data_sources/remote/delivery_info_remote_data_source.dart';
+import '../models/user/delivery_info_model.dart';
 
 class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
   final DeliveryInfoRemoteDataSource remoteDataSource;
@@ -59,11 +59,12 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
     if (await userLocalDataSource.isTokenAvailable()) {
       try {
         final String token = await userLocalDataSource.getToken();
-        final remoteProduct = await remoteDataSource.addDeliveryInfo(
+        final DeliveryInfoModel deliveryInfo = await remoteDataSource.addDeliveryInfo(
           params,
           token,
         );
-        return Right(remoteProduct);
+        await localDataSource.updateDeliveryInfo(deliveryInfo);
+        return Right(deliveryInfo);
       } on Failure catch (failure) {
         return Left(failure);
       }
@@ -78,11 +79,12 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
     if (await userLocalDataSource.isTokenAvailable()) {
       try {
         final String token = await userLocalDataSource.getToken();
-        final remoteProduct = await remoteDataSource.editDeliveryInfo(
+        final DeliveryInfoModel deliveryInfo = await remoteDataSource.editDeliveryInfo(
           params,
           token,
         );
-        return Right(remoteProduct);
+        await localDataSource.updateDeliveryInfo(deliveryInfo);
+        return Right(deliveryInfo);
       } on Failure catch (failure) {
         return Left(failure);
       }
