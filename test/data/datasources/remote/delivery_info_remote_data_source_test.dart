@@ -116,4 +116,60 @@ void main() {
       expect(result, throwsA(isA<ServerException>()));
     });
   });
+
+  group('editDeliveryInfo', () {
+    test('should perform a PUT request to the correct URL with authorization',
+            () async {
+          /// Arrange
+          const fakeToken = 'fakeToken';
+          const fakeDeliveryInfo = tDeliveryInfoModel;
+          const expectedUrl = '$baseUrl/users/delivery-info';
+          final fakeResponse =
+          fixture('delivery_info/delivery_info_add_response.json');
+          when(() => mockHttpClient.put(
+            Uri.parse(expectedUrl),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $fakeToken',
+            },
+            body: deliveryInfoModelToJson(fakeDeliveryInfo),
+          )).thenAnswer((_) async => http.Response(fakeResponse, 200));
+
+          /// Act
+          final result =
+          await dataSource.editDeliveryInfo(fakeDeliveryInfo, fakeToken);
+
+          /// Assert
+          verify(() => mockHttpClient.put(
+            Uri.parse(expectedUrl),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer $fakeToken',
+            },
+            body: deliveryInfoModelToJson(fakeDeliveryInfo),
+          ));
+          expect(result, isA<DeliveryInfoModel>());
+        });
+
+    test('should throw a ServerException on non-200 status code', () async {
+      /// Arrange
+      const fakeToken = 'fakeToken';
+      const fakeDeliveryInfo = tDeliveryInfoModel;
+      const expectedUrl = '$baseUrl/users/delivery-info';
+      when(() => mockHttpClient.put(
+        Uri.parse(expectedUrl),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $fakeToken',
+        },
+        body: deliveryInfoModelToJson(fakeDeliveryInfo),
+      )).thenAnswer((_) async => http.Response('Error message', 404));
+
+      /// Act
+      final result = dataSource.editDeliveryInfo(fakeDeliveryInfo, fakeToken);
+
+      /// Assert
+      expect(result, throwsA(isA<ServerException>()));
+    });
+  });
 }

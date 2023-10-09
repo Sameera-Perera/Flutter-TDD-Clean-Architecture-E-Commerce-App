@@ -8,4 +8,5 @@ abstract class DeliveryInfoRepository {
   Future<Either<Failure, List<DeliveryInfo>>> getRemoteDeliveryInfo();
   Future<Either<Failure, List<DeliveryInfo>>> getCachedDeliveryInfo();
   Future<Either<Failure, DeliveryInfo>> addDeliveryInfo(DeliveryInfoModel param);
+  Future<Either<Failure, DeliveryInfo>> editDeliveryInfo(DeliveryInfoModel param);
 }

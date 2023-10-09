@@ -10,7 +10,6 @@ import '../../../../widgets/delivery_info_card.dart';
 import '../../../../widgets/input_form_button.dart';
 import '../../../../widgets/input_text_form_field.dart';
 
-
 class DeliveryInfoView extends StatefulWidget {
   const DeliveryInfoView({Key? key}) : super(key: key);
 
@@ -86,6 +85,7 @@ class DeliveryInfoForm extends StatefulWidget {
 }
 
 class _DeliveryInfoFormState extends State<DeliveryInfoForm> {
+  String? id;
   final TextEditingController firstName = TextEditingController();
   final TextEditingController lastName = TextEditingController();
   final TextEditingController addressLineOne = TextEditingController();
@@ -98,6 +98,7 @@ class _DeliveryInfoFormState extends State<DeliveryInfoForm> {
   @override
   void initState() {
     if (widget.deliveryInfo != null) {
+      id = widget.deliveryInfo!.id;
       firstName.text = widget.deliveryInfo!.firstName;
       lastName.text = widget.deliveryInfo!.lastName;
       addressLineOne.text = widget.deliveryInfo!.addressLineOne;
@@ -122,6 +123,12 @@ class _DeliveryInfoFormState extends State<DeliveryInfoForm> {
               .read<DeliveryInfoFetchCubit>()
               .addDeliveryInfo(state.deliveryInfo);
           EasyLoading.showSuccess("Delivery info successfully added!");
+        } else if (state is DeliveryInfoEditSuccess) {
+          Navigator.of(context).pop();
+          context
+              .read<DeliveryInfoFetchCubit>()
+              .editDeliveryInfo(state.deliveryInfo);
+          EasyLoading.showSuccess("Delivery info successfully edited!");
         } else if (state is DeliveryInfoAddFail) {
           EasyLoading.showError("Error");
         }
@@ -242,18 +249,31 @@ class _DeliveryInfoFormState extends State<DeliveryInfoForm> {
                     onClick: () {
                       if (_formKey.currentState!.validate()) {
                         if (widget.deliveryInfo == null) {
-                          context
-                              .read<DeliveryInfoAddCubit>()
-                              .addDeliveryInfo(DeliveryInfoModel(
-                                id: '',
-                                firstName: firstName.text,
-                                lastName: lastName.text,
-                                addressLineOne: addressLineOne.text,
-                                addressLineTwo: addressLineTwo.text,
-                                city: city.text,
-                                zipCode: zipCode.text,
-                                contactNumber: contactNumber.text,
-                              ));
+                            context
+                                .read<DeliveryInfoAddCubit>()
+                                .addDeliveryInfo(DeliveryInfoModel(
+                                  id: '',
+                                  firstName: firstName.text,
+                                  lastName: lastName.text,
+                                  addressLineOne: addressLineOne.text,
+                                  addressLineTwo: addressLineTwo.text,
+                                  city: city.text,
+                                  zipCode: zipCode.text,
+                                  contactNumber: contactNumber.text,
+                                ));
+                        } else {
+                            context
+                                .read<DeliveryInfoAddCubit>()
+                                .editDeliveryInfo(DeliveryInfoModel(
+                                  id: id!,
+                                  firstName: firstName.text,
+                                  lastName: lastName.text,
+                                  addressLineOne: addressLineOne.text,
+                                  addressLineTwo: addressLineTwo.text,
+                                  city: city.text,
+                                  zipCode: zipCode.text,
+                                  contactNumber: contactNumber.text,
+                                ));
                         }
                       }
                     },
