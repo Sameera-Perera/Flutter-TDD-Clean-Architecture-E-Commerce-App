@@ -4,7 +4,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../../../../data/models/user/delivery_info_model.dart';
 import '../../../../../domain/entities/user/delivery_info.dart';
-import '../../../../blocs/delivery_info/delivery_info_add/delivery_info_add_cubit.dart';
+import '../../../../blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
 import '../../../../blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import '../../../../widgets/delivery_info_card.dart';
 import '../../../../widgets/input_form_button.dart';
@@ -20,7 +20,19 @@ class DeliveryInfoView extends StatefulWidget {
 class _DeliveryInfoViewState extends State<DeliveryInfoView> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return BlocListener<DeliveryInfoActionCubit, DeliveryInfoActionState>(
+      listener: (context, state) {
+        EasyLoading.dismiss();
+        if (state is DeliveryInfoActionLoading) {
+          EasyLoading.show(status: 'Loading...');
+        } else if (state is DeliveryInfoSelectActionSuccess) {
+          context
+              .read<DeliveryInfoFetchCubit>()
+              .selectDeliveryInfo(state.deliveryInfo);
+        } else if (state is DeliveryInfoActionFail) {
+          EasyLoading.showError("Error");
+        }
+      },
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Delivery Details"),
@@ -39,7 +51,8 @@ class _DeliveryInfoViewState extends State<DeliveryInfoView> {
                       ? const DeliveryInfoCard()
                       : DeliveryInfoCard(
                           deliveryInformation: state.deliveryInformation[index],
-                          // isSelected: true,
+                          isSelected: state.deliveryInformation[index] ==
+                              state.selectedDeliveryInformation,
                         ),
             );
           },
@@ -112,24 +125,24 @@ class _DeliveryInfoFormState extends State<DeliveryInfoForm> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<DeliveryInfoAddCubit, DeliveryInfoAddState>(
+    return BlocListener<DeliveryInfoActionCubit, DeliveryInfoActionState>(
       listener: (context, state) {
         EasyLoading.dismiss();
-        if (state is DeliveryInfoAddLoading) {
+        if (state is DeliveryInfoActionLoading) {
           EasyLoading.show(status: 'Loading...');
-        } else if (state is DeliveryInfoAddSuccess) {
+        } else if (state is DeliveryInfoAddActionSuccess) {
           Navigator.of(context).pop();
           context
               .read<DeliveryInfoFetchCubit>()
               .addDeliveryInfo(state.deliveryInfo);
           EasyLoading.showSuccess("Delivery info successfully added!");
-        } else if (state is DeliveryInfoEditSuccess) {
+        } else if (state is DeliveryInfoEditActionSuccess) {
           Navigator.of(context).pop();
           context
               .read<DeliveryInfoFetchCubit>()
               .editDeliveryInfo(state.deliveryInfo);
           EasyLoading.showSuccess("Delivery info successfully edited!");
-        } else if (state is DeliveryInfoAddFail) {
+        } else if (state is DeliveryInfoActionFail) {
           EasyLoading.showError("Error");
         }
       },
@@ -249,31 +262,31 @@ class _DeliveryInfoFormState extends State<DeliveryInfoForm> {
                     onClick: () {
                       if (_formKey.currentState!.validate()) {
                         if (widget.deliveryInfo == null) {
-                            context
-                                .read<DeliveryInfoAddCubit>()
-                                .addDeliveryInfo(DeliveryInfoModel(
-                                  id: '',
-                                  firstName: firstName.text,
-                                  lastName: lastName.text,
-                                  addressLineOne: addressLineOne.text,
-                                  addressLineTwo: addressLineTwo.text,
-                                  city: city.text,
-                                  zipCode: zipCode.text,
-                                  contactNumber: contactNumber.text,
-                                ));
+                          context
+                              .read<DeliveryInfoActionCubit>()
+                              .addDeliveryInfo(DeliveryInfoModel(
+                                id: '',
+                                firstName: firstName.text,
+                                lastName: lastName.text,
+                                addressLineOne: addressLineOne.text,
+                                addressLineTwo: addressLineTwo.text,
+                                city: city.text,
+                                zipCode: zipCode.text,
+                                contactNumber: contactNumber.text,
+                              ));
                         } else {
-                            context
-                                .read<DeliveryInfoAddCubit>()
-                                .editDeliveryInfo(DeliveryInfoModel(
-                                  id: id!,
-                                  firstName: firstName.text,
-                                  lastName: lastName.text,
-                                  addressLineOne: addressLineOne.text,
-                                  addressLineTwo: addressLineTwo.text,
-                                  city: city.text,
-                                  zipCode: zipCode.text,
-                                  contactNumber: contactNumber.text,
-                                ));
+                          context
+                              .read<DeliveryInfoActionCubit>()
+                              .editDeliveryInfo(DeliveryInfoModel(
+                                id: id!,
+                                firstName: firstName.text,
+                                lastName: lastName.text,
+                                addressLineOne: addressLineOne.text,
+                                addressLineTwo: addressLineTwo.text,
+                                city: city.text,
+                                zipCode: zipCode.text,
+                                contactNumber: contactNumber.text,
+                              ));
                         }
                       }
                     },

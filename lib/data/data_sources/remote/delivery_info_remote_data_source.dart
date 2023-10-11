@@ -47,7 +47,7 @@ class DeliveryInfoRemoteDataSourceImpl implements DeliveryInfoRemoteDataSource {
       body: deliveryInfoModelToJson(params),
     );
     if (response.statusCode == 200) {
-      return deliveryInfoModelFromJson(response.body);
+      return deliveryInfoModelFromRemoteJson(response.body);
     } else {
       throw ServerException();
     }
@@ -64,7 +64,7 @@ class DeliveryInfoRemoteDataSourceImpl implements DeliveryInfoRemoteDataSource {
       body: deliveryInfoModelToJson(params),
     );
     if (response.statusCode == 200) {
-      return deliveryInfoModelFromJson(response.body);
+      return deliveryInfoModelFromRemoteJson(response.body);
     } else {
       throw ServerException();
     }

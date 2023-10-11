@@ -5,13 +5,14 @@ import '../../models/user/delivery_info_model.dart';
 
 abstract class DeliveryInfoLocalDataSource {
   Future<List<DeliveryInfoModel>> getDeliveryInfo();
+  Future<DeliveryInfoModel> getSelectedDeliveryInfo();
   Future<void> saveDeliveryInfo(List<DeliveryInfoModel> params);
   Future<void> updateDeliveryInfo(DeliveryInfoModel params);
   Future<void> updateSelectedDeliveryInfo(DeliveryInfoModel params);
 }
 
 const cashedDeliveryInfo = 'CACHED_DELIVERY_INFO';
-const cashedSelectedDeliveryInfo = 'CACHED_SELECTED_DELIVERY_INFO';
+const cachedSelectedDeliveryInfo = 'CACHED_SELECTED_DELIVERY_INFO';
 
 class DeliveryInfoLocalDataSourceImpl implements DeliveryInfoLocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -59,8 +60,18 @@ class DeliveryInfoLocalDataSourceImpl implements DeliveryInfoLocalDataSource {
   @override
   Future<void> updateSelectedDeliveryInfo(DeliveryInfoModel params) {
     return sharedPreferences.setString(
-      cashedSelectedDeliveryInfo,
+      cachedSelectedDeliveryInfo,
       deliveryInfoModelToJson(params),
     );
+  }
+
+  @override
+  Future<DeliveryInfoModel> getSelectedDeliveryInfo() {
+    final jsonString = sharedPreferences.getString(cachedSelectedDeliveryInfo);
+    if (jsonString != null) {
+      return Future.value(deliveryInfoModelFromLocalJson(jsonString));
+    } else {
+      throw CacheFailure();
+    }
   }
 }

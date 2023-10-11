@@ -11,6 +11,7 @@ import '../../../core/router/app_router.dart';
 import '../../../domain/entities/cart/cart_item.dart';
 import '../../../domain/entities/order/order_details.dart';
 import '../../../domain/entities/order/order_item.dart';
+import '../../../domain/entities/user/delivery_info.dart';
 import '../../blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import '../../blocs/order/order_add/order_add_cubit.dart';
 import '../../widgets/input_form_button.dart';
@@ -61,7 +62,8 @@ class OrderCheckoutView extends StatelessWidget {
                         child: BlocBuilder<DeliveryInfoFetchCubit,
                             DeliveryInfoFetchState>(
                           builder: (context, state) {
-                            if (state.deliveryInformation.isNotEmpty) {
+                            if (state.deliveryInformation.isNotEmpty &&
+                                state.selectedDeliveryInformation != null) {
                               return Container(
                                 padding: const EdgeInsets.only(
                                     top: 16, bottom: 12, left: 4, right: 10),
@@ -72,13 +74,13 @@ class OrderCheckoutView extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "${state.deliveryInformation.first.firstName.capitalize()} ${state.deliveryInformation.first.lastName}, ${state.deliveryInformation.first.contactNumber}",
+                                        "${state.selectedDeliveryInformation!.firstName.capitalize()} ${state.selectedDeliveryInformation!.lastName}, ${state.selectedDeliveryInformation!.contactNumber}",
                                         style: const TextStyle(
                                           fontSize: 14,
                                         ),
                                       ),
                                       Text(
-                                        "${state.deliveryInformation.first.addressLineOne}, ${state.deliveryInformation.first.addressLineTwo}, ${state.deliveryInformation.first.city}, ${state.deliveryInformation.first.zipCode}",
+                                        "${state.selectedDeliveryInformation!.addressLineOne}, ${state.selectedDeliveryInformation!.addressLineTwo}, ${state.selectedDeliveryInformation!.city}, ${state.selectedDeliveryInformation!.zipCode}",
                                         style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),

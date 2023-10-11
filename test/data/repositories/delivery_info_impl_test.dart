@@ -369,7 +369,7 @@ void main() {
       group('selectDeliveryInfo', () {
         test(
           'should call local updateSelectedDeliveryInfo method',
-              () async {
+          () async {
             /// Arrange
             when(() => mockLocalDataSource.updateSelectedDeliveryInfo(
                 tDeliveryInfoModel)).thenAnswer((_) => Future<void>.value());
@@ -380,6 +380,23 @@ void main() {
             /// Assert
             verify(() => mockLocalDataSource
                 .updateSelectedDeliveryInfo(tDeliveryInfoModel));
+          },
+        );
+      });
+
+      group('getSelectedDeliveryInfo', () {
+        test(
+          'should call local getSelectedDeliveryInfo method',
+          () async {
+            /// Arrange
+            when(() => mockLocalDataSource.getSelectedDeliveryInfo())
+                .thenAnswer((_) async => tDeliveryInfoModel);
+
+            /// Act
+            await repository.getSelectedDeliveryInfo();
+
+            /// Assert
+            verify(() => mockLocalDataSource.getSelectedDeliveryInfo());
           },
         );
       });
