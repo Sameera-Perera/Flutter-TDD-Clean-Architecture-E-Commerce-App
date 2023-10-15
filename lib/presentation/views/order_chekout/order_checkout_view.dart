@@ -227,25 +227,30 @@ class OrderCheckoutView extends StatelessWidget {
                 return InputFormButton(
                   color: Colors.black87,
                   onClick: () {
-                    // var orderPlaceBloc = context.read<OrderPlaceCubit>();
-                    // orderPlaceBloc.placeOrder();
-                    context.read<OrderAddCubit>().addOrder(OrderDetails(
-                        id: '',
-                        orderItems: items
-                            .map((item) => OrderItem(
-                                  id: '',
-                                  product: item.product,
-                                  priceTag: item.priceTag,
-                                  price: item.priceTag.price,
-                                  quantity: 1,
-                                ))
-                            .toList(),
-                        deliveryInfo: context
+                    if (context
                             .read<DeliveryInfoFetchCubit>()
                             .state
-                            .deliveryInformation
-                            .first,
-                        discount: 0));
+                            .selectedDeliveryInformation ==
+                        null) {
+                      print('error');
+                    } else {
+                      context.read<OrderAddCubit>().addOrder(OrderDetails(
+                          id: '',
+                          orderItems: items
+                              .map((item) => OrderItem(
+                                    id: '',
+                                    product: item.product,
+                                    priceTag: item.priceTag,
+                                    price: item.priceTag.price,
+                                    quantity: 1,
+                                  ))
+                              .toList(),
+                          deliveryInfo: context
+                              .read<DeliveryInfoFetchCubit>()
+                              .state
+                              .selectedDeliveryInformation!,
+                          discount: 0));
+                    }
                   },
                   titleText: 'Confirm',
                 );
