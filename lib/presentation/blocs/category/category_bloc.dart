@@ -70,8 +70,9 @@ class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
       emit(CategoryLoading(categories: state.categories));
       final cashedResult = await _filterCategoryUseCase(event.keyword);
       cashedResult.fold(
-        (failure) => emit(CategoryLoading(
+        (failure) => emit(CategoryError(
           categories: state.categories,
+          failure: failure,
         )),
         (categories) => emit(CategoryCacheLoaded(
           categories: categories,

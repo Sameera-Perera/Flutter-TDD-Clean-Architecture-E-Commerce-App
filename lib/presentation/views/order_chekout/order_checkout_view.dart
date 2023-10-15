@@ -11,7 +11,6 @@ import '../../../core/router/app_router.dart';
 import '../../../domain/entities/cart/cart_item.dart';
 import '../../../domain/entities/order/order_details.dart';
 import '../../../domain/entities/order/order_item.dart';
-import '../../../domain/entities/user/delivery_info.dart';
 import '../../blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import '../../blocs/order/order_add/order_add_cubit.dart';
 import '../../widgets/input_form_button.dart';
