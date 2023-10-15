@@ -21,14 +21,14 @@ Welcome to the Flutter-TDD-Clean-Architecture-E-Commerce-App GitHub repository! 
 * **E-Commerce Functionality**: The app showcases a variety of E-Commerce features, such as product browsing, searching, cart and purchasing. Users can explore products, add them to their cart, and complete transactions seamlessly.
 <!-- Features -->
 ---
-| Feature       | UseCases                                                                                            |
-|---------------|-----------------------------------------------------------------------------------------------------|
-| Product       | Get Product UseCase                                                                                 |
-| Category      | Get Cached Category UseCase<br/>Get Remote Category UseCase<br/>Filter Category UseCase             |
-| Cart          | Get Cached Cart UseCase<br/>Get Remote Cart UseCase<br/>Add Cart Item UseCase<br/>Sync Cart UseCase |
-| User          | Get Cached User UseCase<br/>SignIn UseCase<br/>SignUp UseCase<br/>SignOut UseCase                   |
-| Delivery Info | Get Cached Delivery Info UseCase<br/>Get Remote Delivery Info UseCase<br/>Add Delivery Info UseCase |
-| Order         | Get Orders UseCase<br/>Add Order UseCase                                                            |
+| Feature       | UseCases                                                                                                                                                                                                   |
+|---------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Product       | Get Product UseCase                                                                                                                                                                                        |
+| Category      | Get Cached Category UseCase<br/>Get Remote Category UseCase<br/>Filter Category UseCase                                                                                                                    |
+| Cart          | Get Cached Cart UseCase<br/>Get Remote Cart UseCase<br/>Add Cart Item UseCase<br/>Sync Cart UseCase                                                                                                        |
+| User          | Get Cached User UseCase<br/>SignIn UseCase<br/>SignUp UseCase<br/>SignOut UseCase                                                                                                                          |
+| Delivery Info | Get Cached Delivery Info UseCase<br/>Get Remote Delivery Info UseCase<br/>Add Delivery Info UseCase<br/>Edit Delivery Info UseCase<br/>Select Delivery Info UseCase<br/>Get Selected Delivery Info UseCase |
+| Order         | Get Orders UseCase<br/>Add Order UseCase                                                                                                                                                                   |
 
 ---
 

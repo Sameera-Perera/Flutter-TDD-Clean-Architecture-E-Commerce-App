@@ -1,4 +1,6 @@
 import 'package:eshop/domain/usecases/delivery_info/edit_delivery_info_usecase.dart';
+import 'package:eshop/domain/usecases/delivery_info/get_selected_delivery_info_usecase.dart';
+import 'package:eshop/domain/usecases/delivery_info/select_delivery_info_usecase.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -49,7 +51,7 @@ import '../../domain/usecases/user/sign_out_usecase.dart';
 import '../../domain/usecases/user/sign_up_usecase.dart';
 import '../../presentation/blocs/cart/cart_bloc.dart';
 import '../../presentation/blocs/category/category_bloc.dart';
-import '../../presentation/blocs/delivery_info/delivery_info_add/delivery_info_add_cubit.dart';
+import '../../presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
 import '../../presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import '../../presentation/blocs/order/order_add/order_add_cubit.dart';
 import '../../presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
@@ -138,16 +140,18 @@ Future<void> init() async {
   //Features - Delivery Info
   // Bloc
   sl.registerFactory(
-    () => DeliveryInfoAddCubit(sl(), sl()),
+    () => DeliveryInfoActionCubit(sl(), sl(), sl()),
   );
   sl.registerFactory(
-    () => DeliveryInfoFetchCubit(sl(),sl()),
+    () => DeliveryInfoFetchCubit(sl(), sl(), sl()),
   );
   // Use cases
   sl.registerLazySingleton(() => GetRemoteDeliveryInfoUseCase(sl()));
   sl.registerLazySingleton(() => GetCachedDeliveryInfoUseCase(sl()));
   sl.registerLazySingleton(() => AddDeliveryInfoUseCase(sl()));
   sl.registerLazySingleton(() => EditDeliveryInfoUseCase(sl()));
+  sl.registerLazySingleton(() => SelectDeliveryInfoUseCase(sl()));
+  sl.registerLazySingleton(() => GetSelectedDeliveryInfoInfoUseCase(sl()));
   // Repository
   sl.registerLazySingleton<DeliveryInfoRepository>(
     () => DeliveryInfoRepositoryImpl(

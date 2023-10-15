@@ -49,7 +49,7 @@ class UserRepositoryImpl implements UserRepository {
   @override
   Future<Either<Failure, NoParams>> signOut() async {
     try {
-      var result = await localDataSource.clearCache();
+      await localDataSource.clearCache();
       return Right(NoParams());
     } on CacheFailure {
       return Left(CacheFailure());

@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:eshop/core/error/failures.dart';
 import 'package:eshop/domain/repositories/delivery_info_repository.dart';
-import 'package:eshop/domain/usecases/delivery_info/edit_delivery_info_usecase.dart';
+import 'package:eshop/domain/usecases/delivery_info/select_delivery_info_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -10,19 +10,19 @@ import '../../../fixtures/constant_objects.dart';
 class MockCartRepository extends Mock implements DeliveryInfoRepository {}
 
 void main() {
-  late EditDeliveryInfoUseCase usecase;
+  late SelectDeliveryInfoUseCase usecase;
   late MockCartRepository mockProductRepository;
 
   setUp(() {
     mockProductRepository = MockCartRepository();
-    usecase = EditDeliveryInfoUseCase(mockProductRepository);
+    usecase = SelectDeliveryInfoUseCase(mockProductRepository);
   });
 
   test(
-    'Should get delivery info from the repository when DeliveryInfo Repository edit data successfully',
+    'Should get delivery info from the repository when DeliveryInfo Repository add data successfully',
         () async {
       /// Arrange
-      when(() => mockProductRepository.editDeliveryInfo(tDeliveryInfoModel))
+      when(() => mockProductRepository.selectDeliveryInfo(tDeliveryInfoModel))
           .thenAnswer((_) async => const Right(tDeliveryInfoModel));
 
       /// Act
@@ -33,15 +33,15 @@ void main() {
             (failure) => fail('Test Fail!'),
             (cart) => expect(cart, tDeliveryInfoModel),
       );
-      verify(() => mockProductRepository.editDeliveryInfo(tDeliveryInfoModel));
+      verify(() => mockProductRepository.selectDeliveryInfo(tDeliveryInfoModel));
       verifyNoMoreInteractions(mockProductRepository);
     },
   );
 
   test('should return a Failure from the repository', () async {
     /// Arrange
-    final failure = NetworkFailure();
-    when(() => mockProductRepository.editDeliveryInfo(tDeliveryInfoModel))
+    final failure = CacheFailure();
+    when(() => mockProductRepository.selectDeliveryInfo(tDeliveryInfoModel))
         .thenAnswer((_) async => Left(failure));
 
     /// Act
@@ -49,7 +49,7 @@ void main() {
 
     /// Assert
     expect(result, Left(failure));
-    verify(() => mockProductRepository.editDeliveryInfo(tDeliveryInfoModel));
+    verify(() => mockProductRepository.selectDeliveryInfo(tDeliveryInfoModel));
     verifyNoMoreInteractions(mockProductRepository);
   });
 }

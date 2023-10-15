@@ -59,7 +59,8 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
     if (await userLocalDataSource.isTokenAvailable()) {
       try {
         final String token = await userLocalDataSource.getToken();
-        final DeliveryInfoModel deliveryInfo = await remoteDataSource.addDeliveryInfo(
+        final DeliveryInfoModel deliveryInfo =
+            await remoteDataSource.addDeliveryInfo(
           params,
           token,
         );
@@ -79,7 +80,8 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
     if (await userLocalDataSource.isTokenAvailable()) {
       try {
         final String token = await userLocalDataSource.getToken();
-        final DeliveryInfoModel deliveryInfo = await remoteDataSource.editDeliveryInfo(
+        final DeliveryInfoModel deliveryInfo =
+            await remoteDataSource.editDeliveryInfo(
           params,
           token,
         );
@@ -90,6 +92,28 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
       }
     } else {
       return Left(AuthenticationFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, DeliveryInfo>> selectDeliveryInfo(
+      DeliveryInfo params) async {
+    try {
+      await localDataSource
+          .updateSelectedDeliveryInfo(DeliveryInfoModel.fromEntity(params));
+      return Right(params);
+    } on Failure catch (failure) {
+      return Left(failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, DeliveryInfo>> getSelectedDeliveryInfo() async {
+    try {
+      final result = await localDataSource.getSelectedDeliveryInfo();
+      return Right(result);
+    } on Failure catch (failure) {
+      return Left(failure);
     }
   }
 }

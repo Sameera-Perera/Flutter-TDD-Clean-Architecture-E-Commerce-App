@@ -53,8 +53,11 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       List<CartItem> cart = [];
       cart.addAll(state.cart);
       cart.add(event.cartItem);
-      emit(CartLoaded(cart: cart));
-      await _addCartUseCase(event.cartItem);
+      var result = await _addCartUseCase(event.cartItem);
+      result.fold(
+            (failure) => emit(CartError(cart: state.cart, failure: failure)),
+            (_) => emit(CartLoaded(cart: cart)),
+      );
     } catch (e) {
       emit(CartError(cart: state.cart, failure: ExceptionFailure()));
     }

@@ -114,7 +114,7 @@ void main() {
 
         test(
           'should call save delivery info local when the call to remote data source is successful',
-              () async {
+          () async {
             /// Arrange
             when(() => mockUserLocalDataSource.isTokenAvailable())
                 .thenAnswer((invocation) => Future.value(true));
@@ -123,14 +123,15 @@ void main() {
             when(() => mockRemoteDataSource.getDeliveryInfo('token'))
                 .thenAnswer((_) async => [tDeliveryInfoModel]);
             when(() =>
-                mockLocalDataSource.saveDeliveryInfo([tDeliveryInfoModel]))
+                    mockLocalDataSource.saveDeliveryInfo([tDeliveryInfoModel]))
                 .thenAnswer((invocation) => Future<void>.value());
 
             /// Act
             await repository.getRemoteDeliveryInfo();
 
             /// Assert
-            verify(() => mockLocalDataSource.saveDeliveryInfo([tDeliveryInfoModel]));
+            verify(() =>
+                mockLocalDataSource.saveDeliveryInfo([tDeliveryInfoModel]));
           },
         );
 
@@ -225,24 +226,25 @@ void main() {
 
         test(
           'should call update local storage when the call to add remote method is successful',
-              () async {
+          () async {
             /// Arrange
             when(() => mockUserLocalDataSource.isTokenAvailable())
                 .thenAnswer((invocation) => Future.value(true));
             when(() => mockUserLocalDataSource.getToken())
                 .thenAnswer((invocation) => Future.value('token'));
             when(() => mockRemoteDataSource.addDeliveryInfo(
-                tDeliveryInfoModel, 'token'))
+                    tDeliveryInfoModel, 'token'))
                 .thenAnswer((_) async => tDeliveryInfoModel);
             when(() =>
-                mockLocalDataSource.updateDeliveryInfo(tDeliveryInfoModel))
+                    mockLocalDataSource.updateDeliveryInfo(tDeliveryInfoModel))
                 .thenAnswer((_) => Future<void>.value());
 
             /// Act
             await repository.addDeliveryInfo(tDeliveryInfoModel);
 
             /// Assert
-            verify(() => mockLocalDataSource.updateDeliveryInfo(tDeliveryInfoModel));
+            verify(() =>
+                mockLocalDataSource.updateDeliveryInfo(tDeliveryInfoModel));
           },
         );
 
@@ -283,7 +285,7 @@ void main() {
                     tDeliveryInfoModel, 'token'))
                 .thenAnswer((_) async => tDeliveryInfoModel);
             when(() =>
-                mockLocalDataSource.updateDeliveryInfo(tDeliveryInfoModel))
+                    mockLocalDataSource.updateDeliveryInfo(tDeliveryInfoModel))
                 .thenAnswer((_) => Future<void>.value());
 
             /// Act
@@ -300,24 +302,25 @@ void main() {
 
         test(
           'should call update local storage when the call to add remote method is successful',
-              () async {
+          () async {
             /// Arrange
             when(() => mockUserLocalDataSource.isTokenAvailable())
                 .thenAnswer((invocation) => Future.value(true));
             when(() => mockUserLocalDataSource.getToken())
                 .thenAnswer((invocation) => Future.value('token'));
             when(() => mockRemoteDataSource.editDeliveryInfo(
-                tDeliveryInfoModel, 'token'))
+                    tDeliveryInfoModel, 'token'))
                 .thenAnswer((_) async => tDeliveryInfoModel);
             when(() =>
-                mockLocalDataSource.updateDeliveryInfo(tDeliveryInfoModel))
+                    mockLocalDataSource.updateDeliveryInfo(tDeliveryInfoModel))
                 .thenAnswer((_) => Future<void>.value());
 
             /// Act
             await repository.editDeliveryInfo(tDeliveryInfoModel);
 
             /// Assert
-            verify(() => mockLocalDataSource.updateDeliveryInfo(tDeliveryInfoModel));
+            verify(() =>
+                mockLocalDataSource.updateDeliveryInfo(tDeliveryInfoModel));
           },
         );
 
@@ -341,6 +344,59 @@ void main() {
               (left) => expect(left, ServerFailure()),
               (right) => fail('test failed'),
             );
+          },
+        );
+      });
+
+      group('selectDeliveryInfo', () {
+        test(
+          'should call local updateSelectedDeliveryInfo method',
+          () async {
+            /// Arrange
+            when(() => mockLocalDataSource.updateSelectedDeliveryInfo(
+                tDeliveryInfoModel)).thenAnswer((_) => Future<void>.value());
+
+            /// Act
+            await repository.selectDeliveryInfo(tDeliveryInfoModel);
+
+            /// Assert
+            verify(() => mockLocalDataSource
+                .updateSelectedDeliveryInfo(tDeliveryInfoModel));
+          },
+        );
+      });
+
+      group('selectDeliveryInfo', () {
+        test(
+          'should call local updateSelectedDeliveryInfo method',
+          () async {
+            /// Arrange
+            when(() => mockLocalDataSource.updateSelectedDeliveryInfo(
+                tDeliveryInfoModel)).thenAnswer((_) => Future<void>.value());
+
+            /// Act
+            await repository.selectDeliveryInfo(tDeliveryInfoModel);
+
+            /// Assert
+            verify(() => mockLocalDataSource
+                .updateSelectedDeliveryInfo(tDeliveryInfoModel));
+          },
+        );
+      });
+
+      group('getSelectedDeliveryInfo', () {
+        test(
+          'should call local getSelectedDeliveryInfo method',
+          () async {
+            /// Arrange
+            when(() => mockLocalDataSource.getSelectedDeliveryInfo())
+                .thenAnswer((_) async => tDeliveryInfoModel);
+
+            /// Act
+            await repository.getSelectedDeliveryInfo();
+
+            /// Assert
+            verify(() => mockLocalDataSource.getSelectedDeliveryInfo());
           },
         );
       });

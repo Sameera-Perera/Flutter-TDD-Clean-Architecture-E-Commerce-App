@@ -9,7 +9,7 @@ import 'core/theme/app_theme.dart';
 import 'domain/usecases/product/get_product_usecase.dart';
 import 'presentation/blocs/cart/cart_bloc.dart';
 import 'presentation/blocs/category/category_bloc.dart';
-import 'presentation/blocs/delivery_info/delivery_info_add/delivery_info_add_cubit.dart';
+import 'presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
 import 'presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import 'presentation/blocs/filter/filter_cubit.dart';
 
@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
           create: (context) => di.sl<UserBloc>()..add(CheckUser()),
         ),
         BlocProvider(
-          create: (context) => di.sl<DeliveryInfoAddCubit>(),
+          create: (context) => di.sl<DeliveryInfoActionCubit>(),
         ),
         BlocProvider(
           create: (context) => di.sl<DeliveryInfoFetchCubit>()..fetchDeliveryInfo(),

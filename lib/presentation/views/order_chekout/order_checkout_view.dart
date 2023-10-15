@@ -61,7 +61,8 @@ class OrderCheckoutView extends StatelessWidget {
                         child: BlocBuilder<DeliveryInfoFetchCubit,
                             DeliveryInfoFetchState>(
                           builder: (context, state) {
-                            if (state.deliveryInformation.isNotEmpty) {
+                            if (state.deliveryInformation.isNotEmpty &&
+                                state.selectedDeliveryInformation != null) {
                               return Container(
                                 padding: const EdgeInsets.only(
                                     top: 16, bottom: 12, left: 4, right: 10),
@@ -72,13 +73,13 @@ class OrderCheckoutView extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        "${state.deliveryInformation.first.firstName.capitalize()} ${state.deliveryInformation.first.lastName}, ${state.deliveryInformation.first.contactNumber}",
+                                        "${state.selectedDeliveryInformation!.firstName.capitalize()} ${state.selectedDeliveryInformation!.lastName}, ${state.selectedDeliveryInformation!.contactNumber}",
                                         style: const TextStyle(
                                           fontSize: 14,
                                         ),
                                       ),
                                       Text(
-                                        "${state.deliveryInformation.first.addressLineOne}, ${state.deliveryInformation.first.addressLineTwo}, ${state.deliveryInformation.first.city}, ${state.deliveryInformation.first.zipCode}",
+                                        "${state.selectedDeliveryInformation!.addressLineOne}, ${state.selectedDeliveryInformation!.addressLineTwo}, ${state.selectedDeliveryInformation!.city}, ${state.selectedDeliveryInformation!.zipCode}",
                                         style: const TextStyle(
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500),
@@ -226,25 +227,30 @@ class OrderCheckoutView extends StatelessWidget {
                 return InputFormButton(
                   color: Colors.black87,
                   onClick: () {
-                    // var orderPlaceBloc = context.read<OrderPlaceCubit>();
-                    // orderPlaceBloc.placeOrder();
-                    context.read<OrderAddCubit>().addOrder(OrderDetails(
-                        id: '',
-                        orderItems: items
-                            .map((item) => OrderItem(
-                                  id: '',
-                                  product: item.product,
-                                  priceTag: item.priceTag,
-                                  price: item.priceTag.price,
-                                  quantity: 1,
-                                ))
-                            .toList(),
-                        deliveryInfo: context
+                    if (context
                             .read<DeliveryInfoFetchCubit>()
                             .state
-                            .deliveryInformation
-                            .first,
-                        discount: 0));
+                            .selectedDeliveryInformation ==
+                        null) {
+                      EasyLoading.showError("Error \nPlease select delivery add your delivery information");
+                    } else {
+                      context.read<OrderAddCubit>().addOrder(OrderDetails(
+                          id: '',
+                          orderItems: items
+                              .map((item) => OrderItem(
+                                    id: '',
+                                    product: item.product,
+                                    priceTag: item.priceTag,
+                                    price: item.priceTag.price,
+                                    quantity: 1,
+                                  ))
+                              .toList(),
+                          deliveryInfo: context
+                              .read<DeliveryInfoFetchCubit>()
+                              .state
+                              .selectedDeliveryInformation!,
+                          discount: 0));
+                    }
                   },
                   titleText: 'Confirm',
                 );
