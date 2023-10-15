@@ -112,4 +112,6 @@ class DeliveryInfoFetchCubit extends Cubit<DeliveryInfoFetchState> {
           selectedDeliveryInformation: state.selectedDeliveryInformation));
     }
   }
+
+  /// clear current user's delivery information data from both local cache and state
 }

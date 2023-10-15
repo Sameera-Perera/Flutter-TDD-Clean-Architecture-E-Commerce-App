@@ -232,7 +232,7 @@ class OrderCheckoutView extends StatelessWidget {
                             .state
                             .selectedDeliveryInformation ==
                         null) {
-                      print('error');
+                      EasyLoading.showError("Error \nPlease select delivery add your delivery information");
                     } else {
                       context.read<OrderAddCubit>().addOrder(OrderDetails(
                           id: '',
