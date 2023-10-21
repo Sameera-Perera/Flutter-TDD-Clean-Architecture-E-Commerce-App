@@ -1,12 +1,13 @@
-import 'package:eshop/core/error/failures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 import '../../../core/constant/images.dart';
+import '../../../core/error/failures.dart';
 import '../../../core/router/app_router.dart';
 import '../../../domain/usecases/user/sign_in_usecase.dart';
 import '../../blocs/cart/cart_bloc.dart';
+import '../../blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import '../../blocs/user/user_bloc.dart';
 import '../../widgets/input_form_button.dart';
 import '../../widgets/input_text_form_field.dart';
@@ -32,6 +33,7 @@ class _SignInViewState extends State<SignInView> {
           EasyLoading.show(status: 'Loading...');
         } else if (state is UserLogged) {
           context.read<CartBloc>().add(const GetCart());
+          context.read<DeliveryInfoFetchCubit>().fetchDeliveryInfo();
           Navigator.of(context).pushNamedAndRemoveUntil(
             AppRouter.home,
             ModalRoute.withName(''),

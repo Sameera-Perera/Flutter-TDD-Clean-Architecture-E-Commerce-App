@@ -27,6 +27,7 @@ class DeliveryInfoFetchCubit extends Cubit<DeliveryInfoFetchState> {
       emit(DeliveryInfoFetchLoading(
           deliveryInformation: const [],
           selectedDeliveryInformation: state.selectedDeliveryInformation));
+      print("fetching");
       final cachedResult = await _getCachedDeliveryInfoUseCase(NoParams());
       cachedResult.fold(
         (failure) => (),
@@ -52,7 +53,9 @@ class DeliveryInfoFetchCubit extends Cubit<DeliveryInfoFetchState> {
             deliveryInformation: deliveryInfo,
             selectedDeliveryInformation: state.selectedDeliveryInformation)),
       );
+      print("done");
     } catch (e) {
+      print(e);
       emit(DeliveryInfoFetchFail(
           deliveryInformation: state.deliveryInformation,
           selectedDeliveryInformation: state.selectedDeliveryInformation));
