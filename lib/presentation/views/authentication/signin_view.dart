@@ -1,3 +1,4 @@
+import 'package:eshop/presentation/blocs/home/navbar_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -34,6 +35,7 @@ class _SignInViewState extends State<SignInView> {
         } else if (state is UserLogged) {
           context.read<CartBloc>().add(const GetCart());
           context.read<DeliveryInfoFetchCubit>().fetchDeliveryInfo();
+          context.read<NavbarCubit>().update(0);
           Navigator.of(context).pushNamedAndRemoveUntil(
             AppRouter.home,
             ModalRoute.withName(''),
