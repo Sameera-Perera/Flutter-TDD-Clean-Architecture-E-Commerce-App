@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:eshop/core/usecases/usecase.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../core/network/network_info.dart';
@@ -112,6 +113,16 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
     try {
       final result = await localDataSource.getSelectedDeliveryInfo();
       return Right(result);
+    } on Failure catch (failure) {
+      return Left(failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, NoParams>> clearLocalDeliveryInfo() async {
+    try {
+      await localDataSource.clearDeliveryInfo();
+      return Right(NoParams());
     } on Failure catch (failure) {
       return Left(failure);
     }

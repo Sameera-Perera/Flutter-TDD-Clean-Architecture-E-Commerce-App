@@ -8,14 +8,14 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../fixtures/constant_objects.dart';
 
-class MockCartRepository extends Mock implements DeliveryInfoRepository {}
+class MockDeliveryInfoRepository extends Mock implements DeliveryInfoRepository {}
 
 void main() {
   late GetRemoteDeliveryInfoUseCase usecase;
-  late MockCartRepository mockProductRepository;
+  late MockDeliveryInfoRepository mockProductRepository;
 
   setUp(() {
-    mockProductRepository = MockCartRepository();
+    mockProductRepository = MockDeliveryInfoRepository();
     usecase = GetRemoteDeliveryInfoUseCase(mockProductRepository);
   });
 

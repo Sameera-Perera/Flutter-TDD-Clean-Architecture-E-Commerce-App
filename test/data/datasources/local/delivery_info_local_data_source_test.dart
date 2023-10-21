@@ -128,4 +128,24 @@ void main() {
       expect(() => call(), throwsA(isA<CacheFailure>()));
     });
   });
+
+  group('clearDeliveryInfo', () {
+    test('should call SharedPreferences.getString with the correct arguments',
+        () async {
+      /// Arrange
+      when(() => mockSharedPreferences.remove(
+            cashedDeliveryInfo,
+          )).thenAnswer((invocation) => Future<bool>.value(true));
+      when(() => mockSharedPreferences.remove(
+            cachedSelectedDeliveryInfo,
+          )).thenAnswer((invocation) => Future<bool>.value(true));
+
+      /// Act
+      await dataSource.clearDeliveryInfo();
+
+      /// Assert
+      verify(() => mockSharedPreferences.remove(cashedDeliveryInfo));
+      verify(() => mockSharedPreferences.remove(cachedSelectedDeliveryInfo));
+    });
+  });
 }

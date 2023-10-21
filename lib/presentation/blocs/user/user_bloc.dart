@@ -45,16 +45,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     }
   }
 
-  void _onSignOut(SignOutUser event, Emitter<UserState> emit) async {
-    try {
-      emit(UserLoading());
-      await _signOutUseCase(NoParams());
-      emit(UserLoggedOut());
-    } catch (e) {
-      emit(UserLoggedFail(ExceptionFailure()));
-    }
-  }
-
   void _onCheckUser(CheckUser event, Emitter<UserState> emit) async {
     try {
       emit(UserLoading());
@@ -76,6 +66,16 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         (failure) => emit(UserLoggedFail(failure)),
         (user) => emit(UserLogged(user)),
       );
+    } catch (e) {
+      emit(UserLoggedFail(ExceptionFailure()));
+    }
+  }
+
+  void _onSignOut(SignOutUser event, Emitter<UserState> emit) async {
+    try {
+      emit(UserLoading());
+      await _signOutUseCase(NoParams());
+      emit(UserLoggedOut());
     } catch (e) {
       emit(UserLoggedFail(ExceptionFailure()));
     }

@@ -1,3 +1,4 @@
+import 'package:eshop/domain/usecases/delivery_info/clear_local_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/delivery_info/edit_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/delivery_info/get_selected_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/delivery_info/select_delivery_info_usecase.dart';
@@ -143,7 +144,7 @@ Future<void> init() async {
     () => DeliveryInfoActionCubit(sl(), sl(), sl()),
   );
   sl.registerFactory(
-    () => DeliveryInfoFetchCubit(sl(), sl(), sl()),
+    () => DeliveryInfoFetchCubit(sl(), sl(), sl(), sl()),
   );
   // Use cases
   sl.registerLazySingleton(() => GetRemoteDeliveryInfoUseCase(sl()));
@@ -152,6 +153,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => EditDeliveryInfoUseCase(sl()));
   sl.registerLazySingleton(() => SelectDeliveryInfoUseCase(sl()));
   sl.registerLazySingleton(() => GetSelectedDeliveryInfoInfoUseCase(sl()));
+  sl.registerLazySingleton(() => ClearLocalDeliveryInfoUseCase(sl()));
   // Repository
   sl.registerLazySingleton<DeliveryInfoRepository>(
     () => DeliveryInfoRepositoryImpl(

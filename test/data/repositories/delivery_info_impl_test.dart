@@ -1,5 +1,6 @@
 import 'package:eshop/core/error/failures.dart';
 import 'package:eshop/core/network/network_info.dart';
+import 'package:eshop/core/usecases/usecase.dart';
 import 'package:eshop/data/data_sources/local/delivery_info_local_data_source.dart';
 import 'package:eshop/data/data_sources/local/user_local_data_source.dart';
 import 'package:eshop/data/data_sources/remote/delivery_info_remote_data_source.dart';
@@ -397,6 +398,59 @@ void main() {
 
             /// Assert
             verify(() => mockLocalDataSource.getSelectedDeliveryInfo());
+          },
+        );
+      });
+
+      group('clearLocalDeliveryInfo', () {
+        test(
+          'should return Right(NoParam) when the call to local data source clear successful',
+          () async {
+            /// Arrange
+            when(() => mockLocalDataSource.clearDeliveryInfo())
+                .thenAnswer((_) => Future<void>.value());
+
+            /// Act
+            final result = await repository.clearLocalDeliveryInfo();
+
+            /// Assert
+            result.fold(
+              (left) => fail('test failed'),
+              (right) => expect(right, NoParams()),
+            );
+          },
+        );
+
+        test(
+          'should call local data source\'s clearDeliveryInfo when the call to clearLocalDeliveryInfo method',
+              () async {
+            /// Arrange
+            when(() => mockLocalDataSource.clearDeliveryInfo())
+                .thenAnswer((_) => Future<void>.value());
+
+            /// Act
+            await repository.clearLocalDeliveryInfo();
+
+            /// Assert
+            verify(() => mockLocalDataSource.clearDeliveryInfo());
+          },
+        );
+
+        test(
+          'should return failure when local data source throw failure',
+              () async {
+            /// Arrange
+            when(() => mockLocalDataSource.clearDeliveryInfo())
+                .thenThrow(CacheFailure());
+
+            /// Act
+            final result = await repository.clearLocalDeliveryInfo();
+
+            /// Assert
+            result.fold(
+                  (left) =>  expect(left, CacheFailure()),
+                  (right) => fail('test failed'),
+            );
           },
         );
       });
