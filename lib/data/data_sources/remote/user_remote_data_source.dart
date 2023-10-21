@@ -19,33 +19,39 @@ class UserRemoteDataSourceImpl implements UserRemoteDataSource {
   UserRemoteDataSourceImpl({required this.client});
 
   @override
-  Future<AuthenticationResponseModel> signIn(params) => _authenticate(
-        '$baseUrl/authentication/local/sign-in',
-        {
-          'identifier': params.username,
-          'password': params.password,
-        },
-      );
+  Future<AuthenticationResponseModel> signIn(SignInParams params) async {
+    final response =
+        await client.post(Uri.parse('$baseUrl/authentication/local/sign-in'),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: json.encode({
+              'identifier': params.username,
+              'password': params.password,
+            }));
+    if (response.statusCode == 200) {
+      return authenticationResponseModelFromJson(response.body);
+    } else if (response.statusCode == 400 || response.statusCode == 401) {
+      throw CredentialFailure();
+    } else {
+      throw ServerException();
+    }
+  }
 
   @override
-  Future<AuthenticationResponseModel> signUp(params) => _authenticate(
-        '$baseUrl/authentication/local/sign-up',
-        {
-          'firstName': params.firstName,
-          'lastName': params.lastName,
-          'email': params.email,
-          'password': params.password,
-        },
-      );
-
-  Future<AuthenticationResponseModel> _authenticate(
-      String url, Map<String, dynamic> body) async {
-    final response = await client.post(Uri.parse(url),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: json.encode(body));
-    if (response.statusCode == 200) {
+  Future<AuthenticationResponseModel> signUp(SignUpParams params) async {
+    final response =
+        await client.post(Uri.parse('$baseUrl/authentication/local/sign-up'),
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: json.encode({
+              'firstName': params.firstName,
+              'lastName': params.lastName,
+              'email': params.email,
+              'password': params.password,
+            }));
+    if (response.statusCode == 201) {
       return authenticationResponseModelFromJson(response.body);
     } else if (response.statusCode == 400 || response.statusCode == 401) {
       throw CredentialFailure();

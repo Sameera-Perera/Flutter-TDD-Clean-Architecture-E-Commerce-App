@@ -134,7 +134,7 @@ void main() {
               'email': fakeParams.email,
               'password': fakeParams.password,
             }),
-          )).thenAnswer((_) async => http.Response(fakeResponse, 200));
+          )).thenAnswer((_) async => http.Response(fakeResponse, 201));
 
       /// Act
       final result = await dataSource.signUp(fakeParams);
