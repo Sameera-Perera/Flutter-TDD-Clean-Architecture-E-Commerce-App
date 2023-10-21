@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:eshop/domain/usecases/delivery_info/clear_local_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/delivery_info/get_selected_delivery_info_usecase.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -13,10 +14,12 @@ class DeliveryInfoFetchCubit extends Cubit<DeliveryInfoFetchState> {
   final GetRemoteDeliveryInfoUseCase _getRemoteDeliveryInfoUseCase;
   final GetCachedDeliveryInfoUseCase _getCachedDeliveryInfoUseCase;
   final GetSelectedDeliveryInfoInfoUseCase _getSelectedDeliveryInfoInfoUseCase;
+  final ClearLocalDeliveryInfoUseCase _clearLocalDeliveryInfoUseCase;
   DeliveryInfoFetchCubit(
     this._getRemoteDeliveryInfoUseCase,
     this._getCachedDeliveryInfoUseCase,
     this._getSelectedDeliveryInfoInfoUseCase,
+    this._clearLocalDeliveryInfoUseCase,
   ) : super(const DeliveryInfoFetchInitial(deliveryInformation: []));
 
   void fetchDeliveryInfo() async {
@@ -24,6 +27,7 @@ class DeliveryInfoFetchCubit extends Cubit<DeliveryInfoFetchState> {
       emit(DeliveryInfoFetchLoading(
           deliveryInformation: const [],
           selectedDeliveryInformation: state.selectedDeliveryInformation));
+      print("fetching");
       final cachedResult = await _getCachedDeliveryInfoUseCase(NoParams());
       cachedResult.fold(
         (failure) => (),
@@ -49,7 +53,9 @@ class DeliveryInfoFetchCubit extends Cubit<DeliveryInfoFetchState> {
             deliveryInformation: deliveryInfo,
             selectedDeliveryInformation: state.selectedDeliveryInformation)),
       );
+      print("done");
     } catch (e) {
+      print(e);
       emit(DeliveryInfoFetchFail(
           deliveryInformation: state.deliveryInformation,
           selectedDeliveryInformation: state.selectedDeliveryInformation));
@@ -114,4 +120,24 @@ class DeliveryInfoFetchCubit extends Cubit<DeliveryInfoFetchState> {
   }
 
   /// clear current user's delivery information data from both local cache and state
+  /// Use when user logout form device
+  void clearLocalDeliveryInfo() async {
+    try {
+      emit(DeliveryInfoFetchLoading(
+          deliveryInformation: state.deliveryInformation,
+          selectedDeliveryInformation: state.selectedDeliveryInformation));
+      final cachedResult = await _clearLocalDeliveryInfoUseCase(NoParams());
+      cachedResult.fold(
+        (failure) => (),
+        (deliveryInfo) => emit(const DeliveryInfoFetchInitial(
+          deliveryInformation: [],
+          selectedDeliveryInformation: null,
+        )),
+      );
+    } catch (e) {
+      emit(DeliveryInfoFetchFail(
+          deliveryInformation: state.deliveryInformation,
+          selectedDeliveryInformation: state.selectedDeliveryInformation));
+    }
+  }
 }

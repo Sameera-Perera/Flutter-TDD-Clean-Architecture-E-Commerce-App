@@ -9,6 +9,8 @@ import '../../../../domain/usecases/delivery_info/select_delivery_info_usecase.d
 
 part 'delivery_info_action_state.dart';
 
+///Use to preform delivery information single actions without
+///interruption to it's main view cubit's state[DeliveryInfoCubit]
 class DeliveryInfoActionCubit extends Cubit<DeliveryInfoActionState> {
   final AddDeliveryInfoUseCase _deliveryInfoAddUsecase;
   final EditDeliveryInfoUseCase _editDeliveryInfoUseCase;

@@ -9,18 +9,21 @@ class InputTextFormField extends StatefulWidget {
   final String? Function(String?)? validation;
   final double hintTextSize;
   final bool enable;
-  const InputTextFormField(
-      {Key? key,
-      required this.controller,
-      this.isSecureField = false,
-      this.autoCorrect = false,
-      this.enable = true,
-      this.hint,
-      this.validation,
-      this.contentPadding,
-        this.hintTextSize = 14
-      })
-      : super(key: key);
+  final TextInputAction? textInputAction;
+  final Function(String)? onFieldSubmitted;
+  const InputTextFormField({
+    Key? key,
+    required this.controller,
+    this.isSecureField = false,
+    this.autoCorrect = false,
+    this.enable = true,
+    this.hint,
+    this.validation,
+    this.contentPadding,
+    this.textInputAction,
+    this.hintTextSize = 14,
+    this.onFieldSubmitted,
+  }) : super(key: key);
 
   @override
   State<InputTextFormField> createState() => _InputTextFormFieldState();
@@ -38,6 +41,8 @@ class _InputTextFormFieldState extends State<InputTextFormField> {
       validator: widget.validation,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       enabled: widget.enable,
+      textInputAction: widget.textInputAction,
+      onFieldSubmitted: widget.onFieldSubmitted,
       decoration: InputDecoration(
         filled: true,
         hintText: widget.hint,

@@ -9,6 +9,7 @@ abstract class DeliveryInfoLocalDataSource {
   Future<void> saveDeliveryInfo(List<DeliveryInfoModel> params);
   Future<void> updateDeliveryInfo(DeliveryInfoModel params);
   Future<void> updateSelectedDeliveryInfo(DeliveryInfoModel params);
+  Future<void> clearDeliveryInfo();
 }
 
 const cashedDeliveryInfo = 'CACHED_DELIVERY_INFO';
@@ -73,5 +74,12 @@ class DeliveryInfoLocalDataSourceImpl implements DeliveryInfoLocalDataSource {
     } else {
       throw CacheFailure();
     }
+  }
+
+  @override
+  Future<void> clearDeliveryInfo() async {
+    await sharedPreferences.remove(cashedDeliveryInfo);
+    await sharedPreferences.remove(cachedSelectedDeliveryInfo);
+    return;
   }
 }
