@@ -1,5 +1,3 @@
-import 'package:eshop/domain/usecases/user/sign_up_usecase.dart';
-import 'package:eshop/presentation/blocs/user/user_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -7,7 +5,9 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import '../../../core/constant/images.dart';
 import '../../../core/error/failures.dart';
 import '../../../core/router/app_router.dart';
+import '../../../domain/usecases/user/sign_up_usecase.dart';
 import '../../blocs/cart/cart_bloc.dart';
+import '../../blocs/user/user_bloc.dart';
 import '../../widgets/input_form_button.dart';
 import '../../widgets/input_text_form_field.dart';
 
@@ -82,6 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   InputTextFormField(
                     controller: firstNameController,
                     hint: 'First Name',
+                    textInputAction: TextInputAction.next,
                     validation: (String? val) {
                       if (val == null || val.isEmpty) {
                         return 'This field can\'t be empty';
@@ -95,6 +96,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   InputTextFormField(
                     controller: lastNameController,
                     hint: 'Last Name',
+                    textInputAction: TextInputAction.next,
                     validation: (String? val) {
                       if (val == null || val.isEmpty) {
                         return 'This field can\'t be empty';
@@ -108,6 +110,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   InputTextFormField(
                     controller: emailController,
                     hint: 'Email',
+                    textInputAction: TextInputAction.next,
                     validation: (String? val) {
                       if (val == null || val.isEmpty) {
                         return 'This field can\'t be empty';
@@ -121,6 +124,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   InputTextFormField(
                     controller: passwordController,
                     hint: 'Password',
+                    textInputAction: TextInputAction.next,
                     isSecureField: true,
                     validation: (String? val) {
                       if (val == null || val.isEmpty) {
@@ -136,11 +140,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: confirmPasswordController,
                     hint: 'Confirm Password',
                     isSecureField: true,
+                    textInputAction: TextInputAction.go,
                     validation: (String? val) {
                       if (val == null || val.isEmpty) {
                         return 'This field can\'t be empty';
                       }
                       return null;
+                    },
+                    onFieldSubmitted: (_) {
+                      if (_formKey.currentState!.validate()) {
+                        if (passwordController.text !=
+                            confirmPasswordController.text) {
+                        } else {
+                          context.read<UserBloc>().add(SignUpUser(SignUpParams(
+                            firstName: firstNameController.text,
+                            lastName: lastNameController.text,
+                            email: emailController.text,
+                            password: passwordController.text,
+                          )));
+                        }
+                      }
                     },
                   ),
                   const SizedBox(

@@ -82,6 +82,7 @@ class _SignInViewState extends State<SignInView> {
                   ),
                   InputTextFormField(
                     controller: emailController,
+                    textInputAction: TextInputAction.next,
                     hint: 'Email',
                     validation: (String? val) {
                       if (val == null || val.isEmpty) {
@@ -95,6 +96,7 @@ class _SignInViewState extends State<SignInView> {
                   ),
                   InputTextFormField(
                     controller: passwordController,
+                    textInputAction: TextInputAction.go,
                     hint: 'Password',
                     isSecureField: true,
                     validation: (String? val) {
@@ -102,6 +104,14 @@ class _SignInViewState extends State<SignInView> {
                         return 'This field can\'t be empty';
                       }
                       return null;
+                    },
+                    onFieldSubmitted: (_) {
+                      if (_formKey.currentState!.validate()) {
+                        context.read<UserBloc>().add(SignInUser(SignInParams(
+                              username: emailController.text,
+                              password: passwordController.text,
+                            )));
+                      }
                     },
                   ),
                   const SizedBox(
