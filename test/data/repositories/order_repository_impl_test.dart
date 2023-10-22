@@ -1,5 +1,7 @@
+import 'package:dartz/dartz.dart';
 import 'package:eshop/core/error/failures.dart';
 import 'package:eshop/core/network/network_info.dart';
+import 'package:eshop/core/usecases/usecase.dart';
 import 'package:eshop/data/data_sources/local/order_local_data_source.dart';
 import 'package:eshop/data/data_sources/local/user_local_data_source.dart';
 import 'package:eshop/data/data_sources/remote/order_remote_data_source.dart';
@@ -316,6 +318,114 @@ void main() {
           result.fold(
             (left) => expect(left, CacheFailure()),
             (right) => fail('test failed'),
+          );
+        },
+      );
+    });
+  });
+
+  group('ClearLocalOrders', ()
+  {
+    runTestsOnline(() {
+      test(
+        'should return Right(NoParam) when local source clear data successfully',
+            () async {
+          /// Arrange
+          when(() => mockLocalDataSource.clearOrder())
+              .thenAnswer((_) async => Future<void>.value());
+
+          /// Act
+          final result = await repository.clearLocalOrders();
+
+          /// Assert
+          result.fold(
+                (left) => fail('test failed'),
+                (right) => expect(right, NoParams()),
+          );
+        },
+      );
+
+      test(
+        'should call clearOrder from local order data source when call clearLocalOrders method from repository',
+            () async {
+          /// Arrange
+          when(() => mockLocalDataSource.clearOrder())
+              .thenAnswer((_) async => Future<void>.value());
+
+          /// Act
+          await repository.clearLocalOrders();
+
+          /// Assert
+          verify(() => mockLocalDataSource.clearOrder());
+        },
+      );
+
+      test(
+        'should return [Failure] when local source fail and throw [Failure]',
+            () async {
+          /// Arrange
+          when(() => mockLocalDataSource.clearOrder()).thenThrow(
+              CacheFailure());
+
+          /// Act
+          final result = await repository.clearLocalOrders();
+
+          /// Assert
+          result.fold(
+                (left) => expect(left, CacheFailure()),
+                (right) => fail('test failed'),
+          );
+        },
+      );
+    });
+    runTestsOffline(() {
+      test(
+        'should return Right(NoParam) when local source clear data successfully',
+            () async {
+          /// Arrange
+          when(() => mockLocalDataSource.clearOrder())
+              .thenAnswer((_) async => Future<void>.value());
+
+          /// Act
+          final result = await repository.clearLocalOrders();
+
+          /// Assert
+          result.fold(
+                (left) => fail('test failed'),
+                (right) => expect(right, NoParams()),
+          );
+        },
+      );
+
+      test(
+        'should call clearOrder from local order data source when call clearLocalOrders method from repository',
+            () async {
+          /// Arrange
+          when(() => mockLocalDataSource.clearOrder())
+              .thenAnswer((_) async => Future<void>.value());
+
+          /// Act
+          await repository.clearLocalOrders();
+
+          /// Assert
+          verify(() => mockLocalDataSource.clearOrder());
+        },
+      );
+
+      test(
+        'should return [Failure] when local source fail and throw [Failure]',
+            () async {
+          /// Arrange
+          when(() => mockLocalDataSource.clearOrder()).thenThrow(
+              CacheFailure());
+
+          /// Act
+          final result = await repository.clearLocalOrders();
+
+          /// Assert
+          result.fold(
+                (left) => expect(left, CacheFailure()),
+                (right) => fail('test failed'),
           );
         },
       );

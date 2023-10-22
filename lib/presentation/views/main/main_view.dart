@@ -16,8 +16,6 @@ class MainView extends StatefulWidget {
 }
 
 class _MainViewState extends State<MainView> {
-  // int _selectedItemPosition = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

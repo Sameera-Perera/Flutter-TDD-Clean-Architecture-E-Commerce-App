@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
+import '../../../../../core/constant/images.dart';
 import '../../../../../data/models/user/delivery_info_model.dart';
 import '../../../../../domain/entities/user/delivery_info.dart';
 import '../../../../blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
@@ -39,6 +40,19 @@ class _DeliveryInfoViewState extends State<DeliveryInfoView> {
         ),
         body: BlocBuilder<DeliveryInfoFetchCubit, DeliveryInfoFetchState>(
           builder: (context, state) {
+            if(state is! DeliveryInfoFetchLoading && state.deliveryInformation.isEmpty) {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(kEmptyDeliveryInfo),
+                  const Text("Delivery information are Empty!"),
+                  SizedBox(
+                    height:
+                    MediaQuery.of(context).size.height * 0.1,
+                  )
+                ],
+              );
+            }
             return ListView.builder(
               itemCount: (state is DeliveryInfoFetchLoading &&
                       state.deliveryInformation.isEmpty)

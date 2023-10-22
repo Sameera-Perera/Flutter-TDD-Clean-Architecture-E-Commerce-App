@@ -57,4 +57,20 @@ void main() {
       verify(() => mockSharedPreferences.setString(cachedOrders, any())).called(1);
     });
   });
+
+  group('clearDeliveryInfo', () {
+    test('should call SharedPreferences.getString with the correct arguments',
+            () async {
+          /// Arrange
+          when(() => mockSharedPreferences.remove(
+            cachedOrders,
+          )).thenAnswer((invocation) => Future<bool>.value(true));
+
+          /// Act
+          await localDataSource.clearOrder();
+
+          /// Assert
+          verify(() => mockSharedPreferences.remove(cachedOrders));
+        });
+  });
 }
