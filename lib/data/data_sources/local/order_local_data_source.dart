@@ -6,6 +6,7 @@ import '../../models/order/order_details_model.dart';
 abstract class OrderLocalDataSource {
   Future<List<OrderDetailsModel>> getOrders();
   Future<void> saveOrders(List<OrderDetailsModel> params);
+  Future<void> clearOrder();
 }
 
 const cachedOrders = 'CACHED_ORDERS';
@@ -30,5 +31,11 @@ class OrderLocalDataSourceImpl implements OrderLocalDataSource {
       cachedOrders,
       orderModelListToJson(params),
     );
+  }
+
+  @override
+  Future<void> clearOrder() {
+    // TODO: implement clearOrder
+    throw UnimplementedError();
   }
 }

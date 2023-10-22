@@ -11,23 +11,24 @@ part 'order_fetch_state.dart';
 class OrderFetchCubit extends Cubit<OrderFetchState> {
   final GetRemoteOrdersUseCase _getOrdersUseCase;
   final GetCachedOrdersUseCase _getCachedOrdersUseCase;
-  OrderFetchCubit(this._getOrdersUseCase, this._getCachedOrdersUseCase) : super(OrderFetchInitial());
+  OrderFetchCubit(this._getOrdersUseCase, this._getCachedOrdersUseCase)
+      : super(const OrderFetchInitial([]));
 
   void getOrders() async {
     try {
-      emit(OrderFetchLoading());
+      emit(OrderFetchLoading(state.orders));
       final cachedResult = await _getCachedOrdersUseCase(NoParams());
       cachedResult.fold(
-            (failure) => (),
-            (orders) => emit(OrderFetchSuccess(orders)),
+        (failure) => (),
+        (orders) => emit(OrderFetchSuccess(orders)),
       );
       final remoteResult = await _getOrdersUseCase(NoParams());
       remoteResult.fold(
-        (failure) => emit(OrderFetchFail()),
+        (failure) => emit(OrderFetchFail(state.orders)),
         (orders) => emit(OrderFetchSuccess(orders)),
       );
     } catch (e) {
-      emit(OrderFetchFail());
+      emit(OrderFetchFail(state.orders));
     }
   }
 }

@@ -45,7 +45,7 @@ class _DeliveryInfoViewState extends State<DeliveryInfoView> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Image.asset(kEmptyDeliveryInfo),
-                  const Text("Delivery is Empty!"),
+                  const Text("Delivery information are Empty!"),
                   SizedBox(
                     height:
                     MediaQuery.of(context).size.height * 0.1,

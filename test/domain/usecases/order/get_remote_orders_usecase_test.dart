@@ -8,22 +8,22 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../../fixtures/constant_objects.dart';
 
-class MockCartRepository extends Mock implements OrderRepository {}
+class MockOrderRepository extends Mock implements OrderRepository {}
 
 void main() {
   late GetRemoteOrdersUseCase usecase;
-  late MockCartRepository mockRepository;
+  late MockOrderRepository mockOrderRepository;
 
   setUp(() {
-    mockRepository = MockCartRepository();
-    usecase = GetRemoteOrdersUseCase(mockRepository);
+    mockOrderRepository = MockOrderRepository();
+    usecase = GetRemoteOrdersUseCase(mockOrderRepository);
   });
 
   test(
     'Should get order from the repository when Order Repository add data successfully',
         () async {
       /// Arrange
-      when(() => mockRepository.getRemoteOrders())
+      when(() => mockOrderRepository.getRemoteOrders())
           .thenAnswer((_) async => Right([tOrderDetailsModel]));
 
       /// Act
@@ -34,15 +34,15 @@ void main() {
             (failure) => fail('Test Fail!'),
             (cart) => expect(cart, [tOrderDetailsModel]),
       );
-      verify(() => mockRepository.getRemoteOrders());
-      verifyNoMoreInteractions(mockRepository);
+      verify(() => mockOrderRepository.getRemoteOrders());
+      verifyNoMoreInteractions(mockOrderRepository);
     },
   );
 
   test('should return a Failure from the repository', () async {
     /// Arrange
     final failure = NetworkFailure();
-    when(() => mockRepository.getRemoteOrders())
+    when(() => mockOrderRepository.getRemoteOrders())
         .thenAnswer((_) async => Left(failure));
 
     /// Act
@@ -50,7 +50,7 @@ void main() {
 
     /// Assert
     expect(result, Left(failure));
-    verify(() => mockRepository.getRemoteOrders());
-    verifyNoMoreInteractions(mockRepository);
+    verify(() => mockOrderRepository.getRemoteOrders());
+    verifyNoMoreInteractions(mockOrderRepository);
   });
 }

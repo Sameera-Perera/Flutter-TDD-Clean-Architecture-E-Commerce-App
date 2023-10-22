@@ -1,15 +1,23 @@
 part of 'order_fetch_cubit.dart';
 
 @immutable
-abstract class OrderFetchState {}
-
-class OrderFetchInitial extends OrderFetchState {}
-
-class OrderFetchLoading extends OrderFetchState {}
-
-class OrderFetchSuccess extends OrderFetchState {
+abstract class OrderFetchState {
   final List<OrderDetails> orders;
-  OrderFetchSuccess(this.orders);
+  const OrderFetchState(this.orders);
 }
 
-class OrderFetchFail extends OrderFetchState {}
+class OrderFetchInitial extends OrderFetchState {
+  const OrderFetchInitial(super.orders);
+}
+
+class OrderFetchLoading extends OrderFetchState {
+  const OrderFetchLoading(super.orders);
+}
+
+class OrderFetchSuccess extends OrderFetchState {
+  const OrderFetchSuccess(super.orders);
+}
+
+class OrderFetchFail extends OrderFetchState {
+  const OrderFetchFail(super.orders);
+}
