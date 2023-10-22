@@ -2,6 +2,7 @@ import 'package:eshop/domain/usecases/delivery_info/clear_local_delivery_info_us
 import 'package:eshop/domain/usecases/delivery_info/edit_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/delivery_info/get_selected_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/delivery_info/select_delivery_info_usecase.dart';
+import 'package:eshop/domain/usecases/order/clear_local_order_usecase.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -168,7 +169,7 @@ Future<void> init() async {
     () => DeliveryInfoRemoteDataSourceImpl(client: sl()),
   );
   sl.registerLazySingleton<DeliveryInfoLocalDataSource>(
-        () => DeliveryInfoLocalDataSourceImpl(sharedPreferences: sl()),
+    () => DeliveryInfoLocalDataSourceImpl(sharedPreferences: sl()),
   );
 
   //Features - Order
@@ -177,12 +178,13 @@ Future<void> init() async {
     () => OrderAddCubit(sl()),
   );
   sl.registerFactory(
-    () => OrderFetchCubit(sl(),sl()),
+    () => OrderFetchCubit(sl(), sl(), sl()),
   );
   // Use cases
   sl.registerLazySingleton(() => AddOrderUseCase(sl()));
   sl.registerLazySingleton(() => GetRemoteOrdersUseCase(sl()));
   sl.registerLazySingleton(() => GetCachedOrdersUseCase(sl()));
+  sl.registerLazySingleton(() => ClearLocalOrdersUseCase(sl()));
   // Repository
   sl.registerLazySingleton<OrderRepository>(
     () => OrderRepositoryImpl(
@@ -197,7 +199,7 @@ Future<void> init() async {
     () => OrderRemoteDataSourceSourceImpl(client: sl()),
   );
   sl.registerLazySingleton<OrderLocalDataSource>(
-        () => OrderLocalDataSourceImpl(sharedPreferences: sl()),
+    () => OrderLocalDataSourceImpl(sharedPreferences: sl()),
   );
 
   //Features - User

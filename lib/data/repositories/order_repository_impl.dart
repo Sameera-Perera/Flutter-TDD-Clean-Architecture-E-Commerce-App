@@ -70,8 +70,12 @@ class OrderRepositoryImpl implements OrderRepository {
   }
 
   @override
-  Future<Either<Failure, NoParams>> clearLocalOrders() {
-    // TODO: implement clearLocalOrders
-    throw UnimplementedError();
+  Future<Either<Failure, NoParams>> clearLocalOrders() async {
+    try {
+      await localDataSource.clearOrder();
+      return Right(NoParams());
+    } on Failure catch (failure) {
+      return Left(failure);
+    }
   }
 }

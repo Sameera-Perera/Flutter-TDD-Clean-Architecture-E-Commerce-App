@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:eshop/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
+import 'package:eshop/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -173,7 +174,10 @@ class OtherView extends StatelessWidget {
                   onClick: () {
                     context.read<UserBloc>().add(SignOutUser());
                     context.read<CartBloc>().add(const ClearCart());
-                    context.read<DeliveryInfoFetchCubit>().clearLocalDeliveryInfo();
+                    context
+                        .read<DeliveryInfoFetchCubit>()
+                        .clearLocalDeliveryInfo();
+                    context.read<OrderFetchCubit>().clearLocalOrders();
                   },
                   title: "Sign Out",
                 );

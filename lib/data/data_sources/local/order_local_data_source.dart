@@ -34,8 +34,8 @@ class OrderLocalDataSourceImpl implements OrderLocalDataSource {
   }
 
   @override
-  Future<void> clearOrder() {
-    // TODO: implement clearOrder
-    throw UnimplementedError();
+  Future<void> clearOrder() async {
+    await sharedPreferences.remove(cachedOrders);
+    return;
   }
 }
