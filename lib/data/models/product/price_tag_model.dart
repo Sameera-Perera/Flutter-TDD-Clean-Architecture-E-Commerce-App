@@ -1,6 +1,7 @@
 import 'package:eshop/domain/entities/product/price_tag.dart';
 
 class PriceTagModel extends PriceTag {
+  // ignore: use_super_parameters
   PriceTagModel({
     required String id,
     required String name,

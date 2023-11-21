@@ -15,6 +15,7 @@ import '../../widgets/input_form_button.dart';
 import '../../widgets/input_text_form_field.dart';
 
 class SignInView extends StatefulWidget {
+  // ignore: use_super_parameters
   const SignInView({Key? key}) : super(key: key);
 
   @override

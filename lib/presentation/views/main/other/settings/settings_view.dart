@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SettingsView extends StatelessWidget {
+  // ignore: use_super_parameters
   const SettingsView({Key? key}) : super(key: key);
 
   @override

@@ -18,6 +18,7 @@ import '../../widgets/outline_label_card.dart';
 
 class OrderCheckoutView extends StatelessWidget {
   final List<CartItem> items;
+  // ignore: use_super_parameters
   const OrderCheckoutView({Key? key, required this.items}) : super(key: key);
 
   @override

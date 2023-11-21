@@ -25,6 +25,7 @@ String orderDetailsModelToJson(OrderDetailsModel data) =>
     json.encode(data.toJsonBody());
 
 class OrderDetailsModel extends OrderDetails {
+  // ignore: use_super_parameters
   const OrderDetailsModel({
     required String id,
     required List<OrderItemModel> orderItems,

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class OtherItemCard extends StatelessWidget {
   final String title;
   final Function()? onClick;
+  // ignore: use_super_parameters
   const OtherItemCard({
     Key? key,
     required this.title,

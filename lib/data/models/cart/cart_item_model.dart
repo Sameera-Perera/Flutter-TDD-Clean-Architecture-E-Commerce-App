@@ -20,6 +20,7 @@ String cartItemModelToJson(List<CartItemModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CartItemModel extends CartItem {
+  // ignore: use_super_parameters
   const CartItemModel({
     String? id,
     required ProductModel product,

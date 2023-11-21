@@ -3,6 +3,7 @@ import '../product/price_tag_model.dart';
 import '../product/product_model.dart';
 
 class OrderItemModel extends OrderItem {
+  // ignore: use_super_parameters
   const OrderItemModel({
     required String id,
     required ProductModel product,

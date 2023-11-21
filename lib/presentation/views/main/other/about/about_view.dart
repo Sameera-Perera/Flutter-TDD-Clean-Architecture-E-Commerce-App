@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AboutView extends StatelessWidget {
+  // ignore: use_super_parameters
   const AboutView({Key? key}) : super(key: key);
 
   @override

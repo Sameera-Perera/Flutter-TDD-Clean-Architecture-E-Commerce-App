@@ -15,6 +15,7 @@ import '../../../widgets/input_form_button.dart';
 import '../../../widgets/product_card.dart';
 
 class HomeView extends StatefulWidget {
+  // ignore: use_super_parameters
   const HomeView({Key? key}) : super(key: key);
 
   @override

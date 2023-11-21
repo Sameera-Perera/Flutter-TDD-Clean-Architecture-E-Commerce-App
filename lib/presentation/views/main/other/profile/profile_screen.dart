@@ -7,6 +7,7 @@ import '../../../../widgets/input_text_form_field.dart';
 
 class UserProfileScreen extends StatefulWidget {
   final User user;
+  // ignore: use_super_parameters
   const UserProfileScreen({Key? key, required this.user}) : super(key: key);
 
   @override

@@ -9,6 +9,7 @@ class ProductCard extends StatelessWidget {
   final Product? product;
   final Function? onFavoriteToggle;
   final Function? onClick;
+  // ignore: use_super_parameters
   const ProductCard({
     Key? key,
     this.product,

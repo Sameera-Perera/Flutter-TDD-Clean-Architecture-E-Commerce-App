@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class OutlineLabelCard extends StatelessWidget {
   final String title;
   final Widget child;
+  // ignore: use_super_parameters
   const OutlineLabelCard({
     Key? key,
     required this.title,

@@ -9,6 +9,7 @@ import 'home/home_view.dart';
 import 'other/other_view.dart';
 
 class MainView extends StatefulWidget {
+  // ignore: use_super_parameters
   const MainView({Key? key}) : super(key: key);
 
   @override

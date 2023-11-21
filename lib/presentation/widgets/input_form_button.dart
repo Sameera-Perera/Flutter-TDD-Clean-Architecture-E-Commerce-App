@@ -9,6 +9,7 @@ class InputFormButton extends StatelessWidget {
   final double? cornerRadius;
   final EdgeInsets padding;
 
+  // ignore: use_super_parameters
   const InputFormButton(
       {Key? key,
       required this.onClick,

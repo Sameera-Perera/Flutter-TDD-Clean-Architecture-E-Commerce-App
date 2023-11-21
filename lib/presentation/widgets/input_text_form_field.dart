@@ -11,6 +11,7 @@ class InputTextFormField extends StatefulWidget {
   final bool enable;
   final TextInputAction? textInputAction;
   final Function(String)? onFieldSubmitted;
+  // ignore: use_super_parameters
   const InputTextFormField({
     Key? key,
     required this.controller,

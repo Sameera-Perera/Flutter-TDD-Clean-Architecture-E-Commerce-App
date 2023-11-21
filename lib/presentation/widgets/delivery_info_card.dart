@@ -11,6 +11,7 @@ import 'outline_label_card.dart';
 class DeliveryInfoCard extends StatelessWidget {
   final DeliveryInfo? deliveryInformation;
   final bool isSelected;
+  // ignore: use_super_parameters
   const DeliveryInfoCard(
       {Key? key, this.deliveryInformation, this.isSelected = false})
       : super(key: key);
