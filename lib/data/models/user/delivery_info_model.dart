@@ -23,6 +23,7 @@ String deliveryInfoModelListToJson(List<DeliveryInfoModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class DeliveryInfoModel extends DeliveryInfo {
+  // ignore: use_super_parameters
   const DeliveryInfoModel({
     required String id,
     required String firstName,

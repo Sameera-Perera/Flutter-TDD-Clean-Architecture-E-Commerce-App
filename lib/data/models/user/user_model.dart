@@ -7,6 +7,7 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel extends User {
+  // ignore: use_super_parameters
   const UserModel({
     required String id,
     required String firstName,

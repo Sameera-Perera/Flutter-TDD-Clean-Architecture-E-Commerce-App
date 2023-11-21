@@ -13,6 +13,7 @@ import '../../widgets/input_form_button.dart';
 
 class ProductDetailsView extends StatefulWidget {
   final Product product;
+  // ignore: use_super_parameters
   const ProductDetailsView({Key? key, required this.product}) : super(key: key);
 
   @override

@@ -38,14 +38,14 @@ dependencies:
 
   #local storage
   shared_preferences: ^2.2.0
-  flutter_secure_storage: ^8.0.0
+  flutter_secure_storage: ^9.0.0
 
   #state management
   bloc: ^8.1.2
   flutter_bloc: ^8.0.1
   get_it: ^7.6.0
 
-  http: ^0.13.3
+  http: ^1.1.0
   equatable: ^2.0.5
   dartz: ^0.10.1
   internet_connection_checker: ^1.0.0+1
@@ -64,7 +64,7 @@ dev_dependencies:
     sdk: flutter
 
 #  mockito: ^5.4.2
-  mocktail: ^0.3.0
+  mocktail: ^1.0.1
   bloc_test: ^9.1.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
@@ -72,7 +72,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

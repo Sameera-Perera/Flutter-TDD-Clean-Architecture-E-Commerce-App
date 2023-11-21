@@ -11,6 +11,7 @@ class CartItemCard extends StatelessWidget {
   final Function? onClick;
   final Function()? onLongClick;
   final bool isSelected;
+  // ignore: use_super_parameters
   const CartItemCard({
     Key? key,
     this.cartItem,

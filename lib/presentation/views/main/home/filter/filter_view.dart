@@ -9,6 +9,7 @@ import '../../../../widgets/input_form_button.dart';
 import '../../../../widgets/input_range_slider.dart';
 
 class FilterView extends StatelessWidget {
+  // ignore: use_super_parameters
   const FilterView({Key? key}) : super(key: key);
 
   @override

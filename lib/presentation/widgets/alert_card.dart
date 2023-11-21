@@ -4,6 +4,7 @@ class AlertCard extends StatelessWidget {
   final String image;
   final String? message;
   final Function()? onClick;
+  // ignore: use_super_parameters
   const AlertCard({
     Key? key,
     required this.image,

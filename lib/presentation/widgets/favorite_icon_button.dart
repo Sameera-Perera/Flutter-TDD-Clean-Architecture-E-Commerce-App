@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class FavoriteIconButton extends StatelessWidget {
+  // ignore: use_super_parameters
   const FavoriteIconButton({Key? key}) : super(key: key);
 
   @override

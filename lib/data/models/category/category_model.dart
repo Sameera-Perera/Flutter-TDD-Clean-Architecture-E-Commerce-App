@@ -14,6 +14,7 @@ String categoryModelListToJson(List<CategoryModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class CategoryModel extends Category {
+  // ignore: use_super_parameters
   const CategoryModel({
     required String id,
     required String name,

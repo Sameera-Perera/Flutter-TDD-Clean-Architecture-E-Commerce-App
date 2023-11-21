@@ -5,6 +5,7 @@ import '../../../blocs/category/category_bloc.dart';
 import '../../../widgets/category_card.dart';
 
 class CategoryView extends StatefulWidget {
+  // ignore: use_super_parameters
   const CategoryView({Key? key}) : super(key: key);
 
   @override

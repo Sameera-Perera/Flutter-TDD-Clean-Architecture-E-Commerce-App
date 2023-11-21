@@ -12,6 +12,7 @@ import '../../../../widgets/input_form_button.dart';
 import '../../../../widgets/input_text_form_field.dart';
 
 class DeliveryInfoView extends StatefulWidget {
+  // ignore: use_super_parameters
   const DeliveryInfoView({Key? key}) : super(key: key);
 
   @override
