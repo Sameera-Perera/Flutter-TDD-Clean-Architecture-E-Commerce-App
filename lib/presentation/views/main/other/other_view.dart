@@ -92,7 +92,7 @@ class OtherView extends StatelessWidget {
               },
             ),
           ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 25),
           BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
               return OtherItemCard(
