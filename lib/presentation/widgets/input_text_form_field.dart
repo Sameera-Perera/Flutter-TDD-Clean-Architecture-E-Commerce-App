@@ -65,7 +65,11 @@ class _InputTextFormFieldState extends State<InputTextFormField> {
             : null,
         border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12.0),
-            borderSide: BorderSide.none),
+            borderSide: const BorderSide(
+              color: Colors.transparent,
+              width: 0.0,
+            ),
+        ),
       ),
     );
   }
