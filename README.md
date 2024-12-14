@@ -107,6 +107,16 @@ For help getting started with Flutter, view our online
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
+## Contributors ✨
+
+Thanks to these wonderful people:
+<!-- ALL-CONTRIBUTORS-LIST:START -->
+<table>
+  <tr><td align="center"><a href="https://github.com/AaronDsilva97"><img src="https://avatars.githubusercontent.com/u/74453685?v=4" width="100px;" alt="AaronDsilva97"/><br /><sub><b>AaronDsilva97</b></sub></a></td></tr>
+</table>
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [contributors-shield]: https://img.shields.io/github/contributors/Sameera-Perera/Flutter-TDD-Clean-Architecture-E-Commerce-App.svg?style=for-the-badge
