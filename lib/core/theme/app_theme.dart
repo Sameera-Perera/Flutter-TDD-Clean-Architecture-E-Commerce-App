@@ -17,15 +17,6 @@ class AppTheme {
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(foregroundColor: kLightSecondaryColor)),
     colorScheme: ColorScheme.light(secondary: kLightSecondaryColor)
-        .copyWith(background: kLightBackgroundColor),
+        .copyWith(surface: kLightBackgroundColor),
   );
-
-  // static final darkTheme = ThemeData(
-  //     brightness: Brightness.dark,
-  //     primaryColor: darkPrimaryColor,
-  //     visualDensity: VisualDensity.adaptivePlatformDensity,
-  //     textButtonTheme: TextButtonThemeData(
-  //         style: TextButton.styleFrom(foregroundColor: darkTextColor)),
-  //     colorScheme: ColorScheme.light(secondary: lightSecondaryColor)
-  //         .copyWith(background: darkBackgroundColor));
 }

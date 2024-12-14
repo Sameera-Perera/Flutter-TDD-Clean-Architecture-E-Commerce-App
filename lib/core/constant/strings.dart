@@ -2,7 +2,7 @@
 const String appTitle = 'EShop';
 
 // Networking and APIs
-const String baseUrl = 'https://rich-jade-mackerel-kit.cyclic.app';
+const String baseUrl = 'https://e-commerce-mock-api-webservice.onrender.com';
 const String defaultApiKey = '';
 const String defaultSources = '';
 
