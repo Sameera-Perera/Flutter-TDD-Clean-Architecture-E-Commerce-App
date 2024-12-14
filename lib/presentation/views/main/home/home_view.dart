@@ -254,29 +254,46 @@ class _HomeViewState extends State<HomeView> {
                         },
                       );
                     }
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        if (state.failure is ServerFailure)
-                          Image.asset(
-                              'assets/status_image/internal-server-error.png'),
-                        if (state.failure is CacheFailure)
-                          Image.asset('assets/status_image/no-connection.png'),
-                        const Text("Products not found!"),
-                        IconButton(
-                            onPressed: () {
-                              context.read<ProductBloc>().add(GetProducts(
-                                  FilterProductParams(
-                                      keyword: context
-                                          .read<FilterCubit>()
-                                          .searchController
-                                          .text)));
-                            },
-                            icon: const Icon(Icons.refresh)),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.1,
-                        )
-                      ],
+                    return Center(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (state.failure is ServerFailure)
+                            Image.asset(
+                              'assets/status_image/internal-server-error.png',
+                              width: MediaQuery.of(context).size.width * 0.7,
+                            ),
+                          if (state.failure is CacheFailure)
+                            Image.asset(
+                              'assets/status_image/no-connection.png',
+                              width: MediaQuery.of(context).size.width * 0.7,
+                            ),
+                          // if (state.products.isEmpty)
+                          //   Image.asset(
+                          //     'assets/status_image/cloths-choosing.png',
+                          //     width: MediaQuery.of(context).size.width * 0.7,
+                          //   ),
+                          Text(
+                            "Products not found!",
+                            style: TextStyle(color: Colors.grey.shade600),
+                          ),
+                          IconButton(
+                              color: Colors.grey.shade600,
+                              onPressed: () {
+                                context.read<ProductBloc>().add(GetProducts(
+                                    FilterProductParams(
+                                        keyword: context
+                                            .read<FilterCubit>()
+                                            .searchController
+                                            .text)));
+                              },
+                              icon: const Icon(Icons.refresh)),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.1,
+                          )
+                        ],
+                      ),
                     );
                   }
                   return RefreshIndicator(
