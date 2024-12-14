@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
@@ -15,7 +17,7 @@ class ProductRemoteDataSourceImpl implements ProductRemoteDataSource {
 
   @override
   Future<ProductResponseModel> getProducts(params) => _getProductFromUrl(
-      '$baseUrl/products');//?keyword=${params.keyword}&pageSize=${params.pageSize}&page=${params.limit}&categories=${jsonEncode(params.categories.map((e) => e.id).toList())}');
+      '$baseUrl/products?keyword=${params.keyword}&pageSize=${params.pageSize}&page=${params.limit}&categories=${jsonEncode(params.categories.map((e) => e.id).toList())}');
 
   Future<ProductResponseModel> _getProductFromUrl(String url) async {
     final response = await client.get(
