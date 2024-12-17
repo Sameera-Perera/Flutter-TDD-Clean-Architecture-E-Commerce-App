@@ -1,5 +1,7 @@
 import 'package:eshop/core/constant/images.dart';
+import 'package:eshop/main.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class InputFormButton extends StatelessWidget {
   final Function() onClick;
@@ -25,10 +27,8 @@ class InputFormButton extends StatelessWidget {
       onPressed: onClick,
       style: ButtonStyle(
         padding: WidgetStateProperty.all<EdgeInsets>(padding),
-        maximumSize:
-            WidgetStateProperty.all<Size>(const Size(double.maxFinite, 50)),
-        minimumSize:
-            WidgetStateProperty.all<Size>(const Size(double.maxFinite, 50)),
+        maximumSize: WidgetStateProperty.all<Size>(Size(double.maxFinite, 28.sp)),
+        minimumSize: WidgetStateProperty.all<Size>(Size(double.maxFinite, 28.sp)),
         backgroundColor: WidgetStateProperty.all<Color>(
             color ?? Theme.of(context).primaryColor),
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -44,6 +44,8 @@ class InputFormButton extends StatelessWidget {
           : Image.asset(
               kFilterIcon,
               color: Colors.white,
+              height: 22.sp,
+              width: 22.sp,
             ),
     );
   }

@@ -59,6 +59,7 @@ dependencies:
   carousel_slider: ^5.0.0
   smooth_page_indicator: ^1.1.0
   flutter_easyloading: ^3.0.5
+  sizer: ^3.0.5
 
 dev_dependencies:
   flutter_test:
@@ -69,7 +70,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
   mocktail: ^0.3.0
   bloc_test: ^9.1.4
 

@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eshop/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../../core/constant/images.dart';
 import '../../../../core/error/failures.dart';
@@ -15,7 +17,7 @@ import '../../../widgets/input_form_button.dart';
 import '../../../widgets/product_card.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -48,121 +50,133 @@ class _HomeViewState extends State<HomeView> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            height: (MediaQuery.of(context).padding.top + 10),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-              if (state is UserLogged) {
-                return Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(AppRouter.userProfile);
-                      },
-                      child: Text(
-                        "${state.user.firstName} ${state.user.lastName}",
-                        style: const TextStyle(fontSize: 26),
-                      ),
-                    ),
-                    const Spacer(),
-                    const SizedBox(
-                      width: 8,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(AppRouter.userProfile);
-                      },
-                      child: state.user.image != null
-                          ? CachedNetworkImage(
-                              imageUrl: state.user.image!,
-                              imageBuilder: (context, image) => CircleAvatar(
-                                radius: 24.0,
-                                backgroundImage: image,
+          Container(
+            color: Colors.white,
+            child: Column(
+              children: [
+                SizedBox(
+                  height: (MediaQuery.of(context).padding.top + 10),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+                    if (state is UserLogged) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 6),
+                        child: Row(
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(AppRouter.userProfile);
+                              },
+                              child: Text(
+                                "${state.user.firstName} ${state.user.lastName}",
+                                style: TextStyle(fontSize: 18.sp),
+                              ),
+                            ),
+                            const Spacer(),
+                            const SizedBox(
+                              width: 8,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(AppRouter.userProfile);
+                              },
+                              child: state.user.image != null
+                                  ? CachedNetworkImage(
+                                imageUrl: state.user.image!,
+                                imageBuilder: (context, image) => CircleAvatar(
+                                  radius: 18.sp,
+                                  backgroundImage: image,
+                                  backgroundColor: Colors.transparent,
+                                ),
+                              )
+                                  : CircleAvatar(
+                                radius: 18.sp,
+                                backgroundImage: AssetImage(kUserAvatar),
                                 backgroundColor: Colors.transparent,
                               ),
                             )
-                          : const CircleAvatar(
-                              radius: 24.0,
-                              backgroundImage: AssetImage(kUserAvatar),
-                              backgroundColor: Colors.transparent,
+                          ],
+                        ),
+                      );
+                    } else {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 8,
+                              ),
+                              Text(
+                                "Welcome,",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 36),
+                              ),
+                              Text(
+                                "E-Shop mobile store",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.normal, fontSize: 22),
+                              ),
+                            ],
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(AppRouter.signIn);
+                            },
+                            child: const Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: CircleAvatar(
+                                radius: 24.0,
+                                backgroundImage: AssetImage(kUserAvatar),
+                                backgroundColor: Colors.transparent,
+                              ),
                             ),
-                    )
-                  ],
-                );
-              } else {
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 8,
-                        ),
-                        Text(
-                          "Welcome,",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 36),
-                        ),
-                        Text(
-                          "E-Shop mobile store",
-                          style: TextStyle(
-                              fontWeight: FontWeight.normal, fontSize: 22),
-                        ),
-                      ],
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).pushNamed(AppRouter.signIn);
-                      },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: CircleAvatar(
-                          radius: 24.0,
-                          backgroundImage: AssetImage(kUserAvatar),
-                          backgroundColor: Colors.transparent,
-                        ),
-                      ),
-                    )
-                  ],
-                );
-              }
-            }),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              top: 12,
-              left: 20,
-              right: 20,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: BlocBuilder<FilterCubit, FilterProductParams>(
-                    builder: (context, state) {
-                      return TextField(
-                        autofocus: false,
-                        controller:
-                            context.read<FilterCubit>().searchController,
-                        onChanged: (val) => setState(() {}),
-                        onSubmitted: (val) => context.read<ProductBloc>().add(
-                            GetProducts(FilterProductParams(keyword: val))),
-                        decoration: InputDecoration(
-                            contentPadding: const EdgeInsets.only(
-                                left: 20, bottom: 22, top: 22),
-                            prefixIcon: const Padding(
-                              padding: EdgeInsets.only(left: 8),
-                              child: Icon(Icons.search),
-                            ),
-                            suffixIcon: context
-                                    .read<FilterCubit>()
-                                    .searchController
-                                    .text
-                                    .isNotEmpty
-                                ? Padding(
+                          )
+                        ],
+                      );
+                    }
+                  }),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 1.h,
+                    left: 6.w,
+                    right: 6.w,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: BlocBuilder<FilterCubit, FilterProductParams>(
+                          builder: (context, state) {
+                            return TextField(
+                              autofocus: false,
+                              controller:
+                              context.read<FilterCubit>().searchController,
+                              onChanged: (val) => setState(() {}),
+                              onSubmitted: (val) => context.read<ProductBloc>().add(
+                                  GetProducts(FilterProductParams(keyword: val))),
+                              decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.only(
+                                    left: 16.sp,
+                                    bottom: 16.sp,
+                                    top: 18.sp,
+                                  ),
+                                  prefixIcon: const Padding(
+                                    padding: EdgeInsets.only(left: 8),
+                                    child: Icon(Icons.search),
+                                  ),
+                                  suffixIcon: context
+                                      .read<FilterCubit>()
+                                      .searchController
+                                      .text
+                                      .isNotEmpty
+                                      ? Padding(
                                     padding: const EdgeInsets.only(right: 8),
                                     child: IconButton(
                                         onPressed: () {
@@ -176,53 +190,59 @@ class _HomeViewState extends State<HomeView> {
                                         },
                                         icon: const Icon(Icons.clear)),
                                   )
-                                : null,
-                            border: const OutlineInputBorder(),
-                            hintText: "Search Product",
-                            fillColor: Colors.grey.shade100,
-                            filled: true,
-                            focusedBorder: OutlineInputBorder(
-                                borderSide: const BorderSide(
-                                    color: Colors.white, width: 3.0),
-                                borderRadius: BorderRadius.circular(26)),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(26),
-                              borderSide: const BorderSide(
-                                  color: Colors.white, width: 3.0),
-                            )),
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                SizedBox(
-                  width: 55,
-                  child: BlocBuilder<FilterCubit, FilterProductParams>(
-                    builder: (context, state) {
-                      return Badge(
-                        alignment: AlignmentDirectional.topEnd,
-                        label: Text(
-                          context
-                              .read<FilterCubit>()
-                              .getFiltersCount()
-                              .toString(),
-                          style: const TextStyle(color: Colors.black87),
-                        ),
-                        isLabelVisible:
-                            context.read<FilterCubit>().getFiltersCount() != 0,
-                        backgroundColor: Theme.of(context).primaryColor,
-                        child: InputFormButton(
-                          color: Colors.black87,
-                          onClick: () {
-                            Navigator.of(context).pushNamed(AppRouter.filter);
+                                      : null,
+                                  border: const OutlineInputBorder(),
+                                  hintText: "Search Product",
+                                  fillColor: Colors.grey.shade100,
+                                  filled: true,
+                                  focusedBorder: OutlineInputBorder(
+                                      borderSide: const BorderSide(
+                                          color: Colors.white, width: 3.0),
+                                      borderRadius: BorderRadius.circular(16.sp)),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16.sp),
+                                    borderSide: const BorderSide(
+                                      color: Colors.white,
+                                      width: 3.0,
+                                    ),
+                                  )),
+                            );
                           },
                         ),
-                      );
-                    },
+                      ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      SizedBox(
+                        width: 55,
+                        child: BlocBuilder<FilterCubit, FilterProductParams>(
+                          builder: (context, state) {
+                            return Badge(
+                              alignment: AlignmentDirectional.topEnd,
+                              label: Text(
+                                context
+                                    .read<FilterCubit>()
+                                    .getFiltersCount()
+                                    .toString(),
+                                style: const TextStyle(color: Colors.black87),
+                              ),
+                              isLabelVisible:
+                              context.read<FilterCubit>().getFiltersCount() != 0,
+                              backgroundColor: Theme.of(context).primaryColor,
+                              child: InputFormButton(
+                                color: Colors.black87,
+                                onClick: () {
+                                  Navigator.of(context).pushNamed(AppRouter.filter);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                SizedBox(height: 1.h,)
               ],
             ),
           ),
@@ -269,11 +289,6 @@ class _HomeViewState extends State<HomeView> {
                               'assets/status_image/no-connection.png',
                               width: MediaQuery.of(context).size.width * 0.7,
                             ),
-                          // if (state.products.isEmpty)
-                          //   Image.asset(
-                          //     'assets/status_image/cloths-choosing.png',
-                          //     width: MediaQuery.of(context).size.width * 0.7,
-                          //   ),
                           Text(
                             "Products not found!",
                             style: TextStyle(color: Colors.grey.shade600),

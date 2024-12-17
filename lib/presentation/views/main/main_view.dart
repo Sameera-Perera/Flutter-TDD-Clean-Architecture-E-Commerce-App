@@ -1,6 +1,8 @@
+import 'package:eshop/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../blocs/home/navbar_cubit.dart';
 import 'cart/cart_view.dart';
@@ -54,7 +56,7 @@ class _MainViewState extends State<MainView> {
                     ),
                     backgroundColor: Colors.black87,
                     snakeViewColor: Colors.black87,
-                    height: 68,
+                    height: 8.h,
                     elevation: 4,
                     selectedItemColor: SnakeShape.circle == SnakeShape.indicator
                         ? Colors.black87
@@ -76,29 +78,30 @@ class _MainViewState extends State<MainView> {
                           curve: Curves.linear);
                       context.read<NavbarCubit>().update(index);
                     }),
-                    items: const [
+                    items: [
                       BottomNavigationBarItem(
-                          icon: ImageIcon(
-                            AssetImage("assets/navbar_icons/home.png"),
-                            color: Colors.white,
-                            size: 26,
+                        icon: ImageIcon(
+                          AssetImage("assets/navbar_icons/home.png"),
+                          color: Colors.white,
+                          size: 20.sp,
+                        ),
+                        activeIcon: Padding(
+                          padding: EdgeInsets.all(0.5.h),
+                          child: CircleAvatar(
+                            backgroundColor: Colors.deepOrange,
+                            maxRadius: 4,
                           ),
-                          activeIcon: Padding(
-                            padding: EdgeInsets.all(5.0),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.deepOrange,
-                              maxRadius: 4,
-                            ),
-                          ),
-                          label: 'Home'),
+                        ),
+                        label: 'Home',
+                      ),
                       BottomNavigationBarItem(
                           icon: ImageIcon(
                             AssetImage("assets/navbar_icons/categories.png"),
                             color: Colors.white,
-                            size: 26,
+                            size: 20.sp,
                           ),
                           activeIcon: Padding(
-                            padding: EdgeInsets.all(5.0),
+                            padding: EdgeInsets.all(0.5.h),
                             child: CircleAvatar(
                               backgroundColor: Colors.deepOrange,
                               maxRadius: 4,
@@ -109,10 +112,10 @@ class _MainViewState extends State<MainView> {
                           icon: ImageIcon(
                             AssetImage("assets/navbar_icons/shopping-cart.png"),
                             color: Colors.white,
-                            size: 26,
+                            size: 20.sp,
                           ),
                           activeIcon: Padding(
-                            padding: EdgeInsets.all(5.0),
+                            padding: EdgeInsets.all(0.5.h),
                             child: CircleAvatar(
                               backgroundColor: Colors.deepOrange,
                               maxRadius: 4,
@@ -123,17 +126,16 @@ class _MainViewState extends State<MainView> {
                           icon: ImageIcon(
                             AssetImage("assets/navbar_icons/user.png"),
                             color: Colors.white,
-                            size: 26,
+                            size: 20.sp,
                           ),
                           activeIcon: Padding(
-                            padding: EdgeInsets.all(5.0),
+                            padding: EdgeInsets.all(0.5.h),
                             child: CircleAvatar(
                               backgroundColor: Colors.deepOrange,
                               maxRadius: 4,
                             ),
                           ),
                           label: 'Other'),
-                      // BottomNavigationBarItem(icon: Icon(Icons.search), label: 'search')
                     ],
                   );
                 },
