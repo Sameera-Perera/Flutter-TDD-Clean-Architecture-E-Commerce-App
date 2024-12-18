@@ -12,7 +12,7 @@ import '../../../../widgets/input_form_button.dart';
 import '../../../../widgets/input_text_form_field.dart';
 
 class DeliveryInfoView extends StatefulWidget {
-  const DeliveryInfoView({Key? key}) : super(key: key);
+  const DeliveryInfoView({super.key});
 
   @override
   State<DeliveryInfoView> createState() => _DeliveryInfoViewState();

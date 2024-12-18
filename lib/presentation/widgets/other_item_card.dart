@@ -4,10 +4,10 @@ class OtherItemCard extends StatelessWidget {
   final String title;
   final Function()? onClick;
   const OtherItemCard({
-    Key? key,
+    super.key,
     required this.title,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

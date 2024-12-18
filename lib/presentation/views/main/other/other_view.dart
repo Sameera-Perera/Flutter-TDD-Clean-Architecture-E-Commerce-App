@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:eshop/main.dart';
 import 'package:eshop/presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import 'package:eshop/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,7 @@ import '../../../blocs/user/user_bloc.dart';
 import '../../../widgets/other_item_card.dart';
 
 class OtherView extends StatelessWidget {
-  const OtherView({Key? key}) : super(key: key);
+  const OtherView({super.key});
 
   @override
   Widget build(BuildContext context) {

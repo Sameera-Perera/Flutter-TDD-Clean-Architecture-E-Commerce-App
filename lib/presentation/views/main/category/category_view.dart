@@ -5,7 +5,7 @@ import '../../../blocs/category/category_bloc.dart';
 import '../../../widgets/category_card.dart';
 
 class CategoryView extends StatefulWidget {
-  const CategoryView({Key? key}) : super(key: key);
+  const CategoryView({super.key});
 
   @override
   State<CategoryView> createState() => _CategoryViewState();

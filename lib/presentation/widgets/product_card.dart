@@ -10,11 +10,11 @@ class ProductCard extends StatelessWidget {
   final Function? onFavoriteToggle;
   final Function? onClick;
   const ProductCard({
-    Key? key,
+    super.key,
     this.product,
     this.onFavoriteToggle,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

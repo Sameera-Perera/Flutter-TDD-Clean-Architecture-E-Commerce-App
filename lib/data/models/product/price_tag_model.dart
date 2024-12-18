@@ -2,14 +2,10 @@ import 'package:eshop/domain/entities/product/price_tag.dart';
 
 class PriceTagModel extends PriceTag {
   PriceTagModel({
-    required String id,
-    required String name,
-    required num price,
-  }) : super(
-          id: id,
-          name: name,
-          price: price,
-        );
+    required super.id,
+    required super.name,
+    required super.price,
+  });
 
   factory PriceTagModel.fromJson(Map<String, dynamic> json) => PriceTagModel(
         id: json["_id"],

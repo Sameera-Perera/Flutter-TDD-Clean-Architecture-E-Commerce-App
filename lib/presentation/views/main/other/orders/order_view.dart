@@ -6,7 +6,7 @@ import '../../../../blocs/order/order_fetch/order_fetch_cubit.dart';
 import '../../../../widgets/order_info_card.dart';
 
 class OrderView extends StatelessWidget {
-  const OrderView({Key? key}) : super(key: key);
+  const OrderView({super.key});
 
   @override
   Widget build(BuildContext context) {

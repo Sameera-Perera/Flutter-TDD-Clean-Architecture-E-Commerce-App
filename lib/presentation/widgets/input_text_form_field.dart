@@ -12,7 +12,7 @@ class InputTextFormField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final Function(String)? onFieldSubmitted;
   const InputTextFormField({
-    Key? key,
+    super.key,
     required this.controller,
     this.isSecureField = false,
     this.autoCorrect = false,
@@ -23,7 +23,7 @@ class InputTextFormField extends StatefulWidget {
     this.textInputAction,
     this.hintTextSize = 14,
     this.onFieldSubmitted,
-  }) : super(key: key);
+  });
 
   @override
   State<InputTextFormField> createState() => _InputTextFormFieldState();

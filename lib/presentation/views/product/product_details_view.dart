@@ -13,7 +13,7 @@ import '../../widgets/input_form_button.dart';
 
 class ProductDetailsView extends StatefulWidget {
   final Product product;
-  const ProductDetailsView({Key? key, required this.product}) : super(key: key);
+  const ProductDetailsView({super.key, required this.product});
 
   @override
   State<ProductDetailsView> createState() => _ProductDetailsViewState();

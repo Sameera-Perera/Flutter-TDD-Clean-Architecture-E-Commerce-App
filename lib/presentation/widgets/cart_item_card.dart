@@ -12,13 +12,13 @@ class CartItemCard extends StatelessWidget {
   final Function()? onLongClick;
   final bool isSelected;
   const CartItemCard({
-    Key? key,
+    super.key,
     this.cartItem,
     this.onFavoriteToggle,
     this.onClick,
     this.onLongClick,
     this.isSelected = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

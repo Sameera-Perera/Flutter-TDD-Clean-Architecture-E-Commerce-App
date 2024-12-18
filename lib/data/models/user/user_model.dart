@@ -8,16 +8,11 @@ String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel extends User {
   const UserModel({
-    required String id,
-    required String firstName,
-    required String lastName,
-    required String email,
-  }) : super(
-    id: id,
-    firstName: firstName,
-    lastName: lastName,
-    email: email,
-  );
+    required super.id,
+    required super.firstName,
+    required super.lastName,
+    required super.email,
+  });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
     id: json["_id"],

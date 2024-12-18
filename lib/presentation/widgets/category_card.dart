@@ -10,7 +10,7 @@ import '../blocs/home/navbar_cubit.dart';
 
 class CategoryCard extends StatelessWidget {
   final Category? category;
-  const CategoryCard({Key? key, this.category}) : super(key: key);
+  const CategoryCard({super.key, this.category});
 
   @override
   Widget build(BuildContext context) {

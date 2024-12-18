@@ -7,7 +7,7 @@ import 'outline_label_card.dart';
 
 class OrderInfoCard extends StatelessWidget {
   final OrderDetails? orderDetails;
-  const OrderInfoCard({Key? key, this.orderDetails}) : super(key: key);
+  const OrderInfoCard({super.key, this.orderDetails});
 
   @override
   Widget build(BuildContext context) {

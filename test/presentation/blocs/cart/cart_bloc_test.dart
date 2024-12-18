@@ -68,7 +68,7 @@ void main() {
       'emits [CartLoading, CartLoaded] when AddProduct is added',
       build: () {
         when(() => mockAddCartUseCase(tCartItemModel))
-            .thenAnswer((_) async => const Right(''));
+            .thenAnswer((_) async =>  Right(tCartItemModel));
         return cartBloc;
       },
       act: (bloc) => bloc.add(AddProduct(cartItem: tCartItemModel)),
