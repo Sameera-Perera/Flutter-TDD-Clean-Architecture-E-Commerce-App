@@ -47,6 +47,9 @@ class OrderInfoCard extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
+                Divider(
+                  color: Colors.grey.shade400,
+                ),
                 Column(
                   children: orderDetails!.orderItems
                       .map((product) => Padding(

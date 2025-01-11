@@ -17,7 +17,7 @@ class CartRemoteDataSourceSourceImpl implements CartRemoteDataSource {
 
   @override
   Future<CartItemModel> addToCart(CartItemModel cartItem, String token) async {
-    final response = await client.post(Uri.parse('$baseUrl/users/cart'),
+    final response = await client.post(Uri.parse('$baseUrl/carts'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
@@ -34,7 +34,7 @@ class CartRemoteDataSourceSourceImpl implements CartRemoteDataSource {
   @override
   Future<List<CartItemModel>> syncCart(
       List<CartItemModel> cart, String token) async {
-    final response = await client.post(Uri.parse('$baseUrl/users/cart/sync'),
+    final response = await client.post(Uri.parse('$baseUrl/carts/sync'),
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',

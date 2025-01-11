@@ -6,14 +6,14 @@ import 'order_item_model.dart';
 
 List<OrderDetailsModel> orderDetailsModelListFromJson(String str) =>
     List<OrderDetailsModel>.from(
-        json.decode(str)['data'].map((x) => OrderDetailsModel.fromJson(x)));
+        json.decode(str).map((x) => OrderDetailsModel.fromJson(x)));
 
 List<OrderDetailsModel> orderDetailsModelListFromLocalJson(String str) =>
     List<OrderDetailsModel>.from(
         json.decode(str).map((x) => OrderDetailsModel.fromJson(x)));
 
 OrderDetailsModel orderDetailsModelFromJson(String str) =>
-    OrderDetailsModel.fromJson(json.decode(str)['data']);
+    OrderDetailsModel.fromJson(json.decode(str));
 
 String orderModelListToJsonBody(List<OrderDetailsModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJsonBody())));

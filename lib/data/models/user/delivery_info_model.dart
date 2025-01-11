@@ -3,14 +3,14 @@ import 'dart:convert';
 import '../../../domain/entities/user/delivery_info.dart';
 
 DeliveryInfoModel deliveryInfoModelFromRemoteJson(String str) =>
-    DeliveryInfoModel.fromJson(json.decode(str)['data']);
+    DeliveryInfoModel.fromJson(json.decode(str));
 
 DeliveryInfoModel deliveryInfoModelFromLocalJson(String str) =>
     DeliveryInfoModel.fromJson(json.decode(str));
 
 List<DeliveryInfoModel> deliveryInfoModelListFromRemoteJson(String str) =>
     List<DeliveryInfoModel>.from(
-        json.decode(str)['data'].map((x) => DeliveryInfoModel.fromJson(x)));
+        json.decode(str).map((x) => DeliveryInfoModel.fromJson(x)));
 
 List<DeliveryInfoModel> deliveryInfoModelListFromLocalJson(String str) =>
     List<DeliveryInfoModel>.from(
