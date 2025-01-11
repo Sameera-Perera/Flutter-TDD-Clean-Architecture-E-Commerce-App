@@ -3,6 +3,7 @@ import 'package:eshop/presentation/blocs/delivery_info/delivery_info_fetch/deliv
 import 'package:eshop/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../../../core/constant/images.dart';
 import '../../../../core/router/app_router.dart';
@@ -11,7 +12,7 @@ import '../../../blocs/user/user_bloc.dart';
 import '../../../widgets/other_item_card.dart';
 
 class OtherView extends StatelessWidget {
-  const OtherView({Key? key}) : super(key: key);
+  const OtherView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +39,13 @@ class OtherView extends StatelessWidget {
                             ? CachedNetworkImage(
                                 imageUrl: state.user.image!,
                                 imageBuilder: (context, image) => CircleAvatar(
-                                  radius: 36.0,
+                                  radius: 24.sp,
                                   backgroundImage: image,
                                   backgroundColor: Colors.transparent,
                                 ),
                               )
-                            : const CircleAvatar(
-                                radius: 36.0,
+                            : CircleAvatar(
+                                radius: 24.sp,
                                 backgroundImage: AssetImage(kUserAvatar),
                                 backgroundColor: Colors.transparent,
                               ),
@@ -69,8 +70,8 @@ class OtherView extends StatelessWidget {
                     },
                     child: Row(
                       children: [
-                        const CircleAvatar(
-                          radius: 36.0,
+                        CircleAvatar(
+                          radius: 24.sp,
                           backgroundImage: AssetImage(kUserAvatar),
                           backgroundColor: Colors.transparent,
                         ),
@@ -92,7 +93,7 @@ class OtherView extends StatelessWidget {
               },
             ),
           ),
-          const SizedBox(height: 25),
+          SizedBox(height: 2.5.h),
           BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
               return OtherItemCard(

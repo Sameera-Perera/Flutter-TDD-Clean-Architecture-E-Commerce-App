@@ -27,7 +27,7 @@ void main() {
       const fakeToken = 'fakeToken';
       final fakeCartItem = tCartItemModel;
       final fakeResponse = fixture('cart/cart_item_add_response.json');
-      const expectedUrl = '$baseUrl/users/cart';
+      const expectedUrl = '$baseUrl/carts';
       when(() => mockHttpClient.post(
         Uri.parse(expectedUrl),
         headers: {
@@ -56,7 +56,7 @@ void main() {
       // Arrange
       const fakeToken = 'fakeToken';
       final fakeCartItem = tCartItemModel;
-      const expectedUrl = '$baseUrl/users/cart';
+      const expectedUrl = '$baseUrl/carts';
       when(() => mockHttpClient.post(
         Uri.parse(expectedUrl),
         headers: {
@@ -79,7 +79,7 @@ void main() {
       // Arrange
       const fakeToken = 'fakeToken';
       final fakeCart = [tCartItemModel];
-      const expectedUrl = '$baseUrl/users/cart/sync';
+      const expectedUrl = '$baseUrl/carts/sync';
       final fakeResponse = fixture('cart/cart_item_fetch_response.json');
       when(() => mockHttpClient.post(
         Uri.parse(expectedUrl),

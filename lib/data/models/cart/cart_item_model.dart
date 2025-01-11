@@ -21,10 +21,10 @@ String cartItemModelToJson(List<CartItemModel> data) =>
 
 class CartItemModel extends CartItem {
   const CartItemModel({
-    String? id,
-    required ProductModel product,
-    required PriceTagModel priceTag,
-  }) : super(id: id, product: product, priceTag: priceTag);
+    super.id,
+    required ProductModel super.product,
+    required PriceTagModel super.priceTag,
+  });
 
   factory CartItemModel.fromJson(Map<String, dynamic> json) {
     return CartItemModel(

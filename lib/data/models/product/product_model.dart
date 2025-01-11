@@ -4,24 +4,15 @@ import 'price_tag_model.dart';
 
 class ProductModel extends Product {
   const ProductModel({
-    required String id,
-    required String name,
-    required String description,
-    required List<PriceTagModel> priceTags,
-    required List<CategoryModel> categories,
-    required List<String> images,
-    required DateTime createdAt,
-    required DateTime updatedAt,
-  }) : super(
-          id: id,
-          name: name,
-          description: description,
-          priceTags: priceTags,
-          categories: categories,
-          images: images,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-        );
+    required super.id,
+    required super.name,
+    required super.description,
+    required List<PriceTagModel> super.priceTags,
+    required List<CategoryModel> super.categories,
+    required super.images,
+    required super.createdAt,
+    required super.updatedAt,
+  });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
         id: json["_id"],

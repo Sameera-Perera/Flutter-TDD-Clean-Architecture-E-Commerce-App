@@ -9,7 +9,7 @@ import '../../../../widgets/input_form_button.dart';
 import '../../../../widgets/input_range_slider.dart';
 
 class FilterView extends StatelessWidget {
-  const FilterView({Key? key}) : super(key: key);
+  const FilterView({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,4 @@
 {
-  "data": {
     "_id": "1",
     "orderItems": [
       {
@@ -56,5 +55,4 @@
     },
     "discount": 0,
     "orderStatus": 0
-  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sizer/sizer.dart';
 
 import 'core/constant/strings.dart';
 import 'core/router/app_router.dart';
@@ -58,21 +59,24 @@ class MyApp extends StatelessWidget {
           create: (context) => di.sl<DeliveryInfoActionCubit>(),
         ),
         BlocProvider(
-          create: (context) => di.sl<DeliveryInfoFetchCubit>()..fetchDeliveryInfo(),
+          create: (context) =>
+              di.sl<DeliveryInfoFetchCubit>()..fetchDeliveryInfo(),
         ),
         BlocProvider(
           create: (context) => di.sl<OrderFetchCubit>()..getOrders(),
         ),
       ],
       child: OKToast(
-        child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          initialRoute: AppRouter.home,
-          onGenerateRoute: AppRouter.onGenerateRoute,
-          title: appTitle,
-          theme: AppTheme.lightTheme,
-          builder: EasyLoading.init(),
-        ),
+        child: Sizer(builder: (context, orientation, deviceType) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            initialRoute: AppRouter.home,
+            onGenerateRoute: AppRouter.onGenerateRoute,
+            title: appTitle,
+            theme: AppTheme.lightTheme,
+            builder: EasyLoading.init(),
+          );
+        }),
       ),
     );
   }

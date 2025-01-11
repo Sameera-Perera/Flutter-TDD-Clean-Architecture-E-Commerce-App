@@ -23,7 +23,7 @@ class DeliveryInfoRemoteDataSourceImpl implements DeliveryInfoRemoteDataSource {
   @override
   Future<List<DeliveryInfoModel>> getDeliveryInfo(token) async {
     final response = await client.get(
-      Uri.parse('$baseUrl/users/delivery-info'),
+      Uri.parse('$baseUrl/delivery-info'),
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',

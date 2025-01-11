@@ -3,12 +3,10 @@ import '../../../domain/entities/product/pagination_meta_data.dart';
 class PaginationMetaDataModel extends PaginationMetaData {
   PaginationMetaDataModel({
     required int page,
-    required int pageSize,
-    required int total,
+    required super.pageSize,
+    required super.total,
   }): super(
     limit: page,
-    pageSize: pageSize,
-    total: total,
   );
 
   factory PaginationMetaDataModel.fromJson(Map<String, dynamic> json) => PaginationMetaDataModel(

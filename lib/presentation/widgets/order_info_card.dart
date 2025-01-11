@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eshop/core/constant/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -7,7 +8,7 @@ import 'outline_label_card.dart';
 
 class OrderInfoCard extends StatelessWidget {
   final OrderDetails? orderDetails;
-  const OrderInfoCard({Key? key, this.orderDetails}) : super(key: key);
+  const OrderInfoCard({super.key, this.orderDetails});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +19,10 @@ class OrderInfoCard extends StatelessWidget {
           title: '',
           child: Container(
             padding: const EdgeInsets.only(
-              top: 12
+              top: kPaddingMedium,
+              left: kPaddingSmall,
+              right: kPaddingSmall,
+              bottom: kPaddingSmall
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,6 +50,9 @@ class OrderInfoCard extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 14,
                   ),
+                ),
+                Divider(
+                  color: Colors.grey.shade400,
                 ),
                 Column(
                   children: orderDetails!.orderItems

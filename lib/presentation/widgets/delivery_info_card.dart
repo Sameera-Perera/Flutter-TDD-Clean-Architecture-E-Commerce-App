@@ -12,8 +12,7 @@ class DeliveryInfoCard extends StatelessWidget {
   final DeliveryInfo? deliveryInformation;
   final bool isSelected;
   const DeliveryInfoCard(
-      {Key? key, this.deliveryInformation, this.isSelected = false})
-      : super(key: key);
+      {super.key, this.deliveryInformation, this.isSelected = false});
 
   @override
   Widget build(BuildContext context) {

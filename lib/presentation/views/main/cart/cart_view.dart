@@ -10,7 +10,7 @@ import '../../../widgets/cart_item_card.dart';
 import '../../../widgets/input_form_button.dart';
 
 class CartView extends StatefulWidget {
-  const CartView({Key? key}) : super(key: key);
+  const CartView({super.key});
 
   @override
   State<CartView> createState() => _CartViewState();
@@ -27,10 +27,9 @@ class _CartViewState extends State<CartView> {
         child: Stack(
           children: [
             Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // SizedBox(
-                //   height: (MediaQuery.of(context).padding.top + 10),
-                // ),
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -44,7 +43,7 @@ class _CartViewState extends State<CartView> {
                                 Image.asset(kNoConnection),
                               if (state.failure is ServerFailure)
                                 Image.asset(kInternalServerError),
-                              const Text("Cart is Empty!"),
+                              const Center(child: Text("Cart is Empty!")),
                               SizedBox(
                                 height:
                                     MediaQuery.of(context).size.height * 0.1,
@@ -81,7 +80,7 @@ class _CartViewState extends State<CartView> {
                             if (state is CartLoading && state.cart.isEmpty) {
                               return const CartItemCard();
                             } else {
-                              if(state.cart.length<index){
+                              if (state.cart.length < index) {
                                 return const CartItemCard();
                               }
                               return CartItemCard(

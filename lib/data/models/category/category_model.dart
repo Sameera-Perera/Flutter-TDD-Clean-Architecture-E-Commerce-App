@@ -15,14 +15,10 @@ String categoryModelListToJson(List<CategoryModel> data) =>
 
 class CategoryModel extends Category {
   const CategoryModel({
-    required String id,
-    required String name,
-    required String image,
-  }) : super(
-          id: id,
-          name: name,
-          image: image,
-        );
+    required super.id,
+    required super.name,
+    required super.image,
+  });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
         id: json["_id"],

@@ -12,7 +12,7 @@ import '../../widgets/input_form_button.dart';
 import '../../widgets/input_text_form_field.dart';
 
 class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   State<SignUpScreen> createState() => _SignUpScreenState();

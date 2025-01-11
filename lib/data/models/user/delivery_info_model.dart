@@ -3,14 +3,14 @@ import 'dart:convert';
 import '../../../domain/entities/user/delivery_info.dart';
 
 DeliveryInfoModel deliveryInfoModelFromRemoteJson(String str) =>
-    DeliveryInfoModel.fromJson(json.decode(str)['data']);
+    DeliveryInfoModel.fromJson(json.decode(str));
 
 DeliveryInfoModel deliveryInfoModelFromLocalJson(String str) =>
     DeliveryInfoModel.fromJson(json.decode(str));
 
 List<DeliveryInfoModel> deliveryInfoModelListFromRemoteJson(String str) =>
     List<DeliveryInfoModel>.from(
-        json.decode(str)['data'].map((x) => DeliveryInfoModel.fromJson(x)));
+        json.decode(str).map((x) => DeliveryInfoModel.fromJson(x)));
 
 List<DeliveryInfoModel> deliveryInfoModelListFromLocalJson(String str) =>
     List<DeliveryInfoModel>.from(
@@ -24,24 +24,15 @@ String deliveryInfoModelListToJson(List<DeliveryInfoModel> data) =>
 
 class DeliveryInfoModel extends DeliveryInfo {
   const DeliveryInfoModel({
-    required String id,
-    required String firstName,
-    required String lastName,
-    required String addressLineOne,
-    required String addressLineTwo,
-    required String city,
-    required String zipCode,
-    required String contactNumber,
-  }) : super(
-          id: id,
-          firstName: firstName,
-          lastName: lastName,
-          addressLineOne: addressLineOne,
-          addressLineTwo: addressLineTwo,
-          city: city,
-          zipCode: zipCode,
-          contactNumber: contactNumber,
-        );
+    required super.id,
+    required super.firstName,
+    required super.lastName,
+    required super.addressLineOne,
+    required super.addressLineTwo,
+    required super.city,
+    required super.zipCode,
+    required super.contactNumber,
+  });
 
   factory DeliveryInfoModel.fromJson(Map<String, dynamic> json) =>
       DeliveryInfoModel(

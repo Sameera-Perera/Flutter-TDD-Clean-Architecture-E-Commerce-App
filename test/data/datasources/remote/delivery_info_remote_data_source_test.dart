@@ -25,8 +25,9 @@ void main() {
         () async {
       /// Arrange
       const fakeToken = 'fakeToken';
-      const expectedUrl = '$baseUrl/users/delivery-info';
+      const expectedUrl = '$baseUrl/delivery-info';
       final fakeResponse = fixture('delivery_info/delivery_info_response.json');
+      expect(fakeResponse, isNotEmpty);
       when(() => mockHttpClient.get(Uri.parse(expectedUrl),
               headers: any(named: 'headers')))
           .thenAnswer((_) async => http.Response(fakeResponse, 200));
@@ -48,7 +49,7 @@ void main() {
     test('should throw a ServerException on non-200 status code', () async {
       /// Arrange
       const fakeToken = 'fakeToken';
-      const expectedUrl = '$baseUrl/users/delivery-info';
+      const expectedUrl = '$baseUrl/delivery-info';
       when(() => mockHttpClient.get(Uri.parse(expectedUrl),
               headers: any(named: 'headers')))
           .thenAnswer((_) async => http.Response('Error message', 404));

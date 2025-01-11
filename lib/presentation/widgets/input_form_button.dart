@@ -1,5 +1,6 @@
 import 'package:eshop/core/constant/images.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class InputFormButton extends StatelessWidget {
   final Function() onClick;
@@ -10,14 +11,13 @@ class InputFormButton extends StatelessWidget {
   final EdgeInsets padding;
 
   const InputFormButton(
-      {Key? key,
+      {super.key,
       required this.onClick,
       this.titleText,
       this.icon,
       this.color,
       this.cornerRadius,
-      this.padding = const EdgeInsets.symmetric(horizontal: 16)})
-      : super(key: key);
+      this.padding = const EdgeInsets.symmetric(horizontal: 16)});
 
   @override
   Widget build(BuildContext context) {
@@ -25,10 +25,8 @@ class InputFormButton extends StatelessWidget {
       onPressed: onClick,
       style: ButtonStyle(
         padding: WidgetStateProperty.all<EdgeInsets>(padding),
-        maximumSize:
-            WidgetStateProperty.all<Size>(const Size(double.maxFinite, 50)),
-        minimumSize:
-            WidgetStateProperty.all<Size>(const Size(double.maxFinite, 50)),
+        maximumSize: WidgetStateProperty.all<Size>(Size(double.maxFinite, 28.sp)),
+        minimumSize: WidgetStateProperty.all<Size>(Size(double.maxFinite, 28.sp)),
         backgroundColor: WidgetStateProperty.all<Color>(
             color ?? Theme.of(context).primaryColor),
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -44,6 +42,8 @@ class InputFormButton extends StatelessWidget {
           : Image.asset(
               kFilterIcon,
               color: Colors.white,
+              height: 22.sp,
+              width: 22.sp,
             ),
     );
   }

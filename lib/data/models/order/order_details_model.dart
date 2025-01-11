@@ -6,14 +6,14 @@ import 'order_item_model.dart';
 
 List<OrderDetailsModel> orderDetailsModelListFromJson(String str) =>
     List<OrderDetailsModel>.from(
-        json.decode(str)['data'].map((x) => OrderDetailsModel.fromJson(x)));
+        json.decode(str).map((x) => OrderDetailsModel.fromJson(x)));
 
 List<OrderDetailsModel> orderDetailsModelListFromLocalJson(String str) =>
     List<OrderDetailsModel>.from(
         json.decode(str).map((x) => OrderDetailsModel.fromJson(x)));
 
 OrderDetailsModel orderDetailsModelFromJson(String str) =>
-    OrderDetailsModel.fromJson(json.decode(str)['data']);
+    OrderDetailsModel.fromJson(json.decode(str));
 
 String orderModelListToJsonBody(List<OrderDetailsModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJsonBody())));
@@ -26,16 +26,11 @@ String orderDetailsModelToJson(OrderDetailsModel data) =>
 
 class OrderDetailsModel extends OrderDetails {
   const OrderDetailsModel({
-    required String id,
-    required List<OrderItemModel> orderItems,
-    required DeliveryInfoModel deliveryInfo,
-    required num discount,
-  }) : super(
-          id: id,
-          orderItems: orderItems,
-          deliveryInfo: deliveryInfo,
-          discount: discount,
-        );
+    required super.id,
+    required List<OrderItemModel> super.orderItems,
+    required DeliveryInfoModel super.deliveryInfo,
+    required super.discount,
+  });
 
   factory OrderDetailsModel.fromJson(Map<String, dynamic> json) =>
       OrderDetailsModel(

@@ -5,11 +5,11 @@ class AlertCard extends StatelessWidget {
   final String? message;
   final Function()? onClick;
   const AlertCard({
-    Key? key,
+    super.key,
     required this.image,
     this.message,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
