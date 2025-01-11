@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:eshop/core/constant/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -43,54 +44,59 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
       ),
       body: ListView(
         children: [
-          SizedBox(
-            height: MediaQuery.sizeOf(context).width,
-            child: CarouselSlider(
-              options: CarouselOptions(
-                height: double.infinity,
-                enlargeCenterPage: true,
-                aspectRatio: 16 / 9,
-                viewportFraction: 1,
-                onPageChanged: (index, reason) {
-                  setState(() {
-                    _currentIndex = index;
-                  });
-                },
-              ),
-              items: widget.product.images.map((image) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Hero(
-                      tag: widget.product.id,
-                      child: CachedNetworkImage(
-                        imageUrl: image,
-                        imageBuilder: (context, imageProvider) => Container(
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: imageProvider,
-                              fit: BoxFit.contain,
-                              colorFilter: ColorFilter.mode(
-                                  Colors.grey.shade50.withOpacity(0.25),
-                                  BlendMode.softLight),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: kPaddingMedium
+            ),
+            child: SizedBox(
+              height: MediaQuery.sizeOf(context).width,
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  height: double.infinity,
+                  enlargeCenterPage: true,
+                  aspectRatio: 16 / 9,
+                  viewportFraction: 1,
+                  onPageChanged: (index, reason) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
+                ),
+                items: widget.product.images.map((image) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Hero(
+                        tag: widget.product.id,
+                        child: CachedNetworkImage(
+                          imageUrl: image,
+                          imageBuilder: (context, imageProvider) => Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: imageProvider,
+                                fit: BoxFit.contain,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.grey.shade50.withOpacity(0.25),
+                                    BlendMode.softLight),
+                              ),
+                            ),
+                          ),
+                          placeholder: (context, url) => Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade100,
+                            ),
+                          ),
+                          errorWidget: (context, url, error) => const Center(
+                            child: Icon(
+                              Icons.error_outline,
+                              color: Colors.grey,
                             ),
                           ),
                         ),
-                        placeholder: (context, url) => Container(
-                          decoration: BoxDecoration(
-                            color: Colors.grey.shade100,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => const Center(
-                          child: Icon(
-                            Icons.error_outline,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                );
-              }).toList(),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
             ),
           ),
           Padding(

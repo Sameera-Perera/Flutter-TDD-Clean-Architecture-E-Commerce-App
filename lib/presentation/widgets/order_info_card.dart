@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:eshop/core/constant/app_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -18,7 +19,10 @@ class OrderInfoCard extends StatelessWidget {
           title: '',
           child: Container(
             padding: const EdgeInsets.only(
-              top: 12
+              top: kPaddingMedium,
+              left: kPaddingSmall,
+              right: kPaddingSmall,
+              bottom: kPaddingSmall
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
