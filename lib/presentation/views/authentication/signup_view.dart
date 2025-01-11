@@ -1,10 +1,11 @@
-import 'package:eshop/core/constant/app_sizes.dart';
-import 'package:eshop/core/constant/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../../core/constant/app_sizes.dart';
 import '../../../core/constant/images.dart';
+import '../../../core/constant/validators.dart';
 import '../../../core/error/failures.dart';
 import '../../../core/router/app_router.dart';
 import '../../../domain/usecases/user/sign_up_usecase.dart';
@@ -73,15 +74,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.black,
                       )),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   const Text(
                     "Please use your e-mail address to crate a new account",
                     style: TextStyle(fontSize: 16, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(
-                    height: 40,
+                  SizedBox(
+                    height: 6.h,
                   ),
                   InputTextFormField(
                     controller: _firstNameController,
@@ -136,7 +137,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     onFieldSubmitted: (_) => _onSignUp(context),
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 24,
                   ),
                   InputFormButton(
                     color: Colors.black87,
