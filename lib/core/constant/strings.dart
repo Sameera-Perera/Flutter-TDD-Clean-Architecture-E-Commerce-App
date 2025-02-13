@@ -1,9 +1,9 @@
 // App
-const String appTitle = 'EShop';
+const String appTitle = 'ASGSA';
 
 // Networking and APIs
 // const String baseUrl = 'https://e-commerce-mock-api-webservice.onrender.com';
-const String baseUrl = 'http://192.168.1.43:4000';
+const String baseUrl = 'http://asgsalgeria.com/App';
 const String defaultApiKey = '';
 const String defaultSources = '';
 
