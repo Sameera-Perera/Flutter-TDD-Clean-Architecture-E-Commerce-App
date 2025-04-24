@@ -5,12 +5,12 @@ import '../../../../../core/usecases/usecase.dart';
 import '../../entities/cart/cart_item.dart';
 import '../../repositories/cart_repository.dart';
 
-class GetCachedCartUseCase implements UseCase<List<CartItem>, NoParams> {
+class GetLocalCartItemsUseCase implements UseCase<List<CartItem>, NoParams> {
   final CartRepository repository;
-  GetCachedCartUseCase(this.repository);
+  GetLocalCartItemsUseCase(this.repository);
 
   @override
   Future<Either<Failure, List<CartItem>>> call(NoParams params) async {
-    return await repository.getCachedCart();
+    return await repository.getLocalCartItems();
   }
 }

@@ -25,42 +25,43 @@ class OrderRepositoryImpl implements OrderRepository {
 
   @override
   Future<Either<Failure, OrderDetails>> addOrder(OrderDetails params) async {
-    if (await userLocalDataSource.isTokenAvailable()) {
-      final String token = await userLocalDataSource.getToken();
-      final remoteProduct = await remoteDataSource.addOrder(
-        OrderDetailsModel.fromEntity(params),
-        token,
-      );
-      return Right(remoteProduct);
-    } else {
+    if(!await networkInfo.isConnected) {
       return Left(NetworkFailure());
     }
+    final token = await userLocalDataSource.getToken();
+    if (token.isEmpty) {
+      return Left(AuthenticationFailure());
+    }
+
+    final remoteProduct = await remoteDataSource.addOrder(
+      OrderDetailsModel.fromEntity(params),
+      token,
+    );
+    return Right(remoteProduct);
   }
 
   @override
   Future<Either<Failure, List<OrderDetails>>> getRemoteOrders() async {
-    if (await networkInfo.isConnected) {
-      if (await userLocalDataSource.isTokenAvailable()) {
-        try {
-          final String token = await userLocalDataSource.getToken();
-          final remoteProduct = await remoteDataSource.getOrders(
-            token,
-          );
-          await localDataSource.saveOrders(remoteProduct);
-          return Right(remoteProduct);
-        } on Failure catch (failure) {
-          return Left(failure);
-        }
-      } else {
-        return Left(AuthenticationFailure());
-      }
-    } else {
+    if (!await networkInfo.isConnected) {
       return Left(NetworkFailure());
+    }
+    final token = await userLocalDataSource.getToken();
+    if (token.isEmpty) {
+      return Left(AuthenticationFailure());
+    }
+    try {
+      final remoteProduct = await remoteDataSource.getOrders(
+        token,
+      );
+      await localDataSource.saveOrders(remoteProduct);
+      return Right(remoteProduct);
+    } on Failure catch (failure) {
+      return Left(failure);
     }
   }
 
   @override
-  Future<Either<Failure, List<OrderDetails>>> getCachedOrders() async {
+  Future<Either<Failure, List<OrderDetails>>> getLocalOrders() async {
     try {
       final localOrders = await localDataSource.getOrders();
       return Right(localOrders);
@@ -70,7 +71,7 @@ class OrderRepositoryImpl implements OrderRepository {
   }
 
   @override
-  Future<Either<Failure, NoParams>> clearLocalOrders() async {
+  Future<Either<Failure, NoParams>> deleteLocalOrders() async {
     try {
       await localDataSource.clearOrder();
       return Right(NoParams());

@@ -22,7 +22,7 @@ void main() {
     'Should get cart item from the repository when Cart Repository add data successfully',
     () async {
       /// Arrange
-      when(() => mockProductRepository.addToCart(tCartItemModel))
+      when(() => mockProductRepository.addCartItem(tCartItemModel))
           .thenAnswer((_) async => Right(tCartItemModel));
 
       /// Act
@@ -30,7 +30,7 @@ void main() {
 
       /// Assert
       expect(result, Right(tCartItemModel));
-      verify(() => mockProductRepository.addToCart(tCartItemModel));
+      verify(() => mockProductRepository.addCartItem(tCartItemModel));
       verifyNoMoreInteractions(mockProductRepository);
     },
   );
@@ -38,7 +38,7 @@ void main() {
   test('should return a Failure from the repository', () async {
     /// Arrange
     final failure = NetworkFailure();
-    when(() => mockProductRepository.addToCart(tCartItemModel))
+    when(() => mockProductRepository.addCartItem(tCartItemModel))
         .thenAnswer((_) async => Left(failure));
 
     /// Act
@@ -47,7 +47,7 @@ void main() {
     /// Assert
     expect(result, Left(failure));
     verify(
-        () => mockProductRepository.addToCart(tCartItemModel));
+        () => mockProductRepository.addCartItem(tCartItemModel));
     verifyNoMoreInteractions(mockProductRepository);
   });
 }

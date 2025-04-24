@@ -138,7 +138,7 @@ void main() {
               .thenAnswer((_) async => [tCategoryModel]);
 
           /// Act
-          final actualResult = await repository.getCachedCategories();
+          final actualResult = await repository.getLocalCategories();
 
           /// Assert
           actualResult.fold(
@@ -156,7 +156,7 @@ void main() {
               .thenThrow(CacheFailure());
 
           /// Act
-          final actualResult = await repository.getCachedCategories();
+          final actualResult = await repository.getLocalCategories();
 
           /// Assert
           actualResult.fold(
@@ -192,7 +192,7 @@ void main() {
               .thenAnswer((_) async => [tCategoryModel]);
 
           /// Act
-          final actualResult = await repository.getCachedCategories();
+          final actualResult = await repository.getLocalCategories();
 
           /// Assert
           actualResult.fold(
@@ -210,7 +210,7 @@ void main() {
               .thenThrow(CacheFailure());
 
           /// Act
-          final actualResult = await repository.getCachedCategories();
+          final actualResult = await repository.getLocalCategories();
 
           /// Assert
           actualResult.fold(

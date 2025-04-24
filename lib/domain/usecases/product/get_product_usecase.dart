@@ -14,7 +14,7 @@ class GetProductUseCase
   @override
   Future<Either<Failure, ProductResponse>> call(
       FilterProductParams params) async {
-    return await repository.getProducts(params);
+    return await repository.getRemoteProducts(params);
   }
 }
 

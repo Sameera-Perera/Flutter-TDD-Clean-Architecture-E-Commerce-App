@@ -1,5 +1,4 @@
-import 'package:eshop/presentation/blocs/home/navbar_cubit.dart';
-import 'package:eshop/presentation/blocs/order/order_fetch/order_fetch_cubit.dart';
+import 'package:eshop/core/constant/validators.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,6 +9,8 @@ import '../../../core/router/app_router.dart';
 import '../../../domain/usecases/user/sign_in_usecase.dart';
 import '../../blocs/cart/cart_bloc.dart';
 import '../../blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
+import '../../blocs/home/navbar_cubit.dart';
+import '../../blocs/order/order_fetch/order_fetch_cubit.dart';
 import '../../blocs/user/user_bloc.dart';
 import '../../widgets/input_form_button.dart';
 import '../../widgets/input_text_form_field.dart';
@@ -87,12 +88,8 @@ class _SignInViewState extends State<SignInView> {
                     controller: emailController,
                     textInputAction: TextInputAction.next,
                     hint: 'Email',
-                    validation: (String? val) {
-                      if (val == null || val.isEmpty) {
-                        return 'This field can\'t be empty';
-                      }
-                      return null;
-                    },
+                    validation: (String? val) =>
+                        Validators.validateField(val, "Email"),
                   ),
                   const SizedBox(
                     height: 12,
@@ -102,20 +99,9 @@ class _SignInViewState extends State<SignInView> {
                     textInputAction: TextInputAction.go,
                     hint: 'Password',
                     isSecureField: true,
-                    validation: (String? val) {
-                      if (val == null || val.isEmpty) {
-                        return 'This field can\'t be empty';
-                      }
-                      return null;
-                    },
-                    onFieldSubmitted: (_) {
-                      if (_formKey.currentState!.validate()) {
-                        context.read<UserBloc>().add(SignInUser(SignInParams(
-                              username: emailController.text,
-                              password: passwordController.text,
-                            )));
-                      }
-                    },
+                    validation: (String? val) =>
+                        Validators.validateField(val, "Password"),
+                    onFieldSubmitted: (_) => _onSignIn(context),
                   ),
                   const SizedBox(
                     height: 10,
@@ -139,14 +125,7 @@ class _SignInViewState extends State<SignInView> {
                   ),
                   InputFormButton(
                     color: Colors.black87,
-                    onClick: () {
-                      if (_formKey.currentState!.validate()) {
-                        context.read<UserBloc>().add(SignInUser(SignInParams(
-                              username: emailController.text,
-                              password: passwordController.text,
-                            )));
-                      }
-                    },
+                    onClick: () => _onSignIn(context),
                     titleText: 'Sign In',
                   ),
                   const SizedBox(
@@ -194,5 +173,16 @@ class _SignInViewState extends State<SignInView> {
         ),
       ),
     );
+  }
+
+  void _onSignIn(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<UserBloc>().add(
+            SignInUser(SignInParams(
+              username: emailController.text,
+              password: passwordController.text,
+            )),
+          );
+    }
   }
 }

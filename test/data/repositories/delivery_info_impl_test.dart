@@ -168,7 +168,7 @@ void main() {
                 .thenAnswer((_) async => [tDeliveryInfoModel]);
 
             /// Act
-            final actualResult = await repository.getCachedDeliveryInfo();
+            final actualResult = await repository.getLocalDeliveryInfo();
 
             /// Assert
             actualResult.fold(
@@ -186,7 +186,7 @@ void main() {
                 .thenThrow(CacheFailure());
 
             /// Act
-            final actualResult = await repository.getCachedDeliveryInfo();
+            final actualResult = await repository.getLocalDeliveryInfo();
 
             /// Assert
             actualResult.fold(
@@ -411,7 +411,7 @@ void main() {
                 .thenAnswer((_) => Future<void>.value());
 
             /// Act
-            final result = await repository.clearLocalDeliveryInfo();
+            final result = await repository.deleteLocalDeliveryInfo();
 
             /// Assert
             result.fold(
@@ -429,7 +429,7 @@ void main() {
                 .thenAnswer((_) => Future<void>.value());
 
             /// Act
-            await repository.clearLocalDeliveryInfo();
+            await repository.deleteLocalDeliveryInfo();
 
             /// Assert
             verify(() => mockLocalDataSource.clearDeliveryInfo());
@@ -444,7 +444,7 @@ void main() {
                 .thenThrow(CacheFailure());
 
             /// Act
-            final result = await repository.clearLocalDeliveryInfo();
+            final result = await repository.deleteLocalDeliveryInfo();
 
             /// Assert
             result.fold(
@@ -467,7 +467,7 @@ void main() {
               .thenAnswer((_) async => [tDeliveryInfoModel]);
 
           /// Act
-          final result = await repository.getCachedDeliveryInfo();
+          final result = await repository.getLocalDeliveryInfo();
 
           /// Assert
           verifyZeroInteractions(mockRemoteDataSource);
@@ -487,7 +487,7 @@ void main() {
               .thenAnswer((_) async => [tDeliveryInfoModel]);
 
           /// Act
-          final actualResult = await repository.getCachedDeliveryInfo();
+          final actualResult = await repository.getLocalDeliveryInfo();
 
           /// Assert
           actualResult.fold(
@@ -505,7 +505,7 @@ void main() {
               .thenThrow(CacheFailure());
 
           /// Act
-          final actualResult = await repository.getCachedDeliveryInfo();
+          final actualResult = await repository.getLocalDeliveryInfo();
 
           /// Assert
           actualResult.fold(

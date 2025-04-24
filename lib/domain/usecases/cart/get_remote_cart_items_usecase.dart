@@ -5,12 +5,12 @@ import '../../../../../core/usecases/usecase.dart';
 import '../../entities/cart/cart_item.dart';
 import '../../repositories/cart_repository.dart';
 
-class SyncCartUseCase implements UseCase<List<CartItem>, NoParams> {
+class GetRemoteCardItemsUseCase implements UseCase<List<CartItem>, NoParams> {
   final CartRepository repository;
-  SyncCartUseCase(this.repository);
+  GetRemoteCardItemsUseCase(this.repository);
 
   @override
   Future<Either<Failure, List<CartItem>>> call(NoParams params) async {
-    return await repository.syncCart();
+    return await repository.getRemoteCartItems();
   }
 }

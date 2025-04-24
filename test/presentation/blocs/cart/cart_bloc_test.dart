@@ -3,22 +3,22 @@ import 'package:dartz/dartz.dart';
 import 'package:eshop/core/error/failures.dart';
 import 'package:eshop/core/usecases/usecase.dart';
 import 'package:eshop/domain/usecases/cart/add_cart_item_usecase.dart';
-import 'package:eshop/domain/usecases/cart/clear_cart_usecase.dart';
-import 'package:eshop/domain/usecases/cart/get_cached_cart_usecase.dart';
-import 'package:eshop/domain/usecases/cart/sync_cart_usecase.dart';
+import 'package:eshop/domain/usecases/cart/delete_cart_usecase.dart';
+import 'package:eshop/domain/usecases/cart/get_local_cart_items_usecase.dart';
+import 'package:eshop/domain/usecases/cart/get_remote_cart_items_usecase.dart';
 import 'package:eshop/presentation/blocs/cart/cart_bloc.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import '../../../fixtures/constant_objects.dart';
 
-class MockGetCachedCartUseCase extends Mock implements GetCachedCartUseCase {}
+class MockGetCachedCartUseCase extends Mock implements GetLocalCartItemsUseCase {}
 
 class MockAddCartUseCase extends Mock implements AddCartUseCase {}
 
-class MockSyncCartUseCase extends Mock implements SyncCartUseCase {}
+class MockSyncCartUseCase extends Mock implements GetRemoteCardItemsUseCase {}
 
-class MockClearCartUseCase extends Mock implements ClearCartUseCase {}
+class MockClearCartUseCase extends Mock implements DeleteCartUseCase {}
 
 void main() {
   group('CartBloc', () {

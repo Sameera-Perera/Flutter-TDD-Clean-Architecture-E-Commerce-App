@@ -4,12 +4,12 @@ import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
 import '../../repositories/order_repository.dart';
 
-class ClearLocalOrdersUseCase implements UseCase<NoParams, NoParams> {
+class DeleteLocalOrdersUseCase implements UseCase<NoParams, NoParams> {
   final OrderRepository repository;
-  ClearLocalOrdersUseCase(this.repository);
+  DeleteLocalOrdersUseCase(this.repository);
 
   @override
   Future<Either<Failure, NoParams>> call(NoParams params) async {
-    return await repository.clearLocalOrders();
+    return await repository.deleteLocalOrders();
   }
 }

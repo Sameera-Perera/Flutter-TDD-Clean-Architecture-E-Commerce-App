@@ -23,7 +23,7 @@ void main() {
     () async {
       /// Arrange
       when(() => mockProductRepository
-              .getProducts(const FilterProductParams()))
+              .getRemoteProducts(const FilterProductParams()))
           .thenAnswer((_) async => Right(tProductResponseModel));
 
       /// Act
@@ -32,7 +32,7 @@ void main() {
       /// Assert
       expect(result, Right(tProductResponseModel));
       verify(() =>
-          mockProductRepository.getProducts(const FilterProductParams()));
+          mockProductRepository.getRemoteProducts(const FilterProductParams()));
       verifyNoMoreInteractions(mockProductRepository);
     },
   );
@@ -40,7 +40,7 @@ void main() {
   test('should return a Failure from the repository', () async {
     /// Arrange
     final failure = NetworkFailure();
-    when(() => mockProductRepository.getProducts(
+    when(() => mockProductRepository.getRemoteProducts(
         const FilterProductParams())).thenAnswer((_) async => Left(failure));
 
     /// Act
@@ -49,7 +49,7 @@ void main() {
     /// Assert
     expect(result, Left(failure));
     verify(() =>
-        mockProductRepository.getProducts(const FilterProductParams()));
+        mockProductRepository.getRemoteProducts(const FilterProductParams()));
     verifyNoMoreInteractions(mockProductRepository);
   });
 }

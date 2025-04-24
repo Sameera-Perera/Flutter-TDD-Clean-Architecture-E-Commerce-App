@@ -1,8 +1,8 @@
-import 'package:eshop/domain/usecases/delivery_info/clear_local_delivery_info_usecase.dart';
+import 'package:eshop/domain/usecases/delivery_info/delete_local_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/delivery_info/edit_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/delivery_info/get_selected_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/delivery_info/select_delivery_info_usecase.dart';
-import 'package:eshop/domain/usecases/order/clear_local_order_usecase.dart';
+import 'package:eshop/domain/usecases/order/delete_local_order_usecase.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
@@ -34,20 +34,20 @@ import '../../domain/repositories/order_repository.dart';
 import '../../domain/repositories/product_repository.dart';
 import '../../domain/repositories/user_repository.dart';
 import '../../domain/usecases/cart/add_cart_item_usecase.dart';
-import '../../domain/usecases/cart/clear_cart_usecase.dart';
-import '../../domain/usecases/cart/get_cached_cart_usecase.dart';
-import '../../domain/usecases/cart/sync_cart_usecase.dart';
+import '../../domain/usecases/cart/delete_cart_usecase.dart';
+import '../../domain/usecases/cart/get_local_cart_items_usecase.dart';
+import '../../domain/usecases/cart/get_remote_cart_items_usecase.dart';
 import '../../domain/usecases/category/filter_category_usecase.dart';
-import '../../domain/usecases/category/get_cached_category_usecase.dart';
+import '../../domain/usecases/category/get_local_category_usecase.dart';
 import '../../domain/usecases/category/get_remote_category_usecase.dart';
 import '../../domain/usecases/delivery_info/add_dilivey_info_usecase.dart';
-import '../../domain/usecases/delivery_info/get_cached_delivery_info_usecase.dart';
+import '../../domain/usecases/delivery_info/get_local_delivery_info_usecase.dart';
 import '../../domain/usecases/delivery_info/get_remote_delivery_info_usecase.dart';
 import '../../domain/usecases/order/add_order_usecase.dart';
-import '../../domain/usecases/order/get_cached_orders_usecase.dart';
+import '../../domain/usecases/order/get_local_orders_usecase.dart';
 import '../../domain/usecases/order/get_remote_orders_usecase.dart';
 import '../../domain/usecases/product/get_product_usecase.dart';
-import '../../domain/usecases/user/get_cached_user_usecase.dart';
+import '../../domain/usecases/user/get_local_user_usecase.dart';
 import '../../domain/usecases/user/sign_in_usecase.dart';
 import '../../domain/usecases/user/sign_out_usecase.dart';
 import '../../domain/usecases/user/sign_up_usecase.dart';
@@ -94,7 +94,7 @@ Future<void> init() async {
   );
   // Use cases
   sl.registerLazySingleton(() => GetRemoteCategoryUseCase(sl()));
-  sl.registerLazySingleton(() => GetCachedCategoryUseCase(sl()));
+  sl.registerLazySingleton(() => GetLocalCategoryUseCase(sl()));
   sl.registerLazySingleton(() => FilterCategoryUseCase(sl()));
   // Repository
   sl.registerLazySingleton<CategoryRepository>(
@@ -118,10 +118,10 @@ Future<void> init() async {
     () => CartBloc(sl(), sl(), sl(), sl()),
   );
   // Use cases
-  sl.registerLazySingleton(() => GetCachedCartUseCase(sl()));
+  sl.registerLazySingleton(() => GetLocalCartItemsUseCase(sl()));
   sl.registerLazySingleton(() => AddCartUseCase(sl()));
-  sl.registerLazySingleton(() => SyncCartUseCase(sl()));
-  sl.registerLazySingleton(() => ClearCartUseCase(sl()));
+  sl.registerLazySingleton(() => GetRemoteCardItemsUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteCartUseCase(sl()));
   // Repository
   sl.registerLazySingleton<CartRepository>(
     () => CartRepositoryImpl(
@@ -149,12 +149,12 @@ Future<void> init() async {
   );
   // Use cases
   sl.registerLazySingleton(() => GetRemoteDeliveryInfoUseCase(sl()));
-  sl.registerLazySingleton(() => GetCachedDeliveryInfoUseCase(sl()));
+  sl.registerLazySingleton(() => GetLocalDeliveryInfoUseCase(sl()));
   sl.registerLazySingleton(() => AddDeliveryInfoUseCase(sl()));
   sl.registerLazySingleton(() => EditDeliveryInfoUseCase(sl()));
   sl.registerLazySingleton(() => SelectDeliveryInfoUseCase(sl()));
   sl.registerLazySingleton(() => GetSelectedDeliveryInfoInfoUseCase(sl()));
-  sl.registerLazySingleton(() => ClearLocalDeliveryInfoUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteLocalDeliveryInfoUseCase(sl()));
   // Repository
   sl.registerLazySingleton<DeliveryInfoRepository>(
     () => DeliveryInfoRepositoryImpl(
@@ -183,8 +183,8 @@ Future<void> init() async {
   // Use cases
   sl.registerLazySingleton(() => AddOrderUseCase(sl()));
   sl.registerLazySingleton(() => GetRemoteOrdersUseCase(sl()));
-  sl.registerLazySingleton(() => GetCachedOrdersUseCase(sl()));
-  sl.registerLazySingleton(() => ClearLocalOrdersUseCase(sl()));
+  sl.registerLazySingleton(() => GetLocalOrdersUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteLocalOrdersUseCase(sl()));
   // Repository
   sl.registerLazySingleton<OrderRepository>(
     () => OrderRepositoryImpl(
@@ -208,7 +208,7 @@ Future<void> init() async {
     () => UserBloc(sl(), sl(), sl(), sl()),
   );
   // Use cases
-  sl.registerLazySingleton(() => GetCachedUserUseCase(sl()));
+  sl.registerLazySingleton(() => GetLocalUserUseCase(sl()));
   sl.registerLazySingleton(() => SignInUseCase(sl()));
   sl.registerLazySingleton(() => SignUpUseCase(sl()));
   sl.registerLazySingleton(() => SignOutUseCase(sl()));

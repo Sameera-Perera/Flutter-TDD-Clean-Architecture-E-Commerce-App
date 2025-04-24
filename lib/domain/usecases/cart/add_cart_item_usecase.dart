@@ -11,6 +11,6 @@ class AddCartUseCase implements UseCase<CartItem, CartItem> {
 
   @override
   Future<Either<Failure, CartItem>> call(CartItem params) async {
-    return await repository.addToCart(params);
+    return await repository.addCartItem(params);
   }
 }

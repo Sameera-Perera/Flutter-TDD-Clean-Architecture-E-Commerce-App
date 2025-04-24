@@ -1,18 +1,18 @@
 import 'package:bloc/bloc.dart';
-import 'package:eshop/domain/usecases/order/clear_local_order_usecase.dart';
+import 'package:eshop/domain/usecases/order/delete_local_order_usecase.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/usecases/usecase.dart';
 import '../../../../domain/entities/order/order_details.dart';
-import '../../../../domain/usecases/order/get_cached_orders_usecase.dart';
+import '../../../../domain/usecases/order/get_local_orders_usecase.dart';
 import '../../../../domain/usecases/order/get_remote_orders_usecase.dart';
 
 part 'order_fetch_state.dart';
 
 class OrderFetchCubit extends Cubit<OrderFetchState> {
   final GetRemoteOrdersUseCase _getOrdersUseCase;
-  final GetCachedOrdersUseCase _getCachedOrdersUseCase;
-  final ClearLocalOrdersUseCase _clearLocalOrdersUseCase;
+  final GetLocalOrdersUseCase _getCachedOrdersUseCase;
+  final DeleteLocalOrdersUseCase _clearLocalOrdersUseCase;
   OrderFetchCubit(this._getOrdersUseCase, this._getCachedOrdersUseCase,
       this._clearLocalOrdersUseCase)
       : super(const OrderFetchInitial([]));

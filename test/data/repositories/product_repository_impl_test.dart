@@ -86,7 +86,7 @@ void main() {
 
           /// Act
           final actualResult =
-              await repository.getProducts(const FilterProductParams());
+              await repository.getRemoteProducts(const FilterProductParams());
 
           /// Assert
           actualResult.fold(
@@ -111,7 +111,7 @@ void main() {
               .thenAnswer((invocation) => Future<void>.value());
 
           /// Act
-          await repository.getProducts(const FilterProductParams());
+          await repository.getRemoteProducts(const FilterProductParams());
 
           /// Assert
           verify(() =>
@@ -130,7 +130,7 @@ void main() {
 
           /// Act
           final result =
-              await repository.getProducts(const FilterProductParams());
+              await repository.getRemoteProducts(const FilterProductParams());
 
           /// Assert
           verify(() =>
@@ -151,7 +151,7 @@ void main() {
 
           /// Act
           final result =
-              await repository.getProducts(const FilterProductParams());
+              await repository.getRemoteProducts(const FilterProductParams());
 
           /// Assert
           verifyZeroInteractions(mockRemoteDataSource);
@@ -169,7 +169,7 @@ void main() {
 
           /// Act
           final result =
-              await repository.getProducts(const FilterProductParams());
+              await repository.getRemoteProducts(const FilterProductParams());
 
           /// Assert
           verifyZeroInteractions(mockRemoteDataSource);

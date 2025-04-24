@@ -4,12 +4,12 @@ import '../../../../../core/error/failures.dart';
 import '../../../../../core/usecases/usecase.dart';
 import '../../repositories/cart_repository.dart';
 
-class ClearCartUseCase implements UseCase<bool, NoParams> {
+class DeleteCartUseCase implements UseCase<bool, NoParams> {
   final CartRepository repository;
-  ClearCartUseCase(this.repository);
+  DeleteCartUseCase(this.repository);
 
   @override
   Future<Either<Failure, bool>> call(NoParams params) async {
-    return await repository.clearCart();
+    return await repository.deleteCart();
   }
 }

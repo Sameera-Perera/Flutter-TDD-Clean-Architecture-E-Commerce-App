@@ -2,19 +2,19 @@ import 'package:dartz/dartz.dart';
 import 'package:eshop/core/error/failures.dart';
 import 'package:eshop/core/usecases/usecase.dart';
 import 'package:eshop/domain/repositories/cart_repository.dart';
-import 'package:eshop/domain/usecases/cart/clear_cart_usecase.dart';
+import 'package:eshop/domain/usecases/cart/delete_cart_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockCartRepository extends Mock implements CartRepository {}
 
 void main() {
-  late ClearCartUseCase usecase;
+  late DeleteCartUseCase usecase;
   late MockCartRepository mockProductRepository;
 
   setUp(() {
     mockProductRepository = MockCartRepository();
-    usecase = ClearCartUseCase(mockProductRepository);
+    usecase = DeleteCartUseCase(mockProductRepository);
   });
 
   test(

@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:eshop/core/error/failures.dart';
 import 'package:eshop/core/usecases/usecase.dart';
 import 'package:eshop/domain/repositories/cart_repository.dart';
-import 'package:eshop/domain/usecases/cart/sync_cart_usecase.dart';
+import 'package:eshop/domain/usecases/cart/get_remote_cart_items_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -11,19 +11,19 @@ import '../../../fixtures/constant_objects.dart';
 class MockCartRepository extends Mock implements CartRepository {}
 
 void main() {
-  late SyncCartUseCase usecase;
+  late GetRemoteCardItemsUseCase usecase;
   late MockCartRepository mockProductRepository;
 
   setUp(() {
     mockProductRepository = MockCartRepository();
-    usecase = SyncCartUseCase(mockProductRepository);
+    usecase = GetRemoteCardItemsUseCase(mockProductRepository);
   });
 
   test(
     'Should get cart item from the repository when Cart Repository add data successfully',
         () async {
       /// Arrange
-      when(() => mockProductRepository.syncCart())
+      when(() => mockProductRepository.getRemoteCartItems())
           .thenAnswer((_) async => Right([tCartItemModel]));
 
       /// Act
@@ -34,7 +34,7 @@ void main() {
             (failure) => fail('Test Fail!'),
             (cart) => expect(cart, [tCartItemModel]),
       );
-      verify(() => mockProductRepository.syncCart());
+      verify(() => mockProductRepository.getRemoteCartItems());
       verifyNoMoreInteractions(mockProductRepository);
     },
   );
@@ -42,7 +42,7 @@ void main() {
   test('should return a Failure from the repository', () async {
     /// Arrange
     final failure = NetworkFailure();
-    when(() => mockProductRepository.syncCart())
+    when(() => mockProductRepository.getRemoteCartItems())
         .thenAnswer((_) async => Left(failure));
 
     /// Act
@@ -50,7 +50,7 @@ void main() {
 
     /// Assert
     expect(result, Left(failure));
-    verify(() => mockProductRepository.syncCart());
+    verify(() => mockProductRepository.getRemoteCartItems());
     verifyNoMoreInteractions(mockProductRepository);
   });
 }

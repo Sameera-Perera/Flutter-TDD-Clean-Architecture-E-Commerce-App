@@ -5,12 +5,12 @@ import '../../../../../core/usecases/usecase.dart';
 import '../../entities/category/category.dart';
 import '../../repositories/category_repository.dart';
 
-class GetCachedCategoryUseCase implements UseCase<List<Category>, NoParams> {
+class GetLocalCategoryUseCase implements UseCase<List<Category>, NoParams> {
   final CategoryRepository repository;
-  GetCachedCategoryUseCase(this.repository);
+  GetLocalCategoryUseCase(this.repository);
 
   @override
   Future<Either<Failure, List<Category>>> call(NoParams params) async {
-    return await repository.getCachedCategories();
+    return await repository.getLocalCategories();
   }
 }
