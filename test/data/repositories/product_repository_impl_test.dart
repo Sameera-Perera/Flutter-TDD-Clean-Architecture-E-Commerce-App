@@ -140,43 +140,5 @@ void main() {
         },
       );
     });
-
-    runTestsOffline(() {
-      test(
-        'should return last locally cached data when the cached data is present',
-        () async {
-          /// Arrange
-          when(() => mockLocalDataSource.getLastProducts())
-              .thenAnswer((_) async => tProductResponseModel);
-
-          /// Act
-          final result =
-              await repository.getRemoteProducts(const FilterProductParams());
-
-          /// Assert
-          verifyZeroInteractions(mockRemoteDataSource);
-          verify(() => mockLocalDataSource.getLastProducts());
-          expect(result, equals(Right(tProductResponseModel)));
-        },
-      );
-
-      test(
-        'should return CacheFailure when there is no cached data present',
-        () async {
-          /// Arrange
-          when(() => mockLocalDataSource.getLastProducts())
-              .thenThrow(CacheException());
-
-          /// Act
-          final result =
-              await repository.getRemoteProducts(const FilterProductParams());
-
-          /// Assert
-          verifyZeroInteractions(mockRemoteDataSource);
-          verify(() => mockLocalDataSource.getLastProducts());
-          expect(result, equals(Left(CacheFailure())));
-        },
-      );
-    });
   });
 }

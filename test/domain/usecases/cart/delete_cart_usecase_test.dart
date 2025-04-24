@@ -21,7 +21,7 @@ void main() {
     'Should get clea item from the repository when Cart Repository clear data successfully',
     () async {
       /// Arrange
-      when(() => mockProductRepository.clearCart())
+      when(() => mockProductRepository.deleteCart())
           .thenAnswer((_) async => const Right(true));
 
       /// Act
@@ -29,7 +29,7 @@ void main() {
 
       /// Assert
       expect(result, const Right(true));
-      verify(() => mockProductRepository.clearCart());
+      verify(() => mockProductRepository.deleteCart());
       verifyNoMoreInteractions(mockProductRepository);
     },
   );
@@ -37,7 +37,7 @@ void main() {
   test('should return a Failure from the repository', () async {
     /// Arrange
     final failure = NetworkFailure();
-    when(() => mockProductRepository.clearCart())
+    when(() => mockProductRepository.deleteCart())
         .thenAnswer((_) async => Left(failure));
 
     /// Act
@@ -45,7 +45,7 @@ void main() {
 
     /// Assert
     expect(result, Left(failure));
-    verify(() => mockProductRepository.clearCart());
+    verify(() => mockProductRepository.deleteCart());
     verifyNoMoreInteractions(mockProductRepository);
   });
 }

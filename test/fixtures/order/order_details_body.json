@@ -1,14 +1,14 @@
 {
-  "_id":"1",
-  "orderItems":[
+  "_id": "1",
+  "orderItems": [
     {
-      "_id":"1",
-      "product":"1",
-      "priceTag":"1",
-      "price":100,
-      "quantity":1
+      "_id": "651301997eae44a63472d728",
+      "product": "64eb722a41cb9b05eb4420b7",
+      "priceTag": "64eb728341cb9b05eb4420ba",
+      "price": 50.99,
+      "quantity": 1
     }
   ],
-  "deliveryInfo":"1",
-  "discount":0
+  "deliveryInfo": "1",
+  "discount": 0
 }

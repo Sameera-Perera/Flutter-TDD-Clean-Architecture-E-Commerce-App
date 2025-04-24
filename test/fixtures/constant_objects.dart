@@ -15,14 +15,21 @@ import 'package:eshop/domain/usecases/user/sign_up_usecase.dart';
 
 //products
 final tProductModel = ProductModel(
-  id: "1",
-  name: "name",
-  description: "description",
-  priceTags: [PriceTagModel(id: "1", name: "name", price: 100)],
-  categories: const [CategoryModel(id: "1", name: "name", image: "image")],
-  images: const ["image"],
-  createdAt: DateTime(2000),
-  updatedAt: DateTime(2000),
+    id: "64eb722a41cb9b05eb4420b7",
+    name: "Asus Gaming Mouse",
+    description: "Text description",
+    priceTags: [tPriceTagModel],
+    categories: const [tCategoryModel],
+    images: const [
+      "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/vxyyemcdwcuoooyejehj.jpg",
+      "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/vqiw6cswpnzhgryd3s1l.jpg",
+      "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/tkanjwktt2t0qvybk5xf.jpg",
+      "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/yjxkgevogpaim02wonks.jpg",
+      "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/m2bb9pzzobynrpyo9ike.jpg",
+      "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/xhojjofgfyfpbjwo2vox.jpg"
+    ],
+    createdAt: DateTime.parse("2023-08-27T15:56:26.504Z"),
+    updatedAt: DateTime.parse("2023-08-27T16:19:16.683Z"),
 );
 
 final tProductModelList = [tProductModel, tProductModel];
@@ -45,7 +52,11 @@ final tProductResponseModel = ProductResponseModel(
 );
 
 //price tag
-final tPriceTagModel = PriceTagModel(id: "1", name: "name", price: 100);
+final tPriceTagModel = PriceTagModel(
+  id: "64eb728341cb9b05eb4420ba",
+  name: "White",
+  price: 50.99,
+);
 
 //cart
 final tCartItemModel = CartItemModel(
@@ -56,21 +67,21 @@ final tCartItemModel = CartItemModel(
 
 //category
 const tCategoryModel = CategoryModel(
-  id: "1",
-  name: "name",
-  image: "image",
+  id: "64cecb613357eaec7b1ab31b",
+  name: "Headphone",
+  image: "https://res.cloudinary.com/dhyttttax/image/upload/v1693148015/category/headphone_pdqwo2.jpg",
 );
 
 // delivery info
 const tDeliveryInfoModel = DeliveryInfoModel(
   id: '1',
-  firstName: 'firstName',
-  lastName: 'lastName',
-  addressLineOne: 'addressLineOne',
-  addressLineTwo: 'addressLineTwo',
-  city: 'city',
-  zipCode: 'zipCode',
-  contactNumber: 'contactNumber',
+  firstName: 'Jon',
+  lastName: 'Perera',
+  addressLineOne: '23/1 Main Road',
+  addressLineTwo: 'Navinna',
+  city: 'Mahragama',
+  zipCode: '10800',
+  contactNumber: '0779125803',
 );
 
 // order details
@@ -83,10 +94,10 @@ final tOrderDetailsModel = OrderDetailsModel(
 
 // order item
 final tOrderItemModel = OrderItemModel(
-  id: '1',
+  id: '651301997eae44a63472d728',
   product: tProductModel,
   priceTag: tPriceTagModel,
-  price: 100,
+  price: 50.99,
   quantity: 1,
 );
 
@@ -103,4 +114,8 @@ const tAuthenticationResponseModel =
     AuthenticationResponseModel(token: 'token', user: tUserModel);
 //params
 const tSignInParams = SignInParams(username: 'username', password: 'password');
-const tSignUpParams = SignUpParams(firstName: 'firstName', lastName: 'lastName', email: 'email', password: 'password');
+const tSignUpParams = SignUpParams(
+    firstName: 'firstName',
+    lastName: 'lastName',
+    email: 'email',
+    password: 'password');

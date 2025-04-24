@@ -59,10 +59,11 @@ class OrderDetailsModel extends OrderDetails {
 
   factory OrderDetailsModel.fromEntity(OrderDetails entity) =>
       OrderDetailsModel(
-          id: entity.id,
-          orderItems: entity.orderItems
-              .map((orderItem) => OrderItemModel.fromEntity(orderItem))
-              .toList(),
-          deliveryInfo: DeliveryInfoModel.fromEntity(entity.deliveryInfo),
-          discount: entity.discount);
+        id: entity.id,
+        orderItems: entity.orderItems
+            .map((orderItem) => OrderItemModel.fromEntity(orderItem))
+            .toList(),
+        deliveryInfo: DeliveryInfoModel.fromEntity(entity.deliveryInfo),
+        discount: entity.discount,
+      );
 }
