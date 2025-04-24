@@ -1,7 +1,11 @@
-import 'category.dart';
+import 'package:equatable/equatable.dart';
+import 'package:eshop/domain/entities/category/category.dart';
 
-class CategoryResponse {
+class CategoryResponse extends Equatable {
   final List<Category> categories;
 
-  CategoryResponse({required this.categories});
+  const CategoryResponse({required this.categories});
+
+  @override
+  List<Object?> get props => [categories];
 }

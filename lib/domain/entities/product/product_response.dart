@@ -1,9 +1,19 @@
-import 'pagination_meta_data.dart';
-import 'product.dart';
+import 'package:equatable/equatable.dart';
+import 'package:eshop/domain/entities/product/pagination_meta_data.dart';
+import 'package:eshop/domain/entities/product/product.dart';
 
-class ProductResponse {
+class ProductResponse extends Equatable {
   final List<Product> products;
   final PaginationMetaData paginationMetaData;
 
-  ProductResponse({required this.products, required this.paginationMetaData});
+  const ProductResponse({
+    required this.products,
+    required this.paginationMetaData,
+  });
+
+  @override
+  List<Object?> get props => [
+        products,
+        paginationMetaData,
+      ];
 }
