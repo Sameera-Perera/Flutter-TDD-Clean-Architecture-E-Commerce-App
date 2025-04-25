@@ -1,13 +1,12 @@
+import 'package:eshop/core/constant/images.dart';
+import 'package:eshop/core/error/failures.dart';
+import 'package:eshop/core/router/app_router.dart';
+import 'package:eshop/domain/entities/cart/cart_item.dart';
+import 'package:eshop/presentation/blocs/cart/cart_bloc.dart';
+import 'package:eshop/presentation/widgets/cart_item_card.dart';
+import 'package:eshop/presentation/widgets/input_form_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../core/constant/images.dart';
-import '../../../../core/error/failures.dart';
-import '../../../../core/router/app_router.dart';
-import '../../../../domain/entities/cart/cart_item.dart';
-import '../../../blocs/cart/cart_bloc.dart';
-import '../../../widgets/cart_item_card.dart';
-import '../../../widgets/input_form_button.dart';
 
 class CartView extends StatefulWidget {
   const CartView({super.key});
@@ -150,8 +149,9 @@ class _CartViewState extends State<CartView> {
                           padding: EdgeInsets.zero,
                           onClick: () {
                             Navigator.of(context).pushNamed(
-                                AppRouter.orderCheckout,
-                                arguments: state.cart);
+                              AppRouter.orderCheckout,
+                              arguments: state.cart,
+                            );
                           },
                           titleText: 'Checkout',
                         ),

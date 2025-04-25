@@ -93,10 +93,15 @@ class CartItemCard extends StatelessWidget {
                             padding: const EdgeInsets.all(24.0),
                             child: CachedNetworkImage(
                               imageUrl: cartItem!.product.images.first,
-                              placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator()),
+                              placeholder: (context, url) => Container(
+                                color: Colors.white,
+                              ),
                               errorWidget: (context, url, error) =>
-                                  const Center(child: Icon(Icons.error)),
+                                  const Center(
+                                child: Icon(
+                                  Icons.error,
+                                ),
+                              ),
                             ),
                           ),
                   ),
