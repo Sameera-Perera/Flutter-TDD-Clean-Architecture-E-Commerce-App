@@ -1,10 +1,10 @@
 {
   "_id": "1",
-  "firstName": "firstName",
-  "lastName": "lastName",
-  "addressLineOne": "addressLineOne",
-  "addressLineTwo": "addressLineTwo",
-  "city": "city",
-  "zipCode": "zipCode",
-  "contactNumber": "contactNumber"
+  "firstName": "Jon",
+  "lastName": "Perera",
+  "addressLineOne": "23/1 Main Road",
+  "addressLineTwo": "Navinna",
+  "city": "Mahragama",
+  "zipCode": "10800",
+  "contactNumber": "0779125803"
 }

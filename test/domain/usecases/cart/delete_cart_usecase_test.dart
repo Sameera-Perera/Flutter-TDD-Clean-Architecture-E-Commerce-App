@@ -2,34 +2,34 @@ import 'package:dartz/dartz.dart';
 import 'package:eshop/core/error/failures.dart';
 import 'package:eshop/core/usecases/usecase.dart';
 import 'package:eshop/domain/repositories/cart_repository.dart';
-import 'package:eshop/domain/usecases/cart/clear_cart_usecase.dart';
+import 'package:eshop/domain/usecases/cart/delete_cart_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 
 class MockCartRepository extends Mock implements CartRepository {}
 
 void main() {
-  late ClearCartUseCase usecase;
+  late DeleteCartUseCase usecase;
   late MockCartRepository mockProductRepository;
 
   setUp(() {
     mockProductRepository = MockCartRepository();
-    usecase = ClearCartUseCase(mockProductRepository);
+    usecase = DeleteCartUseCase(mockProductRepository);
   });
 
   test(
     'Should get clea item from the repository when Cart Repository clear data successfully',
     () async {
       /// Arrange
-      when(() => mockProductRepository.clearCart())
-          .thenAnswer((_) async => const Right(true));
+      when(() => mockProductRepository.deleteCart())
+          .thenAnswer((_) async => Right(NoParams()));
 
       /// Act
       final result = await usecase(NoParams());
 
       /// Assert
-      expect(result, const Right(true));
-      verify(() => mockProductRepository.clearCart());
+      expect(result, Right(NoParams()));
+      verify(() => mockProductRepository.deleteCart());
       verifyNoMoreInteractions(mockProductRepository);
     },
   );
@@ -37,7 +37,7 @@ void main() {
   test('should return a Failure from the repository', () async {
     /// Arrange
     final failure = NetworkFailure();
-    when(() => mockProductRepository.clearCart())
+    when(() => mockProductRepository.deleteCart())
         .thenAnswer((_) async => Left(failure));
 
     /// Act
@@ -45,7 +45,7 @@ void main() {
 
     /// Assert
     expect(result, Left(failure));
-    verify(() => mockProductRepository.clearCart());
+    verify(() => mockProductRepository.deleteCart());
     verifyNoMoreInteractions(mockProductRepository);
   });
 }

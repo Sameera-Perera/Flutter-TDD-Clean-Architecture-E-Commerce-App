@@ -85,7 +85,7 @@ void main() {
           .thenAnswer((_) async => true);
 
       /// Act
-      final result = await dataSource.clearCart();
+      final result = await dataSource.deleteCart();
 
       /// Assert
       expect(result, isTrue);

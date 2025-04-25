@@ -18,9 +18,7 @@ void main() {
 
   group('fromJson', () {
     test(
-      '''Should successfully deserialize a JSON map into a OrderDetailsMap
-          object and ensure that the resulting 
-          object matches the expected tOrderDetails''',
+        'Should successfully deserialize a JSON map into an OrderDetailsModel and match expected result',
       () async {
         /// Arrange
         final Map<String, dynamic> jsonMap =

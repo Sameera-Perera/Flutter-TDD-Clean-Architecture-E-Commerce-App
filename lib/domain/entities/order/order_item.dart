@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
-
-import '../product/price_tag.dart';
-import '../product/product.dart';
+import 'package:eshop/domain/entities/product/price_tag.dart';
+import 'package:eshop/domain/entities/product/product.dart';
 
 class OrderItem extends Equatable {
   final String id;
@@ -21,5 +20,9 @@ class OrderItem extends Equatable {
   @override
   List<Object> get props => [
     id,
+    product,
+    priceTag,
+    price,
+    quantity,
   ];
 }

@@ -75,7 +75,7 @@ void main() {
             .thenAnswer((invocation) => Future<void>.value());
 
         /// Act
-        repository.syncCart();
+        repository.getRemoteCartItems();
 
         /// Assert
         verify(() => mockNetworkInfo.isConnected);
@@ -101,7 +101,7 @@ void main() {
               .thenAnswer((invocation) => Future<void>.value());
 
           /// Act
-          final actualResult = await repository.syncCart();
+          final actualResult = await repository.getRemoteCartItems();
 
           /// Assert
           actualResult.fold(
@@ -127,7 +127,7 @@ void main() {
               .thenAnswer((invocation) => Future<void>.value());
 
           /// Act
-          await repository.syncCart();
+          await repository.getRemoteCartItems();
 
           /// Assert
           verify(() => mockLocalDataSource.saveCart([tCartItemModel]));
@@ -150,7 +150,7 @@ void main() {
               .thenAnswer((invocation) => Future<void>.value());
 
           /// Act
-          final result = await repository.syncCart();
+          final result = await repository.getRemoteCartItems();
 
           /// Assert
           result.fold(
@@ -175,7 +175,7 @@ void main() {
               .thenAnswer((invocation) => Future<void>.value());
 
           /// Act
-          final result = await repository.syncCart();
+          final result = await repository.getRemoteCartItems();
 
           /// Assert
           result.fold(
@@ -195,7 +195,7 @@ void main() {
               .thenAnswer((_) async => [tCartItemModel]);
 
           /// Act
-          final actualResult = await repository.getCachedCart();
+          final actualResult = await repository.getLocalCartItems();
 
           /// Assert
           actualResult.fold(
@@ -212,7 +212,7 @@ void main() {
           when(() => mockLocalDataSource.getCart()).thenThrow(CacheFailure());
 
           /// Act
-          final actualResult = await repository.getCachedCart();
+          final actualResult = await repository.getLocalCartItems();
 
           /// Assert
           actualResult.fold(
@@ -237,7 +237,7 @@ void main() {
             .thenAnswer((invocation) => Future<void>.value());
 
         /// Act
-        final actualResult = await repository.addToCart(tCartItemModel);
+        final actualResult = await repository.addCartItem(tCartItemModel);
 
         /// Assert
         actualResult.fold(
@@ -253,7 +253,7 @@ void main() {
       'should return last locally cached data when the cached data is present',
       () async {
         /// Act
-        final result = await repository.syncCart();
+        final result = await repository.getRemoteCartItems();
 
         /// Assert
         verifyZeroInteractions(mockRemoteDataSource);
@@ -273,7 +273,7 @@ void main() {
             .thenAnswer((_) async => [tCartItemModel]);
 
         /// Act
-        final actualResult = await repository.getCachedCart();
+        final actualResult = await repository.getLocalCartItems();
 
         /// Assert
         actualResult.fold(
@@ -290,7 +290,7 @@ void main() {
         when(() => mockLocalDataSource.getCart()).thenThrow(CacheFailure());
 
         /// Act
-        final actualResult = await repository.getCachedCart();
+        final actualResult = await repository.getLocalCartItems();
 
         /// Assert
         actualResult.fold(

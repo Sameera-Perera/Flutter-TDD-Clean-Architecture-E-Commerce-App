@@ -5,12 +5,12 @@ import '../../../../../core/usecases/usecase.dart';
 import '../../entities/user/user.dart';
 import '../../repositories/user_repository.dart';
 
-class GetCachedUserUseCase implements UseCase<User, NoParams> {
+class GetLocalUserUseCase implements UseCase<User, NoParams> {
   final UserRepository repository;
-  GetCachedUserUseCase(this.repository);
+  GetLocalUserUseCase(this.repository);
 
   @override
   Future<Either<Failure, User>> call(NoParams params) async {
-    return await repository.getCachedUser();
+    return await repository.getLocalUser();
   }
 }

@@ -5,18 +5,18 @@ import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
 import '../../../domain/entities/cart/cart_item.dart';
 import '../../../domain/usecases/cart/add_cart_item_usecase.dart';
-import '../../../domain/usecases/cart/clear_cart_usecase.dart';
-import '../../../domain/usecases/cart/get_cached_cart_usecase.dart';
-import '../../../domain/usecases/cart/sync_cart_usecase.dart';
+import '../../../domain/usecases/cart/delete_cart_usecase.dart';
+import '../../../domain/usecases/cart/get_local_cart_items_usecase.dart';
+import '../../../domain/usecases/cart/get_remote_cart_items_usecase.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';
 
 class CartBloc extends Bloc<CartEvent, CartState> {
-  final GetCachedCartUseCase _getCachedCartUseCase;
+  final GetLocalCartItemsUseCase _getCachedCartUseCase;
   final AddCartUseCase _addCartUseCase;
-  final SyncCartUseCase _syncCartUseCase;
-  final ClearCartUseCase _clearCartUseCase;
+  final GetRemoteCardItemsUseCase _syncCartUseCase;
+  final DeleteCartUseCase _clearCartUseCase;
   CartBloc(
     this._getCachedCartUseCase,
     this._addCartUseCase,

@@ -2,7 +2,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:dartz/dartz.dart';
 import 'package:eshop/core/error/failures.dart';
 import 'package:eshop/core/usecases/usecase.dart';
-import 'package:eshop/domain/usecases/user/get_cached_user_usecase.dart';
+import 'package:eshop/domain/usecases/user/get_local_user_usecase.dart';
 import 'package:eshop/domain/usecases/user/sign_in_usecase.dart';
 import 'package:eshop/domain/usecases/user/sign_out_usecase.dart';
 import 'package:eshop/domain/usecases/user/sign_up_usecase.dart';
@@ -17,7 +17,7 @@ class MockSignUpUseCase extends Mock implements SignUpUseCase {}
 
 class MockSignOutUseCase extends Mock implements SignOutUseCase {}
 
-class MockGetCachedUserUseCase extends Mock implements GetCachedUserUseCase {}
+class MockGetCachedUserUseCase extends Mock implements GetLocalUserUseCase {}
 
 void main() {
   group('UserBloc', () {

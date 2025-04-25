@@ -4,12 +4,12 @@ import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
 import '../../repositories/delivery_info_repository.dart';
 
-class ClearLocalDeliveryInfoUseCase implements UseCase<NoParams, NoParams> {
+class DeleteLocalDeliveryInfoUseCase implements UseCase<NoParams, NoParams> {
   final DeliveryInfoRepository repository;
-  ClearLocalDeliveryInfoUseCase(this.repository);
+  DeleteLocalDeliveryInfoUseCase(this.repository);
 
   @override
   Future<Either<Failure, NoParams>> call(NoParams params) async {
-    return await repository.clearLocalDeliveryInfo();
+    return await repository.deleteLocalDeliveryInfo();
   }
 }

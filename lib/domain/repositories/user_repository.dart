@@ -10,5 +10,5 @@ abstract class UserRepository {
   Future<Either<Failure, User>> signIn(SignInParams params);
   Future<Either<Failure, User>> signUp(SignUpParams params);
   Future<Either<Failure, NoParams>> signOut();
-  Future<Either<Failure, User>> getCachedUser();
+  Future<Either<Failure, User>> getLocalUser();
 }

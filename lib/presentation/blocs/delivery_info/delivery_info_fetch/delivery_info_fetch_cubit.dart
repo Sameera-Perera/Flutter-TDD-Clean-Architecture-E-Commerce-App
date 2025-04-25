@@ -1,20 +1,20 @@
 import 'package:bloc/bloc.dart';
-import 'package:eshop/domain/usecases/delivery_info/clear_local_delivery_info_usecase.dart';
+import 'package:eshop/domain/usecases/delivery_info/delete_local_delivery_info_usecase.dart';
 import 'package:eshop/domain/usecases/delivery_info/get_selected_delivery_info_usecase.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/usecases/usecase.dart';
 import '../../../../domain/entities/user/delivery_info.dart';
-import '../../../../domain/usecases/delivery_info/get_cached_delivery_info_usecase.dart';
+import '../../../../domain/usecases/delivery_info/get_local_delivery_info_usecase.dart';
 import '../../../../domain/usecases/delivery_info/get_remote_delivery_info_usecase.dart';
 
 part 'delivery_info_fetch_state.dart';
 
 class DeliveryInfoFetchCubit extends Cubit<DeliveryInfoFetchState> {
   final GetRemoteDeliveryInfoUseCase _getRemoteDeliveryInfoUseCase;
-  final GetCachedDeliveryInfoUseCase _getCachedDeliveryInfoUseCase;
+  final GetLocalDeliveryInfoUseCase _getCachedDeliveryInfoUseCase;
   final GetSelectedDeliveryInfoInfoUseCase _getSelectedDeliveryInfoInfoUseCase;
-  final ClearLocalDeliveryInfoUseCase _clearLocalDeliveryInfoUseCase;
+  final DeleteLocalDeliveryInfoUseCase _clearLocalDeliveryInfoUseCase;
   DeliveryInfoFetchCubit(
     this._getRemoteDeliveryInfoUseCase,
     this._getCachedDeliveryInfoUseCase,

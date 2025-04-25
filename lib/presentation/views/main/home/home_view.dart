@@ -58,7 +58,8 @@ class _HomeViewState extends State<HomeView> {
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+                  child: BlocBuilder<UserBloc, UserState>(
+                      builder: (context, state) {
                     if (state is UserLogged) {
                       return Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 6),
@@ -85,18 +86,19 @@ class _HomeViewState extends State<HomeView> {
                               },
                               child: state.user.image != null
                                   ? CachedNetworkImage(
-                                imageUrl: state.user.image!,
-                                imageBuilder: (context, image) => CircleAvatar(
-                                  radius: 18.sp,
-                                  backgroundImage: image,
-                                  backgroundColor: Colors.transparent,
-                                ),
-                              )
+                                      imageUrl: state.user.image!,
+                                      imageBuilder: (context, image) =>
+                                          CircleAvatar(
+                                        radius: 18.sp,
+                                        backgroundImage: image,
+                                        backgroundColor: Colors.transparent,
+                                      ),
+                                    )
                                   : CircleAvatar(
-                                radius: 18.sp,
-                                backgroundImage: AssetImage(kUserAvatar),
-                                backgroundColor: Colors.transparent,
-                              ),
+                                      radius: 18.sp,
+                                      backgroundImage: AssetImage(kUserAvatar),
+                                      backgroundColor: Colors.transparent,
+                                    ),
                             )
                           ],
                         ),
@@ -106,7 +108,7 @@ class _HomeViewState extends State<HomeView> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Column(
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
@@ -115,12 +117,16 @@ class _HomeViewState extends State<HomeView> {
                               Text(
                                 "Welcome,",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 36),
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24.sp,
+                                ),
                               ),
                               Text(
                                 "E-Shop mobile store",
                                 style: TextStyle(
-                                    fontWeight: FontWeight.normal, fontSize: 22),
+                                    fontWeight: FontWeight.normal,
+                                    fontSize: 18.sp,
+                                ),
                               ),
                             ],
                           ),
@@ -156,10 +162,12 @@ class _HomeViewState extends State<HomeView> {
                             return TextField(
                               autofocus: false,
                               controller:
-                              context.read<FilterCubit>().searchController,
+                                  context.read<FilterCubit>().searchController,
                               onChanged: (val) => setState(() {}),
-                              onSubmitted: (val) => context.read<ProductBloc>().add(
-                                  GetProducts(FilterProductParams(keyword: val))),
+                              onSubmitted: (val) => context
+                                  .read<ProductBloc>()
+                                  .add(GetProducts(
+                                      FilterProductParams(keyword: val))),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.only(
                                     left: 16.sp,
@@ -171,24 +179,25 @@ class _HomeViewState extends State<HomeView> {
                                     child: Icon(Icons.search),
                                   ),
                                   suffixIcon: context
-                                      .read<FilterCubit>()
-                                      .searchController
-                                      .text
-                                      .isNotEmpty
+                                          .read<FilterCubit>()
+                                          .searchController
+                                          .text
+                                          .isNotEmpty
                                       ? Padding(
-                                    padding: const EdgeInsets.only(right: 8),
-                                    child: IconButton(
-                                        onPressed: () {
-                                          context
-                                              .read<FilterCubit>()
-                                              .searchController
-                                              .clear();
-                                          context
-                                              .read<FilterCubit>()
-                                              .update(keyword: '');
-                                        },
-                                        icon: const Icon(Icons.clear)),
-                                  )
+                                          padding:
+                                              const EdgeInsets.only(right: 8),
+                                          child: IconButton(
+                                              onPressed: () {
+                                                context
+                                                    .read<FilterCubit>()
+                                                    .searchController
+                                                    .clear();
+                                                context
+                                                    .read<FilterCubit>()
+                                                    .update(keyword: '');
+                                              },
+                                              icon: const Icon(Icons.clear)),
+                                        )
                                       : null,
                                   border: const OutlineInputBorder(),
                                   hintText: "Search Product",
@@ -197,7 +206,8 @@ class _HomeViewState extends State<HomeView> {
                                   focusedBorder: OutlineInputBorder(
                                       borderSide: const BorderSide(
                                           color: Colors.white, width: 3.0),
-                                      borderRadius: BorderRadius.circular(16.sp)),
+                                      borderRadius:
+                                          BorderRadius.circular(16.sp)),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(16.sp),
                                     borderSide: const BorderSide(
@@ -225,13 +235,16 @@ class _HomeViewState extends State<HomeView> {
                                     .toString(),
                                 style: const TextStyle(color: Colors.black87),
                               ),
-                              isLabelVisible:
-                              context.read<FilterCubit>().getFiltersCount() != 0,
+                              isLabelVisible: context
+                                      .read<FilterCubit>()
+                                      .getFiltersCount() !=
+                                  0,
                               backgroundColor: Theme.of(context).primaryColor,
                               child: InputFormButton(
                                 color: Colors.black87,
                                 onClick: () {
-                                  Navigator.of(context).pushNamed(AppRouter.filter);
+                                  Navigator.of(context)
+                                      .pushNamed(AppRouter.filter);
                                 },
                               ),
                             );
@@ -241,7 +254,9 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
                 ),
-                SizedBox(height: 1.h,)
+                SizedBox(
+                  height: 1.h,
+                )
               ],
             ),
           ),

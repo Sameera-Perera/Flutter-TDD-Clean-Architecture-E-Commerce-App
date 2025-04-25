@@ -7,7 +7,8 @@ abstract class CartLocalDataSource {
   Future<List<CartItemModel>> getCart();
   Future<void> saveCart(List<CartItemModel> cart);
   Future<void> saveCartItem(CartItemModel cartItem);
-  Future<bool> clearCart();
+  Future<bool> deleteCartItem(CartItemModel cartItem);
+  Future<bool> deleteCart();
 }
 
 const cachedCart = 'CACHED_CART';
@@ -53,7 +54,25 @@ class CartLocalDataSourceImpl implements CartLocalDataSource {
   }
 
   @override
-  Future<bool> clearCart()async {
+  Future<bool> deleteCart() async {
     return sharedPreferences.remove(cachedCart);
+  }
+
+  @override
+  Future<bool> deleteCartItem(CartItemModel cartItem) async {
+    final jsonString = sharedPreferences.getString(cachedCart);
+    if (jsonString != null) {
+      final List<CartItemModel> cart =
+          cartItemModelListFromLocalJson(jsonString);
+      cart.removeWhere((element) =>
+          element.product.id == cartItem.product.id &&
+          element.priceTag.id == cartItem.priceTag.id);
+      return sharedPreferences.setString(
+        cachedCart,
+        cartItemModelToJson(cart),
+      );
+    } else {
+      throw CacheFailure();
+    }
   }
 }

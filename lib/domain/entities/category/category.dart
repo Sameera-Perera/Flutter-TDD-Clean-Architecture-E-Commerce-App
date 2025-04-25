@@ -12,5 +12,5 @@ class Category extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [id, name, image];
 }

@@ -8,7 +8,6 @@ import '../../domain/repositories/category_repository.dart';
 import '../data_sources/local/category_local_data_source.dart';
 import '../data_sources/remote/category_remote_data_source.dart';
 
-
 class CategoryRepositoryImpl implements CategoryRepository {
   final CategoryRemoteDataSource remoteDataSource;
   final CategoryLocalDataSource localDataSource;
@@ -22,21 +21,20 @@ class CategoryRepositoryImpl implements CategoryRepository {
 
   @override
   Future<Either<Failure, List<Category>>> getRemoteCategories() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final remoteProducts = await remoteDataSource.getCategories();
-        localDataSource.saveCategories(remoteProducts);
-        return Right(remoteProducts);
-      } on Failure catch (failure) {
-        return Left(failure);
-      }
-    } else {
+    if (!await networkInfo.isConnected) {
       return Left(NetworkFailure());
+    }
+    try {
+      final remoteProducts = await remoteDataSource.getCategories();
+      localDataSource.saveCategories(remoteProducts);
+      return Right(remoteProducts);
+    } on Failure catch (failure) {
+      return Left(failure);
     }
   }
 
   @override
-  Future<Either<Failure, List<Category>>> getCachedCategories() async {
+  Future<Either<Failure, List<Category>>> getLocalCategories() async {
     try {
       final localProducts = await localDataSource.getCategories();
       return Right(localProducts);

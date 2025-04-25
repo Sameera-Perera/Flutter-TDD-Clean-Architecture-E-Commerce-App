@@ -161,7 +161,7 @@ void main() {
               .thenAnswer((_) async => [tOrderDetailsModel]);
 
           /// Act
-          final actualResult = await repository.getCachedOrders();
+          final actualResult = await repository.getLocalOrders();
 
           /// Assert
           actualResult.fold(
@@ -178,7 +178,7 @@ void main() {
           when(() => mockLocalDataSource.getOrders()).thenThrow(CacheFailure());
 
           /// Act
-          final actualResult = await repository.getCachedOrders();
+          final actualResult = await repository.getLocalOrders();
 
           /// Assert
           actualResult.fold(
@@ -214,7 +214,7 @@ void main() {
               .thenAnswer((_) async => [tOrderDetailsModel]);
 
           /// Act
-          final actualResult = await repository.getCachedOrders();
+          final actualResult = await repository.getLocalOrders();
 
           /// Assert
           actualResult.fold(
@@ -231,7 +231,7 @@ void main() {
           when(() => mockLocalDataSource.getOrders()).thenThrow(CacheFailure());
 
           /// Act
-          final actualResult = await repository.getCachedOrders();
+          final actualResult = await repository.getLocalOrders();
 
           /// Assert
           actualResult.fold(
@@ -253,7 +253,7 @@ void main() {
               .thenAnswer((_) async => [tOrderDetailsModel]);
 
           /// Act
-          final result = await repository.getCachedOrders();
+          final result = await repository.getLocalOrders();
 
           /// Assert
           verify(() => mockLocalDataSource.getOrders());
@@ -271,7 +271,7 @@ void main() {
           when(() => mockLocalDataSource.getOrders()).thenThrow(CacheFailure());
 
           /// Act
-          final result = await repository.getCachedOrders();
+          final result = await repository.getLocalOrders();
 
           /// Assert
           verify(() => mockLocalDataSource.getOrders());
@@ -292,7 +292,7 @@ void main() {
               .thenAnswer((_) async => [tOrderDetailsModel]);
 
           /// Act
-          final result = await repository.getCachedOrders();
+          final result = await repository.getLocalOrders();
 
           /// Assert
           verify(() => mockLocalDataSource.getOrders());
@@ -310,7 +310,7 @@ void main() {
           when(() => mockLocalDataSource.getOrders()).thenThrow(CacheFailure());
 
           /// Act
-          final result = await repository.getCachedOrders();
+          final result = await repository.getLocalOrders();
 
           /// Assert
           verify(() => mockLocalDataSource.getOrders());
@@ -334,7 +334,7 @@ void main() {
               .thenAnswer((_) async => Future<void>.value());
 
           /// Act
-          final result = await repository.clearLocalOrders();
+          final result = await repository.deleteLocalOrders();
 
           /// Assert
           result.fold(
@@ -352,7 +352,7 @@ void main() {
               .thenAnswer((_) async => Future<void>.value());
 
           /// Act
-          await repository.clearLocalOrders();
+          await repository.deleteLocalOrders();
 
           /// Assert
           verify(() => mockLocalDataSource.clearOrder());
@@ -367,7 +367,7 @@ void main() {
               CacheFailure());
 
           /// Act
-          final result = await repository.clearLocalOrders();
+          final result = await repository.deleteLocalOrders();
 
           /// Assert
           result.fold(
@@ -386,7 +386,7 @@ void main() {
               .thenAnswer((_) async => Future<void>.value());
 
           /// Act
-          final result = await repository.clearLocalOrders();
+          final result = await repository.deleteLocalOrders();
 
           /// Assert
           result.fold(
@@ -404,7 +404,7 @@ void main() {
               .thenAnswer((_) async => Future<void>.value());
 
           /// Act
-          await repository.clearLocalOrders();
+          await repository.deleteLocalOrders();
 
           /// Assert
           verify(() => mockLocalDataSource.clearOrder());
@@ -419,7 +419,7 @@ void main() {
               CacheFailure());
 
           /// Act
-          final result = await repository.clearLocalOrders();
+          final result = await repository.deleteLocalOrders();
 
           /// Assert
           result.fold(

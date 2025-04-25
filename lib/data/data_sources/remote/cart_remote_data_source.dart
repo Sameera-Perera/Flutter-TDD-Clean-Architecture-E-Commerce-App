@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:eshop/core/usecases/usecase.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../../core/error/exceptions.dart';
@@ -9,6 +10,8 @@ import '../../models/cart/cart_item_model.dart';
 abstract class CartRemoteDataSource {
   Future<CartItemModel> addToCart(CartItemModel cartItem, String token);
   Future<List<CartItemModel>> syncCart(List<CartItemModel> cart, String token);
+  Future<CartItemModel> deleteCartItem(CartItemModel cart, String token);
+  Future<NoParams> deleteCart(String token);
 }
 
 class CartRemoteDataSourceSourceImpl implements CartRemoteDataSource {
@@ -53,5 +56,17 @@ class CartRemoteDataSourceSourceImpl implements CartRemoteDataSource {
     } else {
       throw ServerException();
     }
+  }
+
+  @override
+  Future<CartItemModel> deleteCartItem(CartItemModel cart, String token) async {
+    // TODO: implement deleteCartItem
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<NoParams> deleteCart(String token) async {
+    // TODO: implement deleteCart
+    throw UnimplementedError();
   }
 }

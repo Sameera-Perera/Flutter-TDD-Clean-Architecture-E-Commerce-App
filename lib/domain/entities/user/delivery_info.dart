@@ -22,5 +22,14 @@ class DeliveryInfo extends Equatable {
   });
 
   @override
-  List<Object> get props => [id];
+  List<Object> get props => [
+    id,
+    firstName,
+    lastName,
+    addressLineOne,
+    addressLineTwo,
+    city,
+    zipCode,
+    contactNumber,
+  ];
 }

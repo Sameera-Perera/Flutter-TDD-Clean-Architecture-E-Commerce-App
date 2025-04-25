@@ -25,28 +25,28 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
 
   @override
   Future<Either<Failure, List<DeliveryInfo>>> getRemoteDeliveryInfo() async {
-    if (await networkInfo.isConnected) {
-      if (await userLocalDataSource.isTokenAvailable()) {
-        try {
-          final String token = await userLocalDataSource.getToken();
-          final result = await remoteDataSource.getDeliveryInfo(
-            token,
-          );
-          await localDataSource.saveDeliveryInfo(result);
-          return Right(result);
-        } on Failure catch (failure) {
-          return Left(failure);
-        }
-      } else {
-        return Left(AuthenticationFailure());
-      }
-    } else {
+    if (!await networkInfo.isConnected) {
       return Left(NetworkFailure());
+    }
+    final token = await userLocalDataSource.getToken();
+    if (token.isEmpty) {
+      return Left(AuthenticationFailure());
+    }
+
+    try {
+      final String token = await userLocalDataSource.getToken();
+      final result = await remoteDataSource.getDeliveryInfo(
+        token,
+      );
+      await localDataSource.saveDeliveryInfo(result);
+      return Right(result);
+    } on Failure catch (failure) {
+      return Left(failure);
     }
   }
 
   @override
-  Future<Either<Failure, List<DeliveryInfo>>> getCachedDeliveryInfo() async {
+  Future<Either<Failure, List<DeliveryInfo>>> getLocalDeliveryInfo() async {
     try {
       final result = await localDataSource.getDeliveryInfo();
       return Right(result);
@@ -57,42 +57,44 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
 
   @override
   Future<Either<Failure, DeliveryInfo>> addDeliveryInfo(params) async {
-    if (await userLocalDataSource.isTokenAvailable()) {
-      try {
-        final String token = await userLocalDataSource.getToken();
-        final DeliveryInfoModel deliveryInfo =
-            await remoteDataSource.addDeliveryInfo(
-          params,
-          token,
-        );
-        await localDataSource.updateDeliveryInfo(deliveryInfo);
-        return Right(deliveryInfo);
-      } on Failure catch (failure) {
-        return Left(failure);
-      }
-    } else {
+    if (!await networkInfo.isConnected) {
+      return Left(NetworkFailure());
+    }
+    final token = await userLocalDataSource.getToken();
+    if (token.isEmpty) {
       return Left(AuthenticationFailure());
+    }
+    try {
+      final deliveryInfo = await remoteDataSource.addDeliveryInfo(
+        params,
+        token,
+      );
+      await localDataSource.updateDeliveryInfo(deliveryInfo);
+      return Right(deliveryInfo);
+    } on Failure catch (failure) {
+      return Left(failure);
     }
   }
 
   @override
   Future<Either<Failure, DeliveryInfo>> editDeliveryInfo(
       DeliveryInfoModel params) async {
-    if (await userLocalDataSource.isTokenAvailable()) {
-      try {
-        final String token = await userLocalDataSource.getToken();
-        final DeliveryInfoModel deliveryInfo =
-            await remoteDataSource.editDeliveryInfo(
-          params,
-          token,
-        );
-        await localDataSource.updateDeliveryInfo(deliveryInfo);
-        return Right(deliveryInfo);
-      } on Failure catch (failure) {
-        return Left(failure);
-      }
-    } else {
+    if (!await networkInfo.isConnected) {
+      return Left(NetworkFailure());
+    }
+    final token = await userLocalDataSource.getToken();
+    if (token.isEmpty) {
       return Left(AuthenticationFailure());
+    }
+    try {
+      final deliveryInfo = await remoteDataSource.editDeliveryInfo(
+        params,
+        token,
+      );
+      await localDataSource.updateDeliveryInfo(deliveryInfo);
+      return Right(deliveryInfo);
+    } on Failure catch (failure) {
+      return Left(failure);
     }
   }
 
@@ -119,7 +121,7 @@ class DeliveryInfoRepositoryImpl implements DeliveryInfoRepository {
   }
 
   @override
-  Future<Either<Failure, NoParams>> clearLocalDeliveryInfo() async {
+  Future<Either<Failure, NoParams>> deleteLocalDeliveryInfo() async {
     try {
       await localDataSource.clearDeliveryInfo();
       return Right(NoParams());

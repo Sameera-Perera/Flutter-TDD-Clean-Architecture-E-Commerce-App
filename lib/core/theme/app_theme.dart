@@ -10,9 +10,9 @@ class AppTheme {
     visualDensity: VisualDensity.adaptivePlatformDensity,
     scaffoldBackgroundColor: kBackgroundColor,
     appBarTheme: AppBarTheme(
-      backgroundColor: Colors.white,
-      foregroundColor: kLightSecondaryColor,
-      elevation: 0,
+      backgroundColor: kLightPrimaryColor,
+      foregroundColor: kBackgroundColor,
+      // elevation: 0,
     ),
     textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(foregroundColor: kLightSecondaryColor)),

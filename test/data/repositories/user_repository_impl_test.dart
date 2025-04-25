@@ -222,7 +222,7 @@ void main() {
             .thenAnswer((_) async => Future.value(tUserModel));
 
         /// Act
-        final actualResult = await repository.getCachedUser();
+        final actualResult = await repository.getLocalUser();
 
         /// Assert
         actualResult.fold(
@@ -239,7 +239,7 @@ void main() {
         when(() => mockLocalDataSource.getUser()).thenThrow(CacheFailure());
 
         /// Act
-        final actualResult = await repository.getCachedUser();
+        final actualResult = await repository.getLocalUser();
 
         /// Assert
         actualResult.fold(
@@ -291,7 +291,7 @@ void main() {
             .thenAnswer((_) async => Future.value(tUserModel));
 
         /// Act
-        final actualResult = await repository.getCachedUser();
+        final actualResult = await repository.getLocalUser();
 
         /// Assert
         actualResult.fold(
@@ -308,7 +308,7 @@ void main() {
         when(() => mockLocalDataSource.getUser()).thenThrow(CacheFailure());
 
         /// Act
-        final actualResult = await repository.getCachedUser();
+        final actualResult = await repository.getLocalUser();
 
         /// Assert
         actualResult.fold(

@@ -3,7 +3,7 @@ import 'package:dartz/dartz.dart';
 import 'package:eshop/core/error/failures.dart';
 import 'package:eshop/core/usecases/usecase.dart';
 import 'package:eshop/domain/usecases/category/filter_category_usecase.dart';
-import 'package:eshop/domain/usecases/category/get_cached_category_usecase.dart';
+import 'package:eshop/domain/usecases/category/get_local_category_usecase.dart';
 import 'package:eshop/domain/usecases/category/get_remote_category_usecase.dart';
 import 'package:eshop/presentation/blocs/category/category_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,7 +15,7 @@ class MockGetRemoteCategoryUseCase extends Mock
     implements GetRemoteCategoryUseCase {}
 
 class MockGetCachedCategoryUseCase extends Mock
-    implements GetCachedCategoryUseCase {}
+    implements GetLocalCategoryUseCase {}
 
 class MockFilterCategoryUseCase extends Mock implements FilterCategoryUseCase {}
 

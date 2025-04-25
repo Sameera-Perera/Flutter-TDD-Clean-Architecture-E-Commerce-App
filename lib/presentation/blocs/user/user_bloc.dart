@@ -9,14 +9,14 @@ import 'package:flutter/cupertino.dart';
 import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
 import '../../../domain/entities/user/user.dart';
-import '../../../domain/usecases/user/get_cached_user_usecase.dart';
+import '../../../domain/usecases/user/get_local_user_usecase.dart';
 import '../../../domain/usecases/user/sign_in_usecase.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
 
 class UserBloc extends Bloc<UserEvent, UserState> {
-  final GetCachedUserUseCase _getCachedUserUseCase;
+  final GetLocalUserUseCase _getCachedUserUseCase;
   final SignInUseCase _signInUseCase;
   final SignUpUseCase _signUpUseCase;
   final SignOutUseCase _signOutUseCase;

@@ -6,7 +6,7 @@ import '../../../core/error/failures.dart';
 import '../../../core/usecases/usecase.dart';
 import '../../../domain/entities/category/category.dart';
 import '../../../domain/usecases/category/filter_category_usecase.dart';
-import '../../../domain/usecases/category/get_cached_category_usecase.dart';
+import '../../../domain/usecases/category/get_local_category_usecase.dart';
 import '../../../domain/usecases/category/get_remote_category_usecase.dart';
 
 part 'category_event.dart';
@@ -14,7 +14,7 @@ part 'category_state.dart';
 
 class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
   final GetRemoteCategoryUseCase _getCategoryUseCase;
-  final GetCachedCategoryUseCase _getCashedCategoryUseCase;
+  final GetLocalCategoryUseCase _getCashedCategoryUseCase;
   final FilterCategoryUseCase _filterCategoryUseCase;
 
   CategoryBloc(this._getCategoryUseCase, this._getCashedCategoryUseCase,

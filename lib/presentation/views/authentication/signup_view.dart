@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:sizer/sizer.dart';
 
+import '../../../core/constant/app_sizes.dart';
 import '../../../core/constant/images.dart';
+import '../../../core/constant/validators.dart';
 import '../../../core/error/failures.dart';
 import '../../../core/router/app_router.dart';
 import '../../../domain/usecases/user/sign_up_usecase.dart';
@@ -19,11 +22,11 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final TextEditingController firstNameController = TextEditingController();
-  final TextEditingController lastNameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
@@ -38,22 +41,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
           context.read<CartBloc>().add(const GetCart());
           Navigator.of(context).pushNamedAndRemoveUntil(
             AppRouter.home,
-            ModalRoute.withName(''),
+            (Route<dynamic> route) => false,
           );
         } else if (state is UserLoggedFail) {
+          String errorMessage = "An error occurred. Please try again.";
           if (state.failure is CredentialFailure) {
-            EasyLoading.showError("Username/Password Wrong!");
-          } else {
-            EasyLoading.showError("Error");
+            errorMessage = "Incorrect username or password.";
+          } else if (state.failure is NetworkFailure) {
+            errorMessage = "Network error. Check your connection.";
           }
+          EasyLoading.showError(errorMessage);
         }
       },
       child: Scaffold(
           body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
+        physics: const BouncingScrollPhysics(),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: kPaddingMedium),
             child: Form(
               key: _formKey,
               child: Column(
@@ -69,118 +74,74 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.black,
                       )),
                   const SizedBox(
-                    height: 20,
+                    height: 10,
                   ),
                   const Text(
                     "Please use your e-mail address to crate a new account",
                     style: TextStyle(fontSize: 16, color: Colors.grey),
                     textAlign: TextAlign.center,
                   ),
-                  const SizedBox(
-                    height: 40,
+                  SizedBox(
+                    height: 6.h,
                   ),
                   InputTextFormField(
-                    controller: firstNameController,
+                    controller: _firstNameController,
                     hint: 'First Name',
                     textInputAction: TextInputAction.next,
-                    validation: (String? val) {
-                      if (val == null || val.isEmpty) {
-                        return 'This field can\'t be empty';
-                      }
-                      return null;
-                    },
+                    validation: (String? val) =>
+                        Validators.validateField(val, "First name"),
                   ),
                   const SizedBox(
                     height: 12,
                   ),
                   InputTextFormField(
-                    controller: lastNameController,
+                    controller: _lastNameController,
                     hint: 'Last Name',
                     textInputAction: TextInputAction.next,
-                    validation: (String? val) {
-                      if (val == null || val.isEmpty) {
-                        return 'This field can\'t be empty';
-                      }
-                      return null;
-                    },
+                    validation: (String? val) =>
+                        Validators.validateField(val, "Last name"),
                   ),
                   const SizedBox(
                     height: 12,
                   ),
                   InputTextFormField(
-                    controller: emailController,
+                    controller: _emailController,
                     hint: 'Email',
                     textInputAction: TextInputAction.next,
-                    validation: (String? val) {
-                      if (val == null || val.isEmpty) {
-                        return 'This field can\'t be empty';
-                      }
-                      return null;
-                    },
+                    validation: (String? val) => Validators.validateEmail(val),
                   ),
                   const SizedBox(
                     height: 12,
                   ),
                   InputTextFormField(
-                    controller: passwordController,
+                    controller: _passwordController,
                     hint: 'Password',
                     textInputAction: TextInputAction.next,
                     isSecureField: true,
-                    validation: (String? val) {
-                      if (val == null || val.isEmpty) {
-                        return 'This field can\'t be empty';
-                      }
-                      return null;
-                    },
+                    validation: (String? val) =>
+                        Validators.validateField(val, "Password"),
                   ),
                   const SizedBox(
                     height: 12,
                   ),
                   InputTextFormField(
-                    controller: confirmPasswordController,
+                    controller: _confirmPasswordController,
                     hint: 'Confirm Password',
                     isSecureField: true,
                     textInputAction: TextInputAction.go,
-                    validation: (String? val) {
-                      if (val == null || val.isEmpty) {
-                        return 'This field can\'t be empty';
-                      }
-                      return null;
-                    },
-                    onFieldSubmitted: (_) {
-                      if (_formKey.currentState!.validate()) {
-                        if (passwordController.text !=
-                            confirmPasswordController.text) {
-                        } else {
-                          context.read<UserBloc>().add(SignUpUser(SignUpParams(
-                            firstName: firstNameController.text,
-                            lastName: lastNameController.text,
-                            email: emailController.text,
-                            password: passwordController.text,
-                          )));
-                        }
-                      }
-                    },
+                    validation: (String? val) =>
+                        Validators.validatePasswordMatch(
+                      val,
+                      _passwordController.text,
+                    ),
+                    onFieldSubmitted: (_) => _onSignUp(context),
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 24,
                   ),
                   InputFormButton(
                     color: Colors.black87,
-                    onClick: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (passwordController.text !=
-                            confirmPasswordController.text) {
-                        } else {
-                          context.read<UserBloc>().add(SignUpUser(SignUpParams(
-                                firstName: firstNameController.text,
-                                lastName: lastNameController.text,
-                                email: emailController.text,
-                                password: passwordController.text,
-                              )));
-                        }
-                      }
-                    },
+                    onClick: () => _onSignUp(context),
                     titleText: 'Sign Up',
                   ),
                   const SizedBox(
@@ -203,5 +164,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       )),
     );
+  }
+
+  void _onSignUp(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      if (_passwordController.text != _confirmPasswordController.text) {
+        EasyLoading.showError("Passwords do not match!");
+        return;
+      }
+      context.read<UserBloc>().add(SignUpUser(SignUpParams(
+            firstName: _firstNameController.text,
+            lastName: _lastNameController.text,
+            email: _emailController.text,
+            password: _passwordController.text,
+          )));
+    }
   }
 }

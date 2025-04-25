@@ -2,15 +2,38 @@
   {
     "_id": "1",
     "product": {
-      "_id": "1",
-      "name": "name",
-      "description": "description",
-      "priceTags": [{"_id": "1", "name": "name", "price": 100}],
-      "categories": [{"_id": "1", "name": "name", "image": "image"}],
-      "images": ["image"],
-      "createdAt": "2000-01-01T00:00:00.000",
-      "updatedAt": "2000-01-01T00:00:00.000"
+      "_id": "64eb722a41cb9b05eb4420b7",
+      "name": "Asus Gaming Mouse",
+      "description": "Text description",
+      "priceTags": [
+        {
+          "_id": "64eb728341cb9b05eb4420ba",
+          "name": "White",
+          "price": 50.99
+        }
+      ],
+      "categories": [
+        {
+          "_id": "64cecb613357eaec7b1ab31b",
+          "name": "Headphone",
+          "image": "https://res.cloudinary.com/dhyttttax/image/upload/v1693148015/category/headphone_pdqwo2.jpg"
+        }
+      ],
+      "images": [
+        "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/vxyyemcdwcuoooyejehj.jpg",
+        "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/vqiw6cswpnzhgryd3s1l.jpg",
+        "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/tkanjwktt2t0qvybk5xf.jpg",
+        "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/yjxkgevogpaim02wonks.jpg",
+        "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/m2bb9pzzobynrpyo9ike.jpg",
+        "https://res.cloudinary.com/dhyttttax/image/upload/v1693151785/product/xhojjofgfyfpbjwo2vox.jpg"
+      ],
+      "createdAt": "2023-08-27T15:56:26.504Z",
+      "updatedAt": "2023-08-27T16:19:16.683Z"
     },
-    "priceTag": {"_id": "1", "name": "name", "price": 100}
+    "priceTag": {
+      "_id": "64eb728341cb9b05eb4420ba",
+      "name": "White",
+      "price": 50.99
+    }
   }
 ]
