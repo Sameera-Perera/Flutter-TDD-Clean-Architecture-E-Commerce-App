@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:eshop/core/usecases/usecase.dart';
 
 import '../../../../core/error/failures.dart';
 import '../../core/network/network_info.dart';
@@ -85,17 +86,44 @@ class CartRepositoryImpl implements CartRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> deleteCartItem(CartItem params) {
-    throw UnimplementedError();
+  Future<Either<Failure, CartItemModel>> deleteCartItem(CartItem params) async {
+    final token = await userLocalDataSource.getToken();
+    final cartItem = CartItemModel.fromParent(params);
+    // Check if the token is empty or if the network is not connected
+    // If so, delete the cart item locally and return true
+    // Otherwise, proceed with the remote data source
+    // and delete the cart item locally after receiving the response
+    if (token.isEmpty || !await networkInfo.isConnected) {
+      localDataSource.deleteCartItem(cartItem);
+      return Right(cartItem);
+    }
+
+    // Proceed with the remote data source
+    // and delete the cart item locally after receiving the response
+    final remoteResponse = await remoteDataSource.deleteCartItem(
+      cartItem,
+      token,
+    );
+    await localDataSource.deleteCartItem(remoteResponse);
+    return Right(remoteResponse);
   }
 
   @override
-  Future<Either<Failure, bool>> deleteCart() async {
-    bool result = await localDataSource.clearCart();
-    if (result) {
-      return Right(result);
-    } else {
-      return Left(CacheFailure());
+  Future<Either<Failure, NoParams>> deleteCart() async {
+    final token = await userLocalDataSource.getToken();
+    // Check if the token is empty or if the network is not connected
+    // If so, delete the cart locally and return true
+    // Otherwise, proceed with the remote data source
+    // and delete the cart locally after receiving the response
+    if (token.isEmpty || !await networkInfo.isConnected) {
+      localDataSource.deleteCart();
+      return Right(NoParams());
     }
+
+    // Proceed with the remote data source
+    // and delete the cart locally after receiving the response
+    final remoteResponse = await remoteDataSource.deleteCart(token);
+    await localDataSource.deleteCart();
+    return Right(remoteResponse);
   }
 }

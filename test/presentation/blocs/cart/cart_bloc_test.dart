@@ -82,7 +82,7 @@ void main() {
       'emits [CartLoading, CartLoaded] when ClearCart is added',
       build: () {
         when(() => mockClearCartUseCase(NoParams()))
-            .thenAnswer((_) async => const Right(true));
+            .thenAnswer((_) async => Right(NoParams()));
         return cartBloc;
       },
       act: (bloc) => bloc.add(const ClearCart()),

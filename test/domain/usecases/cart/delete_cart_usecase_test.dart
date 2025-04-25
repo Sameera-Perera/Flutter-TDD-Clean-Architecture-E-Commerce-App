@@ -22,13 +22,13 @@ void main() {
     () async {
       /// Arrange
       when(() => mockProductRepository.deleteCart())
-          .thenAnswer((_) async => const Right(true));
+          .thenAnswer((_) async => Right(NoParams()));
 
       /// Act
       final result = await usecase(NoParams());
 
       /// Assert
-      expect(result, const Right(true));
+      expect(result, Right(NoParams()));
       verify(() => mockProductRepository.deleteCart());
       verifyNoMoreInteractions(mockProductRepository);
     },
