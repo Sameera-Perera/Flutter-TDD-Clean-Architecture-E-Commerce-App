@@ -53,16 +53,12 @@ class _MainViewState extends State<MainView> {
                     shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(48)),
                     ),
-                    backgroundColor: Colors.black87,
-                    snakeViewColor: Colors.black87,
-                    height: 8.h,
-                    elevation: 4,
-                    selectedItemColor: SnakeShape.circle == SnakeShape.indicator
-                        ? Colors.black87
-                        : null,
-                    unselectedItemColor: Colors.white,
-                    selectedLabelStyle: const TextStyle(
-                      color: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.onSurface,
+                    snakeViewColor: Theme.of(context).colorScheme.onPrimary,
+                    selectedItemColor: Theme.of(context).colorScheme.onPrimary,
+                    unselectedItemColor: Theme.of(context).colorScheme.onPrimary,
+                    selectedLabelStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontWeight: FontWeight.w500,
                       fontStyle: FontStyle.italic,
                       fontSize: 12,
@@ -81,60 +77,59 @@ class _MainViewState extends State<MainView> {
                       BottomNavigationBarItem(
                         icon: ImageIcon(
                           AssetImage("assets/navbar_icons/home.png"),
-                          color: Colors.white,
                           size: 20.sp,
                         ),
                         activeIcon: Padding(
                           padding: EdgeInsets.all(0.5.h),
                           child: CircleAvatar(
-                            backgroundColor: Colors.deepOrange,
+                            backgroundColor: Theme.of(context).colorScheme.primary,
                             maxRadius: 4,
                           ),
                         ),
                         label: 'Home',
                       ),
                       BottomNavigationBarItem(
-                          icon: ImageIcon(
-                            AssetImage("assets/navbar_icons/categories.png"),
-                            color: Colors.white,
-                            size: 20.sp,
+                        icon: ImageIcon(
+                          AssetImage("assets/navbar_icons/categories.png"),
+                          size: 20.sp,
+                        ),
+                        activeIcon: Padding(
+                          padding: EdgeInsets.all(0.5.h),
+                          child: CircleAvatar(
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            maxRadius: 4,
                           ),
-                          activeIcon: Padding(
-                            padding: EdgeInsets.all(0.5.h),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.deepOrange,
-                              maxRadius: 4,
-                            ),
-                          ),
-                          label: 'Category'),
+                        ),
+                        label: 'Category',
+                      ),
                       BottomNavigationBarItem(
-                          icon: ImageIcon(
-                            AssetImage("assets/navbar_icons/shopping-cart.png"),
-                            color: Colors.white,
-                            size: 20.sp,
+                        icon: ImageIcon(
+                          AssetImage("assets/navbar_icons/shopping-cart.png"),
+                          size: 20.sp,
+                        ),
+                        activeIcon: Padding(
+                          padding: EdgeInsets.all(0.5.h),
+                          child: CircleAvatar(
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            maxRadius: 4,
                           ),
-                          activeIcon: Padding(
-                            padding: EdgeInsets.all(0.5.h),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.deepOrange,
-                              maxRadius: 4,
-                            ),
-                          ),
-                          label: 'Cart'),
+                        ),
+                        label: 'Cart',
+                      ),
                       BottomNavigationBarItem(
-                          icon: ImageIcon(
-                            AssetImage("assets/navbar_icons/user.png"),
-                            color: Colors.white,
-                            size: 20.sp,
+                        icon: ImageIcon(
+                          AssetImage("assets/navbar_icons/user.png"),
+                          size: 20.sp,
+                        ),
+                        activeIcon: Padding(
+                          padding: EdgeInsets.all(0.5.h),
+                          child: CircleAvatar(
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            maxRadius: 4,
                           ),
-                          activeIcon: Padding(
-                            padding: EdgeInsets.all(0.5.h),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.deepOrange,
-                              maxRadius: 4,
-                            ),
-                          ),
-                          label: 'Other'),
+                        ),
+                        label: 'Other',
+                      ),
                     ],
                   );
                 },

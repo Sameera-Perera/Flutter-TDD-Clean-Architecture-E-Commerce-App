@@ -41,9 +41,14 @@ class OrderCheckoutView extends StatelessWidget {
         },
         child: Scaffold(
           appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: const Text('Order Checkout'),
+            title: Text(
+              'Order Checkout',
+              style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                color: Theme.of(context).colorScheme.onSurface,
+              ),
+            ),
           ),
+          backgroundColor: Theme.of(context).colorScheme.surface,
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: ListView(
@@ -225,7 +230,7 @@ class OrderCheckoutView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
               child: Builder(builder: (context) {
                 return InputFormButton(
-                  color: Colors.black87,
+                  color: Theme.of(context).colorScheme.primary,
                   onClick: () {
                     if (context
                             .read<DeliveryInfoFetchCubit>()

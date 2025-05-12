@@ -4,11 +4,12 @@ class AlertCard extends StatelessWidget {
   final String image;
   final String? message;
   final Function()? onClick;
+  final Color textColor;
   const AlertCard({
     super.key,
     required this.image,
     this.message,
-    this.onClick,
+    this.onClick, required this.textColor,
   });
 
   @override
@@ -17,7 +18,7 @@ class AlertCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(image),
-        if (message != null) Text(message!),
+        if (message != null) Text(message!,style: TextStyle(color: textColor),),
         if (onClick != null)
           IconButton(onPressed: onClick, icon: const Icon(Icons.refresh)),
         SizedBox(

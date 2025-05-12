@@ -1,0 +1,2 @@
+C:/Users/Mujadad Computer/Desktop/opensource/Flutter-TDD-Clean-Architecture-E-Commerce-App/android/app/.cxx/Debug/599285y2/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/Mujadad Computer/Desktop/opensource/Flutter-TDD-Clean-Architecture-E-Commerce-App/android/app/.cxx/Debug/599285y2/x86_64/CMakeFiles/rebuild_cache.dir

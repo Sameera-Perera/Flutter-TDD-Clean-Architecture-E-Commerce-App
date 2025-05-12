@@ -10,17 +10,20 @@ class InputFormButton extends StatelessWidget {
   final double? cornerRadius;
   final EdgeInsets padding;
 
-  const InputFormButton(
-      {super.key,
-      required this.onClick,
-      this.titleText,
-      this.icon,
-      this.color,
-      this.cornerRadius,
-      this.padding = const EdgeInsets.symmetric(horizontal: 16)});
+  const InputFormButton({
+    super.key,
+    required this.onClick,
+    this.titleText,
+    this.icon,
+    this.color,
+    this.cornerRadius,
+    this.padding = const EdgeInsets.symmetric(horizontal: 16),
+  });
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    
     return ElevatedButton(
       onPressed: onClick,
       style: ButtonStyle(
@@ -28,20 +31,27 @@ class InputFormButton extends StatelessWidget {
         maximumSize: WidgetStateProperty.all<Size>(Size(double.maxFinite, 28.sp)),
         minimumSize: WidgetStateProperty.all<Size>(Size(double.maxFinite, 28.sp)),
         backgroundColor: WidgetStateProperty.all<Color>(
-            color ?? Theme.of(context).primaryColor),
+          color ?? colorScheme.primary,
+        ),
+        foregroundColor: WidgetStateProperty.all<Color>(
+          colorScheme.onPrimary,
+        ),
         shape: WidgetStateProperty.all<RoundedRectangleBorder>(
           RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(cornerRadius ?? 12.0)),
+            borderRadius: BorderRadius.circular(cornerRadius ?? 12.0),
+          ),
         ),
       ),
       child: titleText != null
           ? Text(
               titleText!,
-              style: const TextStyle(color: Colors.white),
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onPrimary,
+                  ),
             )
           : Image.asset(
               kFilterIcon,
-              color: Colors.white,
+              color: colorScheme.onPrimary,
               height: 22.sp,
               width: 22.sp,
             ),

@@ -44,13 +44,17 @@ class _HomeViewState extends State<HomeView> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.background,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            color: Colors.white,
+            color: colorScheme.background,
             child: Column(
               children: [
                 SizedBox(
@@ -72,13 +76,13 @@ class _HomeViewState extends State<HomeView> {
                               },
                               child: Text(
                                 "${state.user.firstName} ${state.user.lastName}",
-                                style: TextStyle(fontSize: 18.sp),
+                                style: textTheme.titleMedium?.copyWith(
+                                  color: colorScheme.onBackground,
+                                ),
                               ),
                             ),
                             const Spacer(),
-                            const SizedBox(
-                              width: 8,
-                            ),
+                            const SizedBox(width: 8),
                             GestureDetector(
                               onTap: () {
                                 Navigator.of(context)
@@ -111,21 +115,18 @@ class _HomeViewState extends State<HomeView> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(
-                                height: 8,
-                              ),
+                              const SizedBox(height: 8),
                               Text(
                                 "Welcome,",
-                                style: TextStyle(
+                                style: textTheme.headlineMedium?.copyWith(
+                                  color: colorScheme.onBackground,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 24.sp,
                                 ),
                               ),
                               Text(
                                 "E-Shop mobile store",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.normal,
-                                    fontSize: 18.sp,
+                                style: textTheme.titleMedium?.copyWith(
+                                  color: colorScheme.onBackground.withOpacity(0.7),
                                 ),
                               ),
                             ],
@@ -168,15 +169,16 @@ class _HomeViewState extends State<HomeView> {
                                   .read<ProductBloc>()
                                   .add(GetProducts(
                                       FilterProductParams(keyword: val))),
+                              style: TextStyle(color: colorScheme.onBackground),
                               decoration: InputDecoration(
                                   contentPadding: EdgeInsets.only(
                                     left: 16.sp,
                                     bottom: 16.sp,
                                     top: 18.sp,
                                   ),
-                                  prefixIcon: const Padding(
-                                    padding: EdgeInsets.only(left: 8),
-                                    child: Icon(Icons.search),
+                                  prefixIcon: Icon(
+                                    Icons.search,
+                                    color: colorScheme.onBackground.withOpacity(0.7),
                                   ),
                                   suffixIcon: context
                                           .read<FilterCubit>()
@@ -196,32 +198,36 @@ class _HomeViewState extends State<HomeView> {
                                                     .read<FilterCubit>()
                                                     .update(keyword: '');
                                               },
-                                              icon: const Icon(Icons.clear)),
+                                              icon: Icon(
+                                                Icons.clear,
+                                                color: colorScheme.onBackground.withOpacity(0.7),
+                                              )),
                                         )
                                       : null,
                                   border: const OutlineInputBorder(),
                                   hintText: "Search Product",
-                                  fillColor: Colors.grey.shade100,
+                                  hintStyle: TextStyle(
+                                    color: colorScheme.onBackground.withOpacity(0.5),
+                                  ),
+                                  fillColor: colorScheme.surface,
                                   filled: true,
                                   focusedBorder: OutlineInputBorder(
-                                      borderSide: const BorderSide(
-                                          color: Colors.white, width: 3.0),
+                                      borderSide: BorderSide(
+                                          color: colorScheme.primary, width: 2.0),
                                       borderRadius:
                                           BorderRadius.circular(16.sp)),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(16.sp),
-                                    borderSide: const BorderSide(
-                                      color: Colors.white,
-                                      width: 3.0,
+                                    borderSide: BorderSide(
+                                      color: colorScheme.outline.withOpacity(0.5),
+                                      width: 2.0,
                                     ),
                                   )),
                             );
                           },
                         ),
                       ),
-                      const SizedBox(
-                        width: 8,
-                      ),
+                      const SizedBox(width: 8),
                       SizedBox(
                         width: 55,
                         child: BlocBuilder<FilterCubit, FilterProductParams>(
@@ -233,15 +239,15 @@ class _HomeViewState extends State<HomeView> {
                                     .read<FilterCubit>()
                                     .getFiltersCount()
                                     .toString(),
-                                style: const TextStyle(color: Colors.black87),
+                                style: TextStyle(color: colorScheme.onPrimary),
                               ),
                               isLabelVisible: context
                                       .read<FilterCubit>()
                                       .getFiltersCount() !=
                                   0,
-                              backgroundColor: Theme.of(context).primaryColor,
+                              backgroundColor: colorScheme.primary,
                               child: InputFormButton(
-                                color: Colors.black87,
+                                color: colorScheme.onBackground,
                                 onClick: () {
                                   Navigator.of(context)
                                       .pushNamed(AppRouter.filter);
@@ -254,9 +260,7 @@ class _HomeViewState extends State<HomeView> {
                     ],
                   ),
                 ),
-                SizedBox(
-                  height: 1.h,
-                )
+                SizedBox(height: 1.h)
               ],
             ),
           ),
@@ -265,19 +269,19 @@ class _HomeViewState extends State<HomeView> {
                 padding: const EdgeInsets.symmetric(horizontal: 8),
                 child: BlocBuilder<ProductBloc, ProductState>(
                     builder: (context, state) {
-                  //Result Empty and No Error
                   if (state is ProductLoaded && state.products.isEmpty) {
-                    return const AlertCard(
+                    return AlertCard(
                       image: kEmpty,
                       message: "Products not found!",
+                      textColor: colorScheme.onBackground,
                     );
                   }
-                  //Error and no preloaded data
                   if (state is ProductError && state.products.isEmpty) {
                     if (state.failure is NetworkFailure) {
                       return AlertCard(
                         image: kNoConnection,
                         message: "Network failure\nTry again!",
+                        textColor: colorScheme.onBackground,
                         onClick: () {
                           context.read<ProductBloc>().add(GetProducts(
                               FilterProductParams(
@@ -305,10 +309,10 @@ class _HomeViewState extends State<HomeView> {
                             ),
                           Text(
                             "Products not found!",
-                            style: TextStyle(color: Colors.grey.shade600),
+                            style: TextStyle(color: colorScheme.onBackground.withOpacity(0.7)),
                           ),
                           IconButton(
-                              color: Colors.grey.shade600,
+                              color: colorScheme.primary,
                               onPressed: () {
                                 context.read<ProductBloc>().add(GetProducts(
                                     FilterProductParams(
@@ -356,8 +360,8 @@ class _HomeViewState extends State<HomeView> {
                           );
                         } else {
                           return Shimmer.fromColors(
-                            baseColor: Colors.grey.shade100,
-                            highlightColor: Colors.white,
+                            baseColor: colorScheme.surface,
+                            highlightColor: colorScheme.surface.withOpacity(0.5),
                             child: const ProductCard(),
                           );
                         }

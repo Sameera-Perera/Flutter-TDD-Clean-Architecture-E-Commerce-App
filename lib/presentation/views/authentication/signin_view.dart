@@ -53,6 +53,7 @@ class _SignInViewState extends State<SignInView> {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -65,17 +66,17 @@ class _SignInViewState extends State<SignInView> {
                     height: 50,
                   ),
                   SizedBox(
-                      height: 80,
-                      child: Image.asset(
-                        kAppLogo,
-                        color: Colors.black,
-                      )),
+                    height: 80,
+                    child: Image.asset(
+                      kAppLogo,
+                      color: Theme.of(context).colorScheme.primary,
+                    )),
                   const SizedBox(
                     height: 20,
                   ),
                   const Text(
                     "Please enter your e-mail address and password to sign-in",
-                    style: TextStyle(fontSize: 16, color: Colors.black54),
+                    style: TextStyle(fontSize: 16),
                     textAlign: TextAlign.center,
                   ),
                   const Spacer(
@@ -112,11 +113,9 @@ class _SignInViewState extends State<SignInView> {
                       onTap: () {
                         // Navigator.pushNamed(context, AppRouter.forgotPassword);
                       },
-                      child: const Text(
+                      child: Text(
                         'Forgot Password?',
-                        style: TextStyle(
-                          fontSize: 14,
-                        ),
+                        style: Theme.of(context).textTheme.bodyMedium,
                       ),
                     ),
                   ),
@@ -124,7 +123,7 @@ class _SignInViewState extends State<SignInView> {
                     height: 24,
                   ),
                   InputFormButton(
-                    color: Colors.black87,
+                    color: Theme.of(context).colorScheme.onSurface,
                     onClick: () => _onSignIn(context),
                     titleText: 'Sign In',
                   ),
@@ -132,7 +131,7 @@ class _SignInViewState extends State<SignInView> {
                     height: 10,
                   ),
                   InputFormButton(
-                    color: Colors.black87,
+                    color: Theme.of(context).colorScheme.onSurface,
                     onClick: () {
                       Navigator.of(context).pop();
                     },
@@ -144,23 +143,17 @@ class _SignInViewState extends State<SignInView> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Don\'t have an account! ',
-                          style: TextStyle(
-                            fontSize: 14,
-                          ),
+                          style: Theme.of(context).textTheme.bodySmall,
                         ),
                         InkWell(
                           onTap: () {
                             Navigator.pushNamed(context, AppRouter.signUp);
                           },
-                          child: const Text(
+                          child: Text(
                             'Register',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black,
-                              fontWeight: FontWeight.w600,
-                            ),
+                            style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ),
                       ],
