@@ -35,11 +35,15 @@ class _RangeSliderExampleState extends State<RangeSliderExample> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    
     return RangeSlider(
       values: _currentRangeValues,
       max: max,
       divisions: 10,
-      activeColor: Colors.black87,
+      activeColor: colorScheme.primary,
+      inactiveColor: colorScheme.surfaceContainerHighest,
+      overlayColor: MaterialStateProperty.all(colorScheme.primary.withOpacity(0.12)),
       labels: RangeLabels(
         _currentRangeValues.start.round().toString(),
         _currentRangeValues.end.round().toString(),

@@ -3,6 +3,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/constant/strings.dart';
 import 'core/router/app_router.dart';
@@ -13,6 +14,7 @@ import 'presentation/blocs/category/category_bloc.dart';
 import 'presentation/blocs/delivery_info/delivery_info_action/delivery_info_action_cubit.dart';
 import 'presentation/blocs/delivery_info/delivery_info_fetch/delivery_info_fetch_cubit.dart';
 import 'presentation/blocs/filter/filter_cubit.dart';
+import 'presentation/blocs/theme/theme_bloc.dart';
 
 import 'core/services/services_locator.dart' as di;
 import 'presentation/blocs/home/navbar_cubit.dart';
@@ -23,18 +25,24 @@ import 'presentation/blocs/user/user_bloc.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
+  final prefs = await SharedPreferences.getInstance();
 
-  runApp(const MyApp());
+  runApp(MyApp(prefs: prefs));
   configLoading();
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SharedPreferences prefs;
+  
+  const MyApp({super.key, required this.prefs});
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(
+          create: (context) => ThemeBloc(prefs)..add(const ThemeLoaded()),
+        ),
         BlocProvider(
           create: (context) => NavbarCubit(),
         ),
@@ -66,17 +74,23 @@ class MyApp extends StatelessWidget {
           create: (context) => di.sl<OrderFetchCubit>()..getOrders(),
         ),
       ],
-      child: OKToast(
-        child: Sizer(builder: (context, orientation, deviceType) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            initialRoute: AppRouter.home,
-            onGenerateRoute: AppRouter.onGenerateRoute,
-            title: appTitle,
-            theme: AppTheme.lightTheme,
-            builder: EasyLoading.init(),
+      child: BlocBuilder<ThemeBloc, ThemeState>(
+        builder: (context, state) {
+          return OKToast(
+            child: Sizer(builder: (context, orientation, deviceType) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                initialRoute: AppRouter.home,
+                onGenerateRoute: AppRouter.onGenerateRoute,
+                title: appTitle,
+                theme: AppTheme.lightTheme,
+                darkTheme: AppTheme.darkTheme,
+                themeMode: state.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+                builder: EasyLoading.init(),
+              );
+            }),
           );
-        }),
+        },
       ),
     );
   }

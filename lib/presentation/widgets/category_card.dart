@@ -14,6 +14,9 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return GestureDetector(
       onTap: () {
         if(category!=null){
@@ -32,7 +35,7 @@ class CategoryCard extends StatelessWidget {
           ? Stack(
               children: [
                 Card(
-                  color: Colors.grey.shade100,
+                  color: colorScheme.surface,
                   margin: const EdgeInsets.only(bottom: 16),
                   elevation: 4,
                   clipBehavior: Clip.antiAlias,
@@ -48,37 +51,46 @@ class CategoryCard extends StatelessWidget {
                         imageUrl: category!.image,
                         fit: BoxFit.cover,
                         placeholder: (context, url) => Container(
-                          color: Colors.grey.shade100,
+                          color: colorScheme.surface,
                         ),
                         errorWidget: (context, url, error) =>
-                            const Center(child: Icon(Icons.error)),
+                            Icon(Icons.error, color: colorScheme.error),
                       ),
                     ),
                   ),
                 ),
                 Positioned(
-                    right: 10,
-                    bottom: 25,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        category!.name,
-                        style: const TextStyle(
-                          fontSize: 18,
+                  right: 10,
+                  bottom: 25,
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                    decoration: BoxDecoration(
+                      color: colorScheme.surface,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: colorScheme.shadow.withOpacity(0.1),
+                          blurRadius: 4,
+                          offset: const Offset(0, 2),
                         ),
+                      ],
+                    ),
+                    child: Text(
+                      category!.name,
+                      style: textTheme.titleMedium?.copyWith(
+                        color: colorScheme.onSurface,
+                        fontWeight: FontWeight.w600,
                       ),
-                    ))
+                    ),
+                  ),
+                )
               ],
             )
           : Shimmer.fromColors(
-              baseColor: Colors.grey.shade100,
-              highlightColor: Colors.white70,
+              baseColor: colorScheme.surface,
+              highlightColor: colorScheme.surface.withOpacity(0.5),
               child: Card(
-                color: Colors.grey.shade100,
+                color: colorScheme.surface,
                 elevation: 4,
                 margin: const EdgeInsets.only(bottom: 16),
                 clipBehavior: Clip.antiAlias,

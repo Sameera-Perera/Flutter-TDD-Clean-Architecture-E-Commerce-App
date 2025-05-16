@@ -13,9 +13,20 @@ class FilterView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       appBar: AppBar(
-        title: const Text("Filter"),
+        leading: BackButton(),
+        title: Text(
+          "Filter",
+          style: textTheme.bodyLarge?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+        ),
         actions: [
           IconButton(
             onPressed: () {
@@ -27,15 +38,15 @@ class FilterView extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               left: 20,
               top: 10,
             ),
             child: Text(
               "Categories",
-              style: TextStyle(
-                fontSize: 18,
+              style: textTheme.titleMedium?.copyWith(
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -50,39 +61,42 @@ class FilterView extends StatelessWidget {
                   horizontal: 20,
                   vertical: 10,
                 ),
-                itemBuilder: (context, index) =>
-                    Row(
-                      children: [
-                        Text(
-                          categoryState.categories[index].name,
-                          style: const TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.w500),
-                        ),
-                        const Spacer(),
-                        BlocBuilder<FilterCubit, FilterProductParams>(
-                          builder: (context, filterState) {
-                            return Checkbox(
-                              value: filterState.categories
-                                  .contains(categoryState.categories[index]) ||
-                                  filterState.categories.isEmpty,
-                              onChanged: (bool? value) {
-                                context.read<FilterCubit>().updateCategory(
-                                    category: categoryState.categories[index]);
-                              },
-                            );
-                          },
-                        )
-                      ],
+                itemBuilder: (context, index) => Row(
+                  children: [
+                    Text(
+                      categoryState.categories[index].name,
+                      style: textTheme.bodyLarge?.copyWith(
+                        color: colorScheme.onSurface,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
+                    const Spacer(),
+                    BlocBuilder<FilterCubit, FilterProductParams>(
+                      builder: (context, filterState) {
+                        return Checkbox(
+                          value: filterState.categories
+                                  .contains(categoryState.categories[index]) ||
+                              filterState.categories.isEmpty,
+                          onChanged: (bool? value) {
+                            context.read<FilterCubit>().updateCategory(
+                                category: categoryState.categories[index]);
+                          },
+                          activeColor:  colorScheme.onSurface,
+                          checkColor:  colorScheme.onPrimary,
+                        );
+                      },
+                    )
+                  ],
+                ),
               );
             },
           ),
-          const Padding(
-            padding: EdgeInsets.only(left: 20, top: 10),
+          Padding(
+            padding: const EdgeInsets.only(left: 20, top: 10),
             child: Text(
               "Price Range",
-              style: TextStyle(
-                fontSize: 18,
+              style: textTheme.titleMedium?.copyWith(
+                color: colorScheme.onSurface,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -102,13 +116,11 @@ class FilterView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
           child: Builder(builder: (context) {
             return InputFormButton(
-              color: Colors.black87,
+              color: colorScheme.onSurface,
               onClick: () {
                 context
                     .read<ProductBloc>()
-                    .add(GetProducts(context
-                    .read<FilterCubit>()
-                    .state));
+                    .add(GetProducts(context.read<FilterCubit>().state));
                 Navigator.of(context).pop();
               },
               titleText: 'Continue',

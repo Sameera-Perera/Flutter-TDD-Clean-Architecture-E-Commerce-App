@@ -32,22 +32,29 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.surface,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        foregroundColor: Colors.black,
-        backgroundColor: Colors.white,
+        backgroundColor: colorScheme.surface.withOpacity(0.8),
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.message)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.share)),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.message, color: colorScheme.onSurface),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.share, color: colorScheme.onSurface),
+          ),
         ],
       ),
       body: ListView(
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-              top: kPaddingMedium
-            ),
+            padding: const EdgeInsets.only(top: kPaddingMedium),
             child: SizedBox(
               height: MediaQuery.sizeOf(context).width,
               child: CarouselSlider(
@@ -75,20 +82,21 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                                 image: imageProvider,
                                 fit: BoxFit.contain,
                                 colorFilter: ColorFilter.mode(
-                                    Colors.grey.shade50.withOpacity(0.25),
-                                    BlendMode.softLight),
+                                  colorScheme.surface.withOpacity(0.25),
+                                  BlendMode.softLight,
+                                ),
                               ),
                             ),
                           ),
                           placeholder: (context, url) => Container(
                             decoration: BoxDecoration(
-                              color: Colors.grey.shade100,
+                              color: colorScheme.surfaceVariant,
                             ),
                           ),
-                          errorWidget: (context, url, error) => const Center(
+                          errorWidget: (context, url, error) => Center(
                             child: Icon(
                               Icons.error_outline,
-                              color: Colors.grey,
+                              color: colorScheme.error,
                             ),
                           ),
                         ),
@@ -107,29 +115,29 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                 activeIndex: _currentIndex,
                 count: widget.product.images.length,
                 effect: ScrollingDotsEffect(
-                    dotColor: Colors.grey.shade300,
-                    maxVisibleDots: 7,
-                    activeDotColor: Colors.grey,
-                    dotHeight: 6,
-                    dotWidth: 6,
-                    activeDotScale: 1.1,
-                    spacing: 6),
+                  dotColor: colorScheme.surfaceVariant,
+                  maxVisibleDots: 7,
+                  activeDotColor: colorScheme.primary,
+                  dotHeight: 6,
+                  dotWidth: 6,
+                  activeDotScale: 1.1,
+                  spacing: 6,
+                ),
               ),
             ),
           ),
           Padding(
-            padding:
-                const EdgeInsets.only(left: 20, right: 14, top: 20, bottom: 4),
+            padding: const EdgeInsets.only(left: 20, right: 14, top: 20, bottom: 4),
             child: Text(
               widget.product.name,
-              style: const TextStyle(fontSize: 22, fontWeight: FontWeight.w500),
+              style: textTheme.headlineSmall?.copyWith(
+                color: colorScheme.onSurface,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
-            ),
+            padding: const EdgeInsets.only(left: 20, right: 20),
             child: Wrap(
               children: widget.product.priceTags
                   .map((priceTag) => GestureDetector(
@@ -141,20 +149,30 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
                         child: Container(
                           decoration: BoxDecoration(
                             border: Border.all(
-                              width: _selectedPriceTag.id == priceTag.id
-                                  ? 2.0
-                                  : 1.0,
-                              color: Colors.grey,
+                              width: _selectedPriceTag.id == priceTag.id ? 2.0 : 1.0,
+                              color: _selectedPriceTag.id == priceTag.id
+                                  ? colorScheme.primary
+                                  : colorScheme.outline,
                             ),
-                            borderRadius:
-                                const BorderRadius.all(Radius.circular(5.0)),
+                            borderRadius: BorderRadius.circular(5.0),
                           ),
                           padding: const EdgeInsets.all(8),
                           margin: const EdgeInsets.only(right: 4),
                           child: Column(
                             children: [
-                              Text(priceTag.name),
-                              Text(priceTag.price.toString()),
+                              Text(
+                                priceTag.name,
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: colorScheme.onSurface,
+                                ),
+                              ),
+                              Text(
+                                priceTag.price.toString(),
+                                style: textTheme.bodyMedium?.copyWith(
+                                  color: colorScheme.onSurface,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -164,19 +182,22 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
           ),
           Padding(
             padding: EdgeInsets.only(
-                left: 20,
-                right: 10,
-                top: 16,
-                bottom: MediaQuery.of(context).padding.bottom),
+              left: 20,
+              right: 10,
+              top: 16,
+              bottom: MediaQuery.of(context).padding.bottom,
+            ),
             child: Text(
               widget.product.description,
-              style: const TextStyle(fontSize: 14),
+              style: textTheme.bodyMedium?.copyWith(
+                color: colorScheme.onSurface,
+              ),
             ),
           )
         ],
       ),
       bottomNavigationBar: Container(
-        color: Theme.of(context).colorScheme.secondary,
+        color: colorScheme.primary,
         height: 80 + MediaQuery.of(context).padding.bottom,
         padding: EdgeInsets.only(
           bottom: MediaQuery.of(context).padding.bottom + 10,
@@ -192,16 +213,18 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Text(
+                Text(
                   "Total",
-                  style: TextStyle(color: Colors.white70, fontSize: 16),
+                  style: textTheme.bodyMedium?.copyWith(
+                    color: colorScheme.onSurface,
+                  ),
                 ),
                 Text(
                   '\$${_selectedPriceTag.price}',
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold),
+                  style: textTheme.titleMedium?.copyWith(
+                    color: colorScheme.onSurface,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ],
             ),
@@ -209,31 +232,32 @@ class _ProductDetailsViewState extends State<ProductDetailsView> {
             SizedBox(
               width: 120,
               child: InputFormButton(
+                color: colorScheme.onSurface,
                 onClick: () {
                   context.read<CartBloc>().add(AddProduct(
                       cartItem: CartItem(
                           product: widget.product,
                           priceTag: _selectedPriceTag)));
-                  // print("test");
                   Navigator.pop(context);
                 },
                 titleText: "Add to Cart",
               ),
             ),
-            const SizedBox(
-              width: 6,
-            ),
+            const SizedBox(width: 6),
             SizedBox(
               width: 90,
               child: InputFormButton(
+                color: colorScheme.onSurface,
                 onClick: () {
-                  Navigator.of(context)
-                      .pushNamed(AppRouter.orderCheckout, arguments: [
-                    CartItem(
-                      product: widget.product,
-                      priceTag: _selectedPriceTag,
-                    )
-                  ]);
+                  Navigator.of(context).pushNamed(
+                    AppRouter.orderCheckout,
+                    arguments: [
+                      CartItem(
+                        product: widget.product,
+                        priceTag: _selectedPriceTag,
+                      )
+                    ],
+                  );
                 },
                 titleText: "Buy",
               ),

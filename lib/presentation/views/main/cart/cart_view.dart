@@ -20,7 +20,11 @@ class _CartViewState extends State<CartView> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return Scaffold(
+      backgroundColor: colorScheme.background,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Stack(
@@ -35,44 +39,48 @@ class _CartViewState extends State<CartView> {
                     child: BlocBuilder<CartBloc, CartState>(
                       builder: (context, state) {
                         if (state is CartError && state.cart.isEmpty) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              if (state.failure is NetworkFailure)
-                                Image.asset(kNoConnection),
-                              if (state.failure is ServerFailure)
-                                Image.asset(kInternalServerError),
-                              const Center(child: Text("Cart is Empty!")),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.1,
-                              )
-                            ],
+                          return Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                if (state.failure is NetworkFailure)
+                                  Image.asset(kNoConnection),
+                                if (state.failure is ServerFailure)
+                                  Image.asset(kInternalServerError),
+                                Text(
+                                  "Cart is Empty!",
+                                  style: textTheme.titleMedium?.copyWith(
+                                    color: colorScheme.onBackground,
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         }
                         if (state.cart.isEmpty) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset(kEmptyCart),
-                              const Text("Cart is Empty!"),
-                              SizedBox(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.1,
-                              )
-                            ],
+                          return Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset(kEmptyCart),
+                                Text(
+                                  "Cart is Empty!",
+                                  style: textTheme.titleMedium?.copyWith(
+                                    color: colorScheme.onBackground,
+                                  ),
+                                ),
+                              ],
+                            ),
                           );
                         }
                         return ListView.builder(
-                          itemCount:
-                              (state is CartLoading && state.cart.isEmpty)
-                                  ? 10
-                                  : (state.cart.length +
-                                      ((state is CartLoading) ? 10 : 0)),
+                          itemCount: (state is CartLoading && state.cart.isEmpty)
+                              ? 10
+                              : (state.cart.length + ((state is CartLoading) ? 10 : 0)),
                           padding: EdgeInsets.only(
-                              top: (MediaQuery.of(context).padding.top + 20),
-                              bottom:
-                                  MediaQuery.of(context).padding.bottom + 200),
+                            top: (MediaQuery.of(context).padding.top + 20),
+                            bottom: MediaQuery.of(context).padding.bottom + 200,
+                          ),
                           physics: const BouncingScrollPhysics(),
                           shrinkWrap: true,
                           itemBuilder: (BuildContext context, int index) {
@@ -90,8 +98,7 @@ class _CartViewState extends State<CartView> {
                                   setState(() {
                                     if (selectedCartItems.any((element) =>
                                         element == state.cart[index])) {
-                                      selectedCartItems
-                                          .remove(state.cart[index]);
+                                      selectedCartItems.remove(state.cart[index]);
                                     } else {
                                       selectedCartItems.add(state.cart[index]);
                                     }
@@ -107,60 +114,64 @@ class _CartViewState extends State<CartView> {
                 ),
               ],
             ),
-            BlocBuilder<CartBloc, CartState>(builder: (context, state) {
-              if (state.cart.isEmpty) {
-                return const SizedBox();
-              }
-              return Positioned(
-                bottom: (MediaQuery.of(context).padding.bottom + 90),
-                left: 0,
-                right: 0,
-                child: Container(
-                  color: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(bottom: 4, left: 8, right: 8),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Total (${state.cart.length} items)',
-                              style: const TextStyle(fontSize: 16),
-                            ),
-                            Text(
-                              '\$${state.cart.fold(0.0, (previousValue, element) => (element.priceTag.price + previousValue))}',
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.w500),
-                            ),
-                          ],
+            BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                if (state.cart.isEmpty) {
+                  return const SizedBox();
+                }
+                return Positioned(
+                  bottom: (MediaQuery.of(context).padding.bottom + 90),
+                  left: 0,
+                  right: 0,
+                  child: Container(
+                    color: colorScheme.surface,
+                    padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4, left: 8, right: 8),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Total (${state.cart.length} items)',
+                                style: textTheme.bodyLarge?.copyWith(
+                                  color: colorScheme.onSurface,
+                                ),
+                              ),
+                              Text(
+                                '\$${state.cart.fold(0.0, (previousValue, element) => (element.priceTag.price + previousValue))}',
+                                style: textTheme.titleMedium?.copyWith(
+                                  color: colorScheme.onSurface,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 40,
-                        width: 100,
-                        child: InputFormButton(
-                          color: Colors.black87,
-                          cornerRadius: 36,
-                          padding: EdgeInsets.zero,
-                          onClick: () {
-                            Navigator.of(context).pushNamed(
-                              AppRouter.orderCheckout,
-                              arguments: state.cart,
-                            );
-                          },
-                          titleText: 'Checkout',
+                        SizedBox(
+                          height: 40,
+                          width: 100,
+                          child: InputFormButton(
+                            color: colorScheme.primary,
+                            cornerRadius: 36,
+                            padding: EdgeInsets.zero,
+                            onClick: () {
+                              Navigator.of(context).pushNamed(
+                                AppRouter.orderCheckout,
+                                arguments: state.cart,
+                              );
+                            },
+                            titleText: 'Checkout',
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
-            })
+                );
+              },
+            )
           ],
         ),
       ),
