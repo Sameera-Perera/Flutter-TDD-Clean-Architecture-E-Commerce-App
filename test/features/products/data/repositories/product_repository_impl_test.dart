@@ -1,0 +1,134 @@
+import 'package:dartz/dartz.dart';
+import 'package:eshop/core/error/exceptions.dart';
+import 'package:eshop/core/error/failures.dart';
+import 'package:eshop/core/network/network_info.dart';
+import 'package:eshop/features/products/data/data_sources/local/product_local_data_source.dart';
+import 'package:eshop/features/products/data/data_sources/remote/product_remote_data_source.dart';
+import 'package:eshop/features/products/data/repositories/product_repository_impl.dart';
+import 'package:eshop/features/products/domain/usecases/get_product_usecase.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:mocktail/mocktail.dart';
+
+import '../../../../fixtures/constant_objects.dart';
+
+class MockRemoteDataSource extends Mock implements ProductRemoteDataSource {}
+
+class MockLocalDataSource extends Mock implements ProductLocalDataSource {}
+
+class MockNetworkInfo extends Mock implements NetworkInfo {}
+
+void main() {
+  late ProductRepositoryImpl repository;
+  late MockRemoteDataSource mockRemoteDataSource;
+  late MockLocalDataSource mockLocalDataSource;
+  late MockNetworkInfo mockNetworkInfo;
+
+  setUp(() {
+    mockRemoteDataSource = MockRemoteDataSource();
+    mockLocalDataSource = MockLocalDataSource();
+    mockNetworkInfo = MockNetworkInfo();
+    repository = ProductRepositoryImpl(
+      remoteDataSource: mockRemoteDataSource,
+      localDataSource: mockLocalDataSource,
+      networkInfo: mockNetworkInfo,
+    );
+  });
+
+  void runTestsOnline(Function body) {
+    group('device is online', () {
+      setUp(() {
+        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+      });
+
+      body();
+    });
+  }
+
+  group('getConcreted', () {
+    test(
+      'should check if the device is online',
+      () async {
+        /// Arrange
+        when(() => mockNetworkInfo.isConnected).thenAnswer((_) async => true);
+        when(() =>
+                mockRemoteDataSource.getProducts(const FilterProductParams()))
+            .thenAnswer((_) async => tProductResponseModel);
+        when(() => mockLocalDataSource.saveProducts(tProductResponseModel))
+            .thenAnswer((invocation) => Future<void>.value());
+
+        /// Act
+        // repository.getProducts();
+        /// Assert
+        // verify(() => mockNetworkInfo.isConnected);
+      },
+    );
+
+    runTestsOnline(() {
+      test(
+        'should return remote data when the call to remote data source is successful',
+        () async {
+          /// Arrange
+          when(() =>
+                  mockRemoteDataSource.getProducts(const FilterProductParams()))
+              .thenAnswer((_) async => tProductResponseModel);
+          when(() => mockLocalDataSource.saveProducts(tProductResponseModel))
+              .thenAnswer((invocation) => Future<void>.value());
+
+          /// Act
+          final actualResult =
+              await repository.getRemoteProducts(const FilterProductParams());
+
+          /// Assert
+          actualResult.fold(
+            (left) => fail('test failed'),
+            (right) {
+              verify(() => mockRemoteDataSource
+                  .getProducts(const FilterProductParams()));
+              expect(right, tProductResponseModel);
+            },
+          );
+        },
+      );
+
+      test(
+        'should cache the data locally when the call to remote data source is successful',
+        () async {
+          /// Arrange
+          when(() =>
+                  mockRemoteDataSource.getProducts(const FilterProductParams()))
+              .thenAnswer((_) async => tProductResponseModel);
+          when(() => mockLocalDataSource.saveProducts(tProductResponseModel))
+              .thenAnswer((invocation) => Future<void>.value());
+
+          /// Act
+          await repository.getRemoteProducts(const FilterProductParams());
+
+          /// Assert
+          verify(() =>
+              mockRemoteDataSource.getProducts(const FilterProductParams()));
+          verify(() => mockLocalDataSource.saveProducts(tProductResponseModel));
+        },
+      );
+
+      test(
+        'should return server failure when the call to remote data source is unsuccessful',
+        () async {
+          /// Arrange
+          when(() =>
+                  mockRemoteDataSource.getProducts(const FilterProductParams()))
+              .thenThrow(ServerException());
+
+          /// Act
+          final result =
+              await repository.getRemoteProducts(const FilterProductParams());
+
+          /// Assert
+          verify(() =>
+              mockRemoteDataSource.getProducts(const FilterProductParams()));
+          verifyZeroInteractions(mockLocalDataSource);
+          expect(result, equals(Left(ServerFailure())));
+        },
+      );
+    });
+  });
+}

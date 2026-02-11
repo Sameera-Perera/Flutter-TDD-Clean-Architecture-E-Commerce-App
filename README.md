@@ -62,13 +62,8 @@ Welcome to the Flutter-TDD-Clean-Architecture-E-Commerce-App GitHub repository! 
 </div>
 
 ## Backend Options
-### Node json-server(Mock API)
-* Source Code - https://github.com/Sameera-Perera/E-Commerce-Mock-API
-* Live - https://e-commerce-mock-api-webservice.onrender.com
-
-### Java Spring Boot
-* Source Code - coming soon
-* Live - coming soon
+### Nest JS Backend
+* Source Code - https://github.com/Sameera-Perera/E-Commerce-App-Backend
 
 ## Contributing:
 

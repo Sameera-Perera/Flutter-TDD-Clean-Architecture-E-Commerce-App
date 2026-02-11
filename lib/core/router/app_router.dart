@@ -1,20 +1,20 @@
-import 'package:eshop/presentation/views/main/home/filter/filter_view.dart';
 import 'package:flutter/material.dart';
 
-import '../../domain/entities/cart/cart_item.dart';
-import '../../domain/entities/product/product.dart';
-import '../../domain/entities/user/user.dart';
-import '../../presentation/views/authentication/signin_view.dart';
-import '../../presentation/views/authentication/signup_view.dart';
-import '../../presentation/views/main/main_view.dart';
-import '../../presentation/views/main/other/about/about_view.dart';
-import '../../presentation/views/main/other/delivery_info/delivery_info.dart';
-import '../../presentation/views/main/other/notification/notification_view.dart';
-import '../../presentation/views/main/other/orders/order_view.dart';
-import '../../presentation/views/main/other/profile/profile_screen.dart';
-import '../../presentation/views/main/other/settings/settings_view.dart';
-import '../../presentation/views/order_chekout/order_checkout_view.dart';
-import '../../presentation/views/product/product_details_view.dart';
+import 'package:eshop/features/account/presentation/views/other/about/about_view.dart';
+import 'package:eshop/features/account/presentation/views/other/notification/notification_view.dart';
+import 'package:eshop/features/account/presentation/views/other/profile/profile_screen.dart';
+import 'package:eshop/features/account/presentation/views/other/settings/settings_view.dart';
+import 'package:eshop/features/auth/domain/entities/user.dart';
+import 'package:eshop/features/auth/presentation/views/authentication/signin_view.dart';
+import 'package:eshop/features/auth/presentation/views/authentication/signup_view.dart';
+import 'package:eshop/features/cart/domain/entities/cart/cart_item.dart';
+import 'package:eshop/features/delivery_info/presentation/views/delivery_info.dart';
+import 'package:eshop/features/home/presentation/views/main_view.dart';
+import 'package:eshop/features/orders/presentation/views/order_checkout_view.dart';
+import 'package:eshop/features/orders/presentation/views/order_view.dart';
+import 'package:eshop/features/products/domain/entities/product/product.dart';
+import 'package:eshop/features/products/presentation/views/filter_view.dart';
+import 'package:eshop/features/products/presentation/views/product_details_view.dart';
 import '../error/exceptions.dart';
 
 class AppRouter {
