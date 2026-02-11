@@ -1,0 +1,16 @@
+import 'package:dartz/dartz.dart';
+
+import 'package:eshop/core/error/failures.dart';
+import 'package:eshop/core/usecases/usecase.dart';
+import '../../entities/cart/cart_item.dart';
+import '../../repositories/cart_repository.dart';
+
+class GetRemoteCardItemsUseCase implements UseCase<List<CartItem>, NoParams> {
+  final CartRepository repository;
+  GetRemoteCardItemsUseCase(this.repository);
+
+  @override
+  Future<Either<Failure, List<CartItem>>> call(NoParams params) async {
+    return await repository.getRemoteCartItems();
+  }
+}
